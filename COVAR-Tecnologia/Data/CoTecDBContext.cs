@@ -9,6 +9,7 @@ namespace COVAR_Tecnologia.Data
 
         // Estas propiedades DbSet representan cada tabla en tu base de datos SQL
         public DbSet<cotec_usuario> Usuarios { get; set; }
+        public DbSet<cotec_rol> Roles { get; set; }
         public DbSet<cotec_producto> Productos { get; set; }
         public DbSet<cotec_marca> Marcas { get; set; }
         public DbSet<cotec_categoria> Categorias { get; set; }
@@ -51,6 +52,28 @@ namespace COVAR_Tecnologia.Data
                 .WithMany(c => c.Productos)
                 .HasForeignKey(p => p.CategoriaId)
                 .OnDelete(DeleteBehavior.Restrict);
+            // 5. Relación Rol -> Usuario
+            modelBuilder.Entity<cotec_usuario>()
+            .HasOne(u => u.Rol)
+            .WithMany(r => r.Usuarios)
+            .HasForeignKey(u => u.RolId)
+            .OnDelete(DeleteBehavior.Restrict);
+            //6. Creación de roles por defecto
+            modelBuilder.Entity<cotec_rol>().HasData(
+            new cotec_rol { Id = 1, Nombre = "Administrador" },
+            new cotec_rol { Id = 2, Nombre = "Vendedor" },
+            new cotec_rol { Id = 3, Nombre = "Cliente" });
+            //7. Creacion de credenciales de administrador
+            modelBuilder.Entity<cotec_usuario>().HasData(
+                new cotec_usuario
+                {
+                    Id = 1,
+                    Email = "enriquearana1402@gmail.com",
+                    // IMPORTANTE: Aquí va el hash, no la contraseña real "3nriqueA1402"
+                    Password = "$2a$12$tzU3g/s8DF2nU3Wu4t5sRuJ0j4jmhmrG0FZBhvadEgNe2Z0PUQnjq",
+                    RolId = 1 // 1 corresponde a Administrador
+                }
+            );
         }
     }
 }

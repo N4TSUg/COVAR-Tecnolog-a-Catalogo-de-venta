@@ -3,12 +3,44 @@
   "WorkspaceRootPath": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Migrations\\20260417232552_InicializacionDB.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:COVAR-Tecnologia\\Migrations\\20260417232552_InicializacionDB.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\controllers\\productocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\controllers\\marcacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\controllers\\marcacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\controllers\\categoriacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\controllers\\categoriacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\models\\cotec_imagenproducto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\models\\cotec_imagenproducto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\models\\cotec_producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\models\\cotec_producto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\controllers\\accesocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\controllers\\accesocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\views\\producto\\crear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\views\\producto\\crear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\views\\marca\\crear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\views\\marca\\crear.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,32 +50,136 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "20260417232552_InicializacionDB.cs",
-              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Migrations\\20260417232552_InicializacionDB.cs",
-              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Migrations\\20260417232552_InicializacionDB.cs",
-              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Migrations\\20260417232552_InicializacionDB.cs",
-              "RelativeToolTip": "COVAR-Tecnologia\\Migrations\\20260417232552_InicializacionDB.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "CategoriaController.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\CategoriaController.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Controllers\\CategoriaController.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\CategoriaController.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Controllers\\CategoriaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T23:25:52.692Z",
+              "WhenOpened": "2026-05-10T17:58:51.406Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "cotec_producto.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Models\\cotec_producto.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Models\\cotec_producto.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Models\\cotec_producto.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Models\\cotec_producto.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAA8AAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T17:52:12.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "cotec_imagenProducto.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Models\\cotec_imagenProducto.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Models\\cotec_imagenProducto.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Models\\cotec_imagenProducto.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Models\\cotec_imagenProducto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T17:51:57.763Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Admin\\Index.cshtml",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Views\\Admin\\Index.cshtml",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Admin\\Index.cshtml",
+              "RelativeToolTip": "COVAR-Tecnologia\\Views\\Admin\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEcAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-10T17:48:30.86Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "AccesoController.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\AccesoController.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Controllers\\AccesoController.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\AccesoController.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Controllers\\AccesoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T17:44:44.151Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Program.cs",
-              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Program.cs",
-              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Program.cs",
-              "RelativeToolTip": "COVAR-Tecnologia\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Title": "MarcaController.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\MarcaController.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Controllers\\MarcaController.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\MarcaController.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Controllers\\MarcaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-17T23:21:07.172Z",
+              "WhenOpened": "2026-05-10T17:43:20.151Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Crear.cshtml",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Marca\\Crear.cshtml",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Views\\Marca\\Crear.cshtml",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Marca\\Crear.cshtml",
+              "RelativeToolTip": "COVAR-Tecnologia\\Views\\Marca\\Crear.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-10T17:43:16.639Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Crear.cshtml",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Producto\\Crear.cshtml",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Views\\Producto\\Crear.cshtml",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Producto\\Crear.cshtml",
+              "RelativeToolTip": "COVAR-Tecnologia\\Views\\Producto\\Crear.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-05-10T17:42:35.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ProductoController.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\ProductoController.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Controllers\\ProductoController.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\ProductoController.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Controllers\\ProductoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T17:40:44.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Controllers\\AdminController.cs",
+              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "COVAR-Tecnologia\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-10T17:36:26.835Z",
               "EditorCaption": ""
             }
           ]

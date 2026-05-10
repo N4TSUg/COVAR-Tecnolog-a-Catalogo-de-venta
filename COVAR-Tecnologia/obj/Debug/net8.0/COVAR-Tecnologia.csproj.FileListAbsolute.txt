@@ -169,3 +169,5 @@ D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\refint\COVAR-T
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.pdb
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.genruntimeconfig.cache
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\ref\COVAR-Tecnologia.dll
+D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.sourcelink.json

@@ -1,0 +1,58 @@
+﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_marca>
+
+@{
+    ViewData["Title"] = "Marcas";
+}
+
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h2 class="text-primary">🏷️ Gestión de Marcas</h2>
+            <p class="text-muted">Administra los fabricantes de los productos de COVAR Tecnología.</p>
+        </div>
+        <div class="col-md-4 text-end align-self-center">
+            <a asp-action="Crear" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> + Nueva Marca
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de la Marca</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center text-muted py-4">No hay marcas registradas.</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td class="fw-bold">@item.Nombre</td>
+                                <td class="text-center">
+                                    <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm"
+                                       onclick="return confirm('¿Seguro que deseas eliminar esta marca?');">
+                                        Eliminar
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

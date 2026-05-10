@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COVAR_Tecnologia.Migrations
 {
     [DbContext(typeof(CoTecDBContext))]
-    [Migration("20260417232552_InicializacionDB")]
-    partial class InicializacionDB
+    [Migration("20260510170421_SeedAdminUser")]
+    partial class SeedAdminUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,41 @@ namespace COVAR_Tecnologia.Migrations
                     b.ToTable("Productos");
                 });
 
+            modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_rol", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nombre = "Administrador"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nombre = "Vendedor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nombre = "Cliente"
+                        });
+                });
+
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_ticketSoporte", b =>
                 {
                     b.Property<int>("Id")
@@ -170,12 +205,26 @@ namespace COVAR_Tecnologia.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("RolId");
+
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "enriquearana1402@gmail.com",
+                            Password = "$2a$12$tzU3g/s8DF2nU3Wu4t5sRuJ0j4jmhmrG0FZBhvadEgNe2Z0PUQnjq",
+                            RolId = 1
+                        });
                 });
 
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_mensaje", b =>
@@ -218,6 +267,17 @@ namespace COVAR_Tecnologia.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_usuario", b =>
+                {
+                    b.HasOne("COVAR_Tecnologia.Models.cotec_rol", "Rol")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Rol");
+                });
+
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_categoria", b =>
                 {
                     b.Navigation("Productos");
@@ -226,6 +286,11 @@ namespace COVAR_Tecnologia.Migrations
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_marca", b =>
                 {
                     b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_rol", b =>
+                {
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_ticketSoporte", b =>
