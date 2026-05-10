@@ -36,6 +36,7 @@ namespace COVAR_Tecnologia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(cotec_marca marca)
         {
+            ModelState.Remove("Productos");
             if (ModelState.IsValid)
             {
                 _context.Add(marca);
@@ -48,6 +49,7 @@ namespace COVAR_Tecnologia.Controllers
         // 4. EDITAR - VISTA (GET)
         public async Task<IActionResult> Editar(int? id)
         {
+            ModelState.Remove("Productos");
             if (id == null)
             {
                 return NotFound();

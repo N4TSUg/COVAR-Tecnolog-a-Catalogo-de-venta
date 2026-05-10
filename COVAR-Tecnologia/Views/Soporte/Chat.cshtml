@@ -1,0 +1,45 @@
+﻿@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+@{
+    ViewData["Title"] = "Chat de Soporte";
+}
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Ticket #@Model.Id: <span class="text-primary">@Model.Asunto</span></h4>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">← Volver</a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body" style="height: 400px; overflow-y: auto; background-color: #e9ecef;">
+            @foreach (var msj in Model.Mensajes.OrderBy(m => m.FechaEnvio))
+            {
+                <div class="d-flex mb-3 @(!msj.EsRespuestaAdmin ? "justify-content-end" : "justify-content-start")">
+                    <div class="p-3 rounded shadow-sm @(!msj.EsRespuestaAdmin ? "bg-primary text-white" : "bg-white border")" style="max-width: 75%;">
+                        <p class="mb-1">@msj.Texto</p>
+                        <small class="@(!msj.EsRespuestaAdmin ? "text-light" : "text-muted")" style="font-size: 0.75rem;">
+                            @msj.FechaEnvio.ToString("dd/MM HH:mm")
+                            @(!msj.EsRespuestaAdmin ? "(Tú)" : "(Soporte COVAR)")
+                        </small>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+        {
+            <div class="card-footer bg-white p-3">
+                <form asp-action="Chat" method="post" class="d-flex">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="text" name="textoMensaje" class="form-control me-2" placeholder="Escribe tu respuesta..." required autocomplete="off" />
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="card-footer text-center bg-light text-success fw-bold p-3">
+                ✅ Este caso ha sido marcado como resuelto.
+            </div>
+        }
+    </div>
+</div>

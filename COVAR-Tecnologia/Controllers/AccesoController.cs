@@ -1,4 +1,5 @@
 ﻿using COVAR_Tecnologia.Data;
+using COVAR_Tecnologia.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -64,7 +65,7 @@ namespace COVAR_Tecnologia.Controllers
                 case "Vendedor":
                     // Aquí podrías redirigir a un VendedorController (si decides crearlo)
                     // Por ahora lo mandaremos al Home o al inventario
-                    return RedirectToAction("Index", "Producto");
+                    return RedirectToAction("Index", "Vendedor");
 
                 case "Cliente":
                     // El cliente debe ir directamente a ver el catálogo de productos
@@ -74,6 +75,61 @@ namespace COVAR_Tecnologia.Controllers
                     // Por si ocurre algo inesperado, lo mandamos al Home
                     return RedirectToAction("Index", "Home");
             }
+        }
+
+        // VISTA DE REGISTRO (GET)
+        public IActionResult Registrarse()
+        {
+            return View();
+        }
+
+        // LÓGICA DE REGISTRO (POST)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Registrarse(cotec_usuario usuario, string claveRaw, string confirmarClave)
+        {
+            // Validaciones manuales básicas
+            if (claveRaw != confirmarClave)
+            {
+                ViewData["Mensaje"] = "Las contraseñas no coinciden.";
+                return View();
+            }
+
+            // Quitamos validaciones de objetos de navegación
+            ModelState.Remove("Rol");
+            ModelState.Remove("Tickets");
+            ModelState.Remove("Password");
+
+            if (ModelState.IsValid)
+            {
+                // Verificamos si el correo ya existe
+                var existe = await _context.Usuarios.AnyAsync(u => u.Email == usuario.Email);
+                if (existe)
+                {
+                    ViewData["Mensaje"] = "Este correo ya está registrado.";
+                    return View();
+                }
+
+                // Buscamos el ID del rol "Cliente"
+                var rolCliente = await _context.Roles.FirstOrDefaultAsync(r => r.Nombre == "Cliente");
+                if (rolCliente == null)
+                {
+                    ViewData["Mensaje"] = "Error interno: El rol Cliente no existe.";
+                    return View();
+                }
+
+                // Asignamos datos finales
+                usuario.RolId = rolCliente.Id;
+                usuario.Password = BCrypt.Net.BCrypt.HashPassword(claveRaw);
+
+                _context.Add(usuario);
+                await _context.SaveChangesAsync();
+
+                // Redirigimos al Login para que inicie sesión
+                return RedirectToAction("Login", "Acceso");
+            }
+
+            return View(usuario);
         }
 
         // Método para cerrar sesión

@@ -171,3 +171,4 @@ D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnolog
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\ref\COVAR-Tecnologia.dll
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\bin\Debug\net8.0\BCrypt.Net-Next.dll
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.sourcelink.json
+D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\bin\Debug\net8.0\Microsoft.EntityFrameworkCore.InMemory.dll

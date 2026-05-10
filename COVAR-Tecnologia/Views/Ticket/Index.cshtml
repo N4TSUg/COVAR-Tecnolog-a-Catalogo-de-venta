@@ -1,0 +1,70 @@
+﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_ticketSoporte>
+
+@{
+    ViewData["Title"] = "Bandeja de Soporte";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger mb-4">🎧 Bandeja de Soporte y Consultas</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Cliente / Correo</th>
+                        <th>Asunto</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr><td colspan="6" class="text-center py-4">No hay tickets registrados.</td></tr>
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>#@item.Id</td>
+                            <td>@item.FechaCreacion.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                @if (item.Usuario != null)
+                                {
+                                    <span class="fw-bold">@item.Usuario.Email</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted"><i>Cliente Anónimo</i></span>
+                                }
+                            </td>
+                            <td>@item.Asunto</td>
+                            <td>
+                                @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+                                {
+                                    <span class="badge bg-warning text-dark">Pendiente</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Resuelto</span>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+                                {
+                                    <a asp-action="Responder" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Responder</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="Responder" asp-route-id="@item.Id" class="btn btn-secondary btn-sm">Ver Detalles</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

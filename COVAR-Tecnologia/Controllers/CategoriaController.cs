@@ -36,6 +36,7 @@ namespace COVAR_Tecnologia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(cotec_categoria categoria)
         {
+            ModelState.Remove("Productos");
             if (ModelState.IsValid)
             {
                 _context.Add(categoria);
@@ -67,6 +68,7 @@ namespace COVAR_Tecnologia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(int id, cotec_categoria categoria)
         {
+            ModelState.Remove("Productos");
             if (id != categoria.Id)
             {
                 return NotFound();

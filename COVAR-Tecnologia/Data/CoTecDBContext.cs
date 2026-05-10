@@ -14,7 +14,7 @@ namespace COVAR_Tecnologia.Data
         public DbSet<cotec_marca> Marcas { get; set; }
         public DbSet<cotec_categoria> Categorias { get; set; }
         public DbSet<cotec_ticketSoporte> TicketsSoporte { get; set; }
-        public DbSet<cotec_mensaje> Mensajes { get; set; }
+        public DbSet<cotec_mensaje> MensajesSoporte { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace COVAR_Tecnologia.Data
             // 1. Relación TicketSoporte -> Mensajes
             // Si se borra un ticket, está bien que se borren todos sus mensajes (Cascade)
             modelBuilder.Entity<cotec_mensaje>()
-                .HasOne(m => m.Ticket)
+                .HasOne(m => m.TicketSoporte)
                 .WithMany(t => t.Mensajes)
                 .HasForeignKey(m => m.TicketSoporteId)
                 .OnDelete(DeleteBehavior.Cascade);

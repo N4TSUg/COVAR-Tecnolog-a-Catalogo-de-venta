@@ -66,12 +66,15 @@ namespace COVAR_Tecnologia.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Contenido")
+                    b.Property<bool>("EsRespuestaAdmin")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("FechaEnvio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Texto")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("TicketSoporteId")
                         .HasColumnType("int");
@@ -80,7 +83,7 @@ namespace COVAR_Tecnologia.Migrations
 
                     b.HasIndex("TicketSoporteId");
 
-                    b.ToTable("Mensajes");
+                    b.ToTable("MensajesSoporte");
                 });
 
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_producto", b =>
@@ -177,6 +180,9 @@ namespace COVAR_Tecnologia.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
                     b.Property<int?>("UsuarioId")
                         .HasColumnType("int");
 
@@ -226,13 +232,13 @@ namespace COVAR_Tecnologia.Migrations
 
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_mensaje", b =>
                 {
-                    b.HasOne("COVAR_Tecnologia.Models.cotec_ticketSoporte", "Ticket")
+                    b.HasOne("COVAR_Tecnologia.Models.cotec_ticketSoporte", "TicketSoporte")
                         .WithMany("Mensajes")
                         .HasForeignKey("TicketSoporteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Ticket");
+                    b.Navigation("TicketSoporte");
                 });
 
             modelBuilder.Entity("COVAR_Tecnologia.Models.cotec_producto", b =>

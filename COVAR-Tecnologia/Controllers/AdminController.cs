@@ -23,6 +23,7 @@ namespace COVAR_Tecnologia.Controllers
             ViewBag.TotalMarcas = await _context.Marcas.CountAsync();
             ViewBag.TotalCategorias = await _context.Categorias.CountAsync();
             ViewBag.TicketsAbiertos = await _context.TicketsSoporte.CountAsync(t => t.Estado == cotec_estadoTicket.Abierto);
+            ViewBag.TotalUsuarios = await _context.Usuarios.CountAsync();
 
             return View();
         }

@@ -41,8 +41,14 @@ namespace COVAR_Tecnologia.Controllers
         // 3. CREAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear(cotec_producto producto, IFormFile archivoImagen)
+        // Puedes agregar el signo de interrogación (?) a IFormFile para indicar explícitamente que es opcional
+        public async Task<IActionResult> Crear(cotec_producto producto, IFormFile? archivoImagen)
         {
+            ModelState.Remove("Marca");
+            ModelState.Remove("Categoria");
+            ModelState.Remove("archivoImagen");
+            ModelState.Remove("ImagenURL");
+
             if (ModelState.IsValid)
             {
                 // PRIORIDAD 1: Si hay un archivo físico, lo guardamos localmente
@@ -96,6 +102,11 @@ namespace COVAR_Tecnologia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(int id, cotec_producto producto)
         {
+            ModelState.Remove("Marca");
+            ModelState.Remove("Categoria");
+            ModelState.Remove("archivoImagen");
+            ModelState.Remove("ImagenURL");
+
             if (id != producto.Id) return NotFound();
 
             if (ModelState.IsValid)
