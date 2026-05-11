@@ -338,10 +338,10 @@ C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecno
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Te.9AD866D8.Up2Date
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.dll
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\refint\COVAR-Tecnologia.dll
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.pdb
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.genruntimeconfig.cache
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\ref\COVAR-Tecnologia.dll
+C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.sourcelink.json

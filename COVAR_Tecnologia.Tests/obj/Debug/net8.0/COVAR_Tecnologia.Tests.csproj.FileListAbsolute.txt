@@ -329,3 +329,4 @@ C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecno
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR_Tecnologia.Tests\obj\Debug\net8.0\COVAR_Tecnologia.Tests.pdb
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR_Tecnologia.Tests\obj\Debug\net8.0\COVAR_Tecnologia.Tests.genruntimeconfig.cache
 C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR_Tecnologia.Tests\obj\Debug\net8.0\ref\COVAR_Tecnologia.Tests.dll
+C:\Users\dali_\Downloads\COVAR-Tecnolog-a-Catalogo-de-venta-main (1)\COVAR-Tecnolog-a-Catalogo-de-venta-main\COVAR_Tecnologia.Tests\obj\Debug\net8.0\COVAR_Tecnologia.Tests.sourcelink.json
