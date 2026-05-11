@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37203.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COVAR-Tecnologia", "COVAR-Tecnologia\COVAR-Tecnologia.csproj", "{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COVAR_Tecnologia.Tests", "COVAR_Tecnologia.Tests\COVAR_Tecnologia.Tests.csproj", "{4BD388DD-4D48-420C-BDDD-EEDA97A94191}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BD388DD-4D48-420C-BDDD-EEDA97A94191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BD388DD-4D48-420C-BDDD-EEDA97A94191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BD388DD-4D48-420C-BDDD-EEDA97A94191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BD388DD-4D48-420C-BDDD-EEDA97A94191}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6942B506-795D-4C03-9B09-C8A6CABB9CA3}
+	EndGlobalSection
+EndGlobal

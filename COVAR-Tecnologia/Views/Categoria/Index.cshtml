@@ -1,0 +1,49 @@
+﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_categoria>
+
+@{
+    ViewData["Title"] = "Categorías";
+}
+
+<div class="container mt-4">
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <h2 class="text-primary">📂 Gestión de Categorías</h2>
+            <p class="text-muted">Organiza los productos de COVAR Tecnología por grupos.</p>
+        </div>
+        <div class="col-md-4 text-end align-self-center">
+            <a asp-action="Crear" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> + Nueva Categoría
+            </a>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre de la Categoría</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td class="fw-bold">@item.Nombre</td>
+                            <td class="text-center">
+                                <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
+                                <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('¿Eliminar esta categoría? Los productos asociados podrían quedar sin clasificación.');">
+                                    Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
