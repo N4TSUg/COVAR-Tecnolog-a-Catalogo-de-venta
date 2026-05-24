@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
@@ -12,4 +12,3 @@ namespace COVAR_Tecnologia.Models
         public List<cotec_producto> Productos { get; set; }
     }
 }
-

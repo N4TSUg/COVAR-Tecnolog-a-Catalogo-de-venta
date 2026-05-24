@@ -24,13 +24,13 @@ namespace COVAR_Tecnologia.Models
         public cotec_categoria Categoria { get; set; }
         public string GetWhatsAppLink()
         {
-            // 1. Define el nÃºmero de tu negocio (Sin sÃ­mbolos, usa el cÃ³digo de paÃ­s. Ej: 51 para PerÃº)
+            // 1. Define el número de tu negocio (Sin símbolos, usa el código de país. Ej: 51 para Perú)
             string numeroVendedor = "51928876259";
 
-            // 2. Arma el mensaje dinÃ¡mico usando las propiedades de la clase
-            string mensaje = $"Hola, me interesa el producto '{Nombre}' que tiene un precio de {Precio:C}. Â¿AÃºn estÃ¡ disponible?";
+            // 2. Arma el mensaje dinámico usando las propiedades de la clase
+            string mensaje = $"Hola, me interesa el producto '{Nombre}' que tiene un precio de {Precio:C}. ¿Aún está disponible?";
 
-            // 3. Codifica el texto para que la URL sea vÃ¡lida
+            // 3. Codifica el texto para que la URL sea válida
             string mensajeCodificado = Uri.EscapeDataString(mensaje);
 
             // 4. Retorna el enlace final armado
@@ -39,4 +39,3 @@ namespace COVAR_Tecnologia.Models
 
     }
 }
-

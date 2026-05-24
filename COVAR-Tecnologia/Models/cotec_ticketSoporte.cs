@@ -27,4 +27,3 @@ namespace COVAR_Tecnologia.Models
         public List<cotec_mensaje> Mensajes { get; set; }
     }
 }
-

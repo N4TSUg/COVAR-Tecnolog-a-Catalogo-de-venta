@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("COVAR_Tecnologia.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e3ff6195bb49c975e72192e79da5de3e1dc5949")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a28408bc8abf5472d5897b09ea451660c078337f")]
 [assembly: System.Reflection.AssemblyProductAttribute("COVAR_Tecnologia.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("COVAR_Tecnologia.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
