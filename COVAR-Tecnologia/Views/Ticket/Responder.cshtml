@@ -1,53 +1,91 @@
-﻿@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+@model COVAR_Tecnologia.Models.cotec_ticketSoporte
 
 @{
     ViewData["Title"] = "Responder Ticket";
 }
 
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card shadow-sm border-info">
-                <div class="card-header bg-info text-white fw-bold">
-                    Detalles del Caso #@Model.Id
+<div class="container mt-4 mb-5 fade-in-up">
+    <div class="row g-4">
+        <!-- Detalles del Caso -->
+        <div class="col-md-4">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-dark text-white fw-bold p-3 border-0 rounded-top-4">
+                    <i class="bi bi-info-circle-fill text-info me-2"></i> Detalles del Caso #@Model.Id
                 </div>
-                <div class="card-body">
-                    <p><strong>Cliente:</strong> @(Model.Usuario?.Email ?? "AnÃ³nimo")</p>
-                    <p><strong>Fecha:</strong> @Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</p>
-                    <p><strong>Asunto:</strong> @Model.Asunto</p>
-                    <p><strong>Nivel:</strong> @(Model.EsComplejo ? "ðŸ”´ Complejo" : "ðŸŸ¢ EstÃ¡ndar")</p>
-                    <p>
-                        <strong>Estado:</strong>
-                        <span class="badge @(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto ? "bg-warning text-dark" : "bg-success")">
-                            @Model.Estado
+                <div class="card-body p-4 bg-body">
+                    <div class="mb-3">
+                        <small class="text-muted text-uppercase fw-bold d-block mb-1">Cliente</small>
+                        <div class="d-flex align-items-center gap-2">
+                            <i class="bi bi-person-circle fs-4 text-secondary"></i>
+                            <span class="fw-bold">@(Model.Usuario?.Email ?? "Anónimo")</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <small class="text-muted text-uppercase fw-bold d-block mb-1">Fecha de Creación</small>
+                        <span><i class="bi bi-calendar-event text-secondary"></i> @Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <small class="text-muted text-uppercase fw-bold d-block mb-1">Asunto</small>
+                        <p class="mb-0 fw-medium">@Model.Asunto</p>
+                    </div>
+
+                    <div class="mb-3 d-flex justify-content-between align-items-center">
+                        <small class="text-muted text-uppercase fw-bold">Nivel</small>
+                        @if (Model.EsComplejo)
+                        {
+                            <span class="badge bg-danger rounded-pill px-3 py-2"><i class="bi bi-exclamation-triangle-fill"></i> Complejo</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-info text-dark rounded-pill px-3 py-2"><i class="bi bi-info-circle-fill"></i> Estándar</span>
+                        }
+                    </div>
+
+                    <div class="mb-4 d-flex justify-content-between align-items-center">
+                        <small class="text-muted text-uppercase fw-bold">Estado</small>
+                        <span class="badge rounded-pill px-3 py-2 @(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto ? "bg-warning text-dark" : "bg-success")">
+                            @if(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto) { <i class="bi bi-door-open-fill"></i> } else { <i class="bi bi-door-closed-fill"></i> } @Model.Estado
                         </span>
-                    </p>
-                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">ðŸ”™ Volver a la bandeja</a>
+                    </div>
+                    
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100 rounded-pill fw-bold">
+                        <i class="bi bi-arrow-left"></i> Volver a la bandeja
+                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Chat -->
         <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white fw-bold">
-                    ðŸ’¬ Historial de ConversaciÃ³n
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden h-100 d-flex flex-column">
+                <div class="card-header bg-primary text-white p-3 border-0" style="background: linear-gradient(135deg, var(--bs-primary) 0%, #004085 100%) !important;">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-chat-dots-fill fs-4"></i>
+                        <h5 class="mb-0 fw-bold">Historial de Conversación</h5>
+                    </div>
                 </div>
 
-                <div class="card-body" id="chatContainer" style="height: 400px; overflow-y: auto; background-color: #f8f9fa;">
+                <div class="card-body p-4 flex-grow-1" id="chatContainer" style="min-height: 400px; max-height: 500px; overflow-y: auto; background-color: var(--bs-tertiary-bg);">
                     @if (Model.Mensajes == null || !Model.Mensajes.Any())
                     {
-                        <p class="text-center text-muted mt-5" id="noMessagesText">No hay mensajes registrados. Esperando consulta del cliente.</p>
+                        <div class="h-100 d-flex flex-column align-items-center justify-content-center opacity-50" id="noMessagesText">
+                            <i class="bi bi-chat-square-text" style="font-size: 3rem;"></i>
+                            <p class="mt-3 fw-bold">No hay mensajes registrados.</p>
+                            <small>Esperando consulta del cliente.</small>
+                        </div>
                     }
                     else
                     {
                         foreach (var msj in Model.Mensajes.OrderBy(m => m.FechaEnvio))
                         {
                             <div class="d-flex mb-3 @(msj.EsRespuestaAdmin ? "justify-content-end" : "justify-content-start")">
-                                <div class="p-3 rounded shadow-sm @(msj.EsRespuestaAdmin ? "bg-primary text-white" : "bg-white border")" style="max-width: 75%;">
-                                    <p class="mb-1">@msj.Texto</p>
-                                    <small class="@(msj.EsRespuestaAdmin ? "text-light" : "text-muted")" style="font-size: 0.75rem;">
+                                <div class="p-3 shadow-sm @(msj.EsRespuestaAdmin ? "bg-primary text-white text-end" : "bg-body border")" style="max-width: 80%; border-radius: 1.5rem; @(msj.EsRespuestaAdmin ? "border-bottom-right-radius: 0.25rem;" : "border-bottom-left-radius: 0.25rem;")">
+                                    <p class="mb-1" style="word-wrap: break-word;">@msj.Texto</p>
+                                    <small class="@(msj.EsRespuestaAdmin ? "text-white-50" : "text-muted")" style="font-size: 0.75rem;">
                                         @msj.FechaEnvio.ToString("dd/MM HH:mm")
-                                        @(msj.EsRespuestaAdmin ? "(TÃº)" : "(Cliente)")
+                                        @(msj.EsRespuestaAdmin ? "(Tú)" : "(Cliente)")
                                     </small>
                                 </div>
                             </div>
@@ -57,23 +95,23 @@
 
                 @if (Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
                 {
-                    <div class="card-footer bg-white">
+                    <div class="card-footer bg-body p-3 border-top-0">
                         <form id="chatForm" autocomplete="off" asp-action="Responder" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
 
-                            <div class="mb-3">
-                                <textarea id="textoMensaje" name="textoMensaje" class="form-control" rows="3" placeholder="Escribe la respuesta al cliente aquÃ­..."></textarea>
+                            <div class="mb-3 position-relative">
+                                <textarea id="textoMensaje" name="textoMensaje" class="form-control rounded-4 px-4 py-3 shadow-none bg-body-tertiary border-0" rows="3" placeholder="Escribe la respuesta al cliente aquí..."></textarea>
                             </div>
 
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="cerrarTicket" value="true" id="checkCerrar">
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input shadow-none" type="checkbox" role="switch" name="cerrarTicket" value="true" id="checkCerrar">
                                     <label class="form-check-label text-danger fw-bold" for="checkCerrar">
-                                        Marcar como resuelto / Cerrar Ticket
+                                        <i class="bi bi-x-circle-fill"></i> Marcar como resuelto
                                     </label>
                                 </div>
-                                <button type="submit" class="btn btn-primary">
-                                    Enviar Respuesta <i class="bi bi-send"></i>
+                                <button type="submit" class="btn btn-primary rounded-pill px-4 fw-bold shadow-sm btn-hover-grow">
+                                    Enviar <i class="bi bi-send-fill ms-1"></i>
                                 </button>
                             </div>
                         </form>
@@ -81,8 +119,8 @@
                 }
                 else
                 {
-                    <div class="card-footer text-center border-top text-muted fw-bold">
-                        ðŸ”’ Este ticket ha sido cerrado. Ya no admite respuestas.
+                    <div class="card-footer text-center border-top text-muted fw-bold p-3 bg-body">
+                        <i class="bi bi-lock-fill"></i> Este ticket ha sido cerrado. Ya no admite respuestas.
                     </div>
                 }
             </div>
@@ -107,15 +145,16 @@
 
             var isMine = sentByAdmin === isAdmin;
             var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
-            var bgClass = isMine ? "bg-primary text-white" : "bg-white border";
-            var textClass = isMine ? "text-light" : "text-muted";
-            var senderName = sentByAdmin ? "(TÃº)" : "(Cliente)";
+            var bgClass = isMine ? "bg-primary text-white text-end" : "bg-body border";
+            var textClass = isMine ? "text-white-50" : "text-muted";
+            var senderName = sentByAdmin ? "(Tú)" : "(Cliente)";
+            var radiusStyle = isMine ? "border-radius: 1.5rem; border-bottom-right-radius: 0.25rem;" : "border-radius: 1.5rem; border-bottom-left-radius: 0.25rem;";
 
             var msgDiv = document.createElement("div");
             msgDiv.className = "d-flex mb-3 " + alignmentClass;
             msgDiv.innerHTML = `
-                <div class="p-3 rounded shadow-sm ` + bgClass + `" style="max-width: 75%;">
-                    <p class="mb-1">` + mensaje + `</p>
+                <div class="p-3 shadow-sm ` + bgClass + `" style="max-width: 80%; ` + radiusStyle + `">
+                    <p class="mb-1" style="word-wrap: break-word;">` + mensaje + `</p>
                     <small class="` + textClass + `" style="font-size: 0.75rem;">
                         ` + fechaFormateada + ` ` + senderName + `
                     </small>
@@ -134,7 +173,6 @@
         document.getElementById("chatForm")?.addEventListener("submit", function (e) {
             var checkCerrar = document.getElementById("checkCerrar");
             if (checkCerrar && checkCerrar.checked) {
-                // If closing, do standard form post
                 return;
             }
 
@@ -155,4 +193,3 @@
         if(cc) cc.scrollTop = cc.scrollHeight;
     </script>
 }
-
