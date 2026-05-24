@@ -1,0 +1,50 @@
+﻿@model COVAR_Tecnologia.Models.cotec_usuario
+
+@{
+    ViewData["Title"] = "Editar Acceso";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">✏️ Editar Usuario</h4>
+                </div>
+                <div class="card-body">
+                    <form autocomplete="off" asp-action="Editar" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Correo Electrónico</label>
+                            <input asp-for="Email" class="form-control" type="email" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Rol</label>
+                            <select asp-for="RolId" class="form-select" asp-items="ViewBag.Roles" required>
+                                <option value="">-- Selecciona un Rol --</option>
+                            </select>
+                            <span asp-validation-for="RolId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Contraseña</label>
+                            <input type="password" name="claveRaw" class="form-control" placeholder="Dejar en blanco para mantener la actual" />
+                        </div>
+
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

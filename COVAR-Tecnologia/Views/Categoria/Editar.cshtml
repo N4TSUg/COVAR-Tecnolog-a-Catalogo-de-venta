@@ -9,14 +9,14 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header bg-warning">
-                    <h4 class="mb-0">✏️ Editar Categor�a</h4>
+                    <h4 class="mb-0">✏️ Editar Categoría</h4>
                 </div>
                 <div class="card-body">
                     <form autocomplete="off" asp-action="Editar">
                         <input type="hidden" asp-for="Id" />
 
                         <div class="mb-3">
-                            <label asp-for="Nombre" class="form-label">Nombre de la Categor�a</label>
+                            <label asp-for="Nombre" class="form-label">Nombre de la Categoría</label>
                             <input asp-for="Nombre" class="form-control" />
                             <span asp-validation-for="Nombre" class="text-danger"></span>
                         </div>

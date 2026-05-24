@@ -1,9 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Xunit;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace COVAR_Tecnologia.Tests
 {
@@ -33,11 +35,11 @@ namespace COVAR_Tecnologia.Tests
             using (var context = new CoTecDBContext(options))
             {
                 var controller = new HomeController(context);
-                var result = await controller.Index();
+                var result = await controller.Index(null, null, null, 1);
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsAssignableFrom<IEnumerable<cotec_producto>>(viewResult.ViewData.Model);
-                Assert.Equal(2, model.Count());
+                var model = Assert.IsAssignableFrom<CatalogoViewModel>(viewResult.ViewData.Model);
+                Assert.Equal(2, model.Productos.Count());
             }
         }
 

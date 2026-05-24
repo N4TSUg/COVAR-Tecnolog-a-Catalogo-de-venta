@@ -5,6 +5,9 @@ using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Xunit;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace COVAR_Tecnologia.Tests
 {
@@ -82,15 +85,15 @@ namespace COVAR_Tecnologia.Tests
                 Assert.Equal(1, context.Usuarios.Count());
             }
         }
-
+        
         [Fact]
-        public async Task EliminarGet_ConIdValido_DebeRetornarVista()
+        public async Task EditarGet_DebeRetornarVista_ConUsuarioValido()
         {
-            var options = GetDbContextOptions("TestDB_Usuario_EliminarGet");
+            var options = GetDbContextOptions("TestDB_Usuario_EditarGet");
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Rol" });
+                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Administrador" });
                 context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
                 await context.SaveChangesAsync();
             }
@@ -98,11 +101,42 @@ namespace COVAR_Tecnologia.Tests
             using (var context = new CoTecDBContext(options))
             {
                 var controller = new UsuarioController(context);
-                var result = await controller.Eliminar(1);
+                var result = await controller.Editar(1);
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsAssignableFrom<cotec_usuario>(viewResult.ViewData.Model);
+                var model = Assert.IsType<cotec_usuario>(viewResult.Model);
                 Assert.Equal(1, model.Id);
+            }
+        }
+
+        [Fact]
+        public async Task EditarPost_ModeloValido_DebeEditarYRedirigir()
+        {
+            var options = GetDbContextOptions("TestDB_Usuario_EditarPost");
+
+            using (var context = new CoTecDBContext(options))
+            {
+                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Administrador" });
+                context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "viejo@test.com", Password = "pass", RolId = 1 });
+                await context.SaveChangesAsync();
+            }
+
+            using (var context = new CoTecDBContext(options))
+            {
+                var controller = new UsuarioController(context);
+                var usuarioEditado = new cotec_usuario { Id = 1, Email = "nuevo@test.com", Password = "pass", RolId = 1 };
+                var result = await controller.Editar(1, usuarioEditado, "nuevaclave");
+
+                var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+                Assert.Equal("Index", redirectResult.ActionName);
+            }
+
+            using (var context = new CoTecDBContext(options))
+            {
+                var usuario = context.Usuarios.First();
+                Assert.Equal("nuevo@test.com", usuario.Email);
+                // "nuevaclave" se encriptaría, así que el password será distinto de "pass"
+                Assert.NotEqual("pass", usuario.Password);
             }
         }
 

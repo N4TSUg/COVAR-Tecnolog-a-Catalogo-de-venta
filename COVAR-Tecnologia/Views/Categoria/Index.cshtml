@@ -1,4 +1,4 @@
-@model IEnumerable<COVAR_Tecnologia.Models.cotec_categoria>
+﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_categoria>
 
 @{
     ViewData["Title"] = "Categorías";
@@ -7,7 +7,7 @@
 <div class="container mt-4">
     <div class="row mb-3">
         <div class="col-md-8">
-            <h2 class="text-primary">📂 Gestión de Categorías</h2>
+            <h2 class="text-primary">📁 Gestión de Categorías</h2>
             <p class="text-muted">Organiza los productos de COVAR Tecnología por grupos.</p>
         </div>
         <div class="col-md-4 text-end align-self-center">
@@ -35,9 +35,9 @@
                             <td class="fw-bold">@item.Nombre</td>
                             <td class="text-center">
                                 <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
-                                <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="setEliminarId(@item.Id)" data-bs-toggle="modal" data-bs-target="#eliminarModal">
                                     Eliminar
-                                </a>
+                                </button>
                             </td>
                         </tr>
                     }
@@ -46,3 +46,34 @@
         </div>
     </div>
 </div>
+
+<!-- Modal de Eliminación -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="eliminarModalLabel">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Estás seguro de que deseas eliminar esta categoría?</p>
+        <p class="text-muted small">Nota: No podrás eliminar la categoría si existen productos asociados a la misma.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form asp-action="EliminarConfirmado" method="post">
+            <input type="hidden" id="categoriaIdAEliminar" name="id" value="" />
+            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+    <script>
+        function setEliminarId(id) {
+            document.getElementById('categoriaIdAEliminar').value = id;
+        }
+    </script>
+}

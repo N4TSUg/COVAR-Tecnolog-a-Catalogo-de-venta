@@ -48,10 +48,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhXEVkaXRhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Categoria/Eliminar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhXEVsaW1pbmFyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Categoria/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcmlhXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -76,10 +72,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFyY2FcRWRpdGFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Marca/Eliminar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFyY2FcRWxpbWluYXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Marca/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFyY2FcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -90,10 +82,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Producto/Editar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRWRpdGFyLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Producto/Eliminar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHVjdG9cRWxpbWluYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Producto/Index.cshtml]
@@ -132,8 +120,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xDcmVhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Usuario/Eliminar.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xFbGltaW5hci5jc2h0bWw=
+[d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Usuario/Editar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb1xFZGl0YXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [d:/UNI/CALIPSO/COVAR-Tecnologia/COVAR-Tecnologia/Views/Usuario/Index.cshtml]

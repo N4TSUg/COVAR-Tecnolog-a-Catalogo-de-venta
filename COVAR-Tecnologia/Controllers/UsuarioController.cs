@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
@@ -38,8 +38,6 @@ namespace COVAR_Tecnologia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(cotec_usuario usuario, string claveRaw)
         {
-            // 1. IMPORTANTE: Eliminamos la validación de 'Password' del ModelState 
-            // porque lo vamos a llenar manualmente con el hash después.
             ModelState.Remove("Password");
             ModelState.Remove("Rol");
             ModelState.Remove("Tickets");
@@ -48,7 +46,6 @@ namespace COVAR_Tecnologia.Controllers
             {
                 try
                 {
-                    // 2. Hasheamos la clave que viene del input 'claveRaw'
                     usuario.Password = BCrypt.Net.BCrypt.HashPassword(claveRaw);
 
                     _context.Add(usuario);
@@ -57,29 +54,74 @@ namespace COVAR_Tecnologia.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Si hay un error de base de datos (ej. correo duplicado), lo atrapamos aquí
                     ModelState.AddModelError("", "No se pudo guardar: " + ex.Message);
                 }
             }
 
-            // Si llegamos aquí, algo falló. Recargamos la lista de roles.
             ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre");
             return View(usuario);
         }
 
-        // Método para mostrar la confirmación de eliminación (GET)
-        public async Task<IActionResult> Eliminar(int? id)
+        // GET: Usuario/Editar/5
+        public async Task<IActionResult> Editar(int? id)
         {
             if (id == null) return NotFound();
 
-            var usuario = await _context.Usuarios.Include(u => u.Rol).FirstOrDefaultAsync(u => u.Id == id);
+            var usuario = await _context.Usuarios.FindAsync(id);
             if (usuario == null) return NotFound();
 
+            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre", usuario.RolId);
+            return View(usuario);
+        }
+
+        // POST: Usuario/Editar/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(int id, cotec_usuario usuario, string? claveRaw)
+        {
+            if (id != usuario.Id) return NotFound();
+
+            ModelState.Remove("Password");
+            ModelState.Remove("Rol");
+            ModelState.Remove("Tickets");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var userInDb = await _context.Usuarios.FindAsync(id);
+                    if (userInDb == null) return NotFound();
+
+                    userInDb.Email = usuario.Email;
+                    userInDb.RolId = usuario.RolId;
+
+                    // Solo actualizar contraseña si se proporcionó una nueva
+                    if (!string.IsNullOrWhiteSpace(claveRaw))
+                    {
+                        userInDb.Password = BCrypt.Net.BCrypt.HashPassword(claveRaw);
+                    }
+
+                    _context.Update(userInDb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioExists(usuario.Id)) return NotFound();
+                    else throw;
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Error al editar: " + ex.Message);
+                }
+            }
+
+            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre", usuario.RolId);
             return View(usuario);
         }
 
         // Método para eliminar un acceso (POST)
-        [HttpPost, ActionName("Eliminar")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarConfirmado(int id)
         {
@@ -94,10 +136,14 @@ namespace COVAR_Tecnologia.Controllers
                 catch (DbUpdateException)
                 {
                     TempData["Error"] = "No se puede eliminar este usuario porque tiene tickets de soporte u otros registros asociados.";
-                    return RedirectToAction(nameof(Index));
                 }
             }
             return RedirectToAction(nameof(Index));
+        }
+
+        private bool UsuarioExists(int id)
+        {
+            return _context.Usuarios.Any(e => e.Id == id);
         }
     }
 }

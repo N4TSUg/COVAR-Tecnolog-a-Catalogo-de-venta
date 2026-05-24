@@ -1,9 +1,14 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace COVAR_Tecnologia.Controllers
 {
@@ -21,7 +26,6 @@ namespace COVAR_Tecnologia.Controllers
         // 1. LISTADO DE PRODUCTOS
         public async Task<IActionResult> Index()
         {
-            // Traemos los productos incluyendo su Marca y Categoría para mostrarlas en la tabla
             var productos = await _context.Productos
                 .Include(p => p.Marca)
                 .Include(p => p.Categoria)
@@ -32,7 +36,6 @@ namespace COVAR_Tecnologia.Controllers
         // 2. CREAR - VISTA (GET)
         public IActionResult Crear()
         {
-            // Llenamos los DropDownLists
             ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre");
             ViewBag.Categorias = new SelectList(_context.Categorias, "Id", "Nombre");
             return View();
@@ -41,7 +44,6 @@ namespace COVAR_Tecnologia.Controllers
         // 3. CREAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // Puedes agregar el signo de interrogación (?) a IFormFile para indicar explícitamente que es opcional
         public async Task<IActionResult> Crear(cotec_producto producto, IFormFile? archivoImagen)
         {
             ModelState.Remove("Marca");
@@ -51,7 +53,6 @@ namespace COVAR_Tecnologia.Controllers
 
             if (ModelState.IsValid)
             {
-                // PRIORIDAD 1: Si hay un archivo físico, lo guardamos localmente
                 if (archivoImagen != null && archivoImagen.Length > 0)
                 {
                     string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoImagen.FileName);
@@ -67,18 +68,14 @@ namespace COVAR_Tecnologia.Controllers
                         await archivoImagen.CopyToAsync(stream);
                     }
 
-                    // Sobrescribimos el campo ImagenURL con la ruta del servidor local
                     producto.ImagenURL = "/images/productos/" + nombreArchivo;
                 }
-                // PRIORIDAD 2: Si no hay archivo pero puso una URL, no hacemos nada extra.
-                // El "Model Binder" ya asignó el valor del input de texto a producto.ImagenURL automáticamente.
 
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            // Si algo falla, recargamos las listas para la vista
             ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
             ViewBag.Categorias = new SelectList(_context.Categorias, "Id", "Nombre", producto.CategoriaId);
             return View(producto);
@@ -144,14 +141,8 @@ namespace COVAR_Tecnologia.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductoExists(producto.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!ProductoExists(producto.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -165,23 +156,8 @@ namespace COVAR_Tecnologia.Controllers
             return _context.Productos.Any(e => e.Id == id);
         }
 
-        // 6. ELIMINAR - VISTA (GET)
-        public async Task<IActionResult> Eliminar(int? id)
-        {
-            if (id == null) return NotFound();
-
-            var producto = await _context.Productos
-                .Include(p => p.Marca)
-                .Include(p => p.Categoria)
-                .FirstOrDefaultAsync(m => m.Id == id);
-                
-            if (producto == null) return NotFound();
-
-            return View(producto);
-        }
-
         // 7. ELIMINAR - LÓGICA (POST)
-        [HttpPost, ActionName("Eliminar")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarConfirmado(int id)
         {

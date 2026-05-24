@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
@@ -9,7 +9,7 @@ namespace COVAR_Tecnologia.Tests
 {
     public class CategoriaControllerTests
     {
-        // Método auxiliar para crear bases de datos aisladas
+        // MÃ©todo auxiliar para crear bases de datos aisladas
         private DbContextOptions<CoTecDBContext> GetDbContextOptions(string dbName)
         {
             return new DbContextOptionsBuilder<CoTecDBContext>()
@@ -18,7 +18,7 @@ namespace COVAR_Tecnologia.Tests
         }
 
         // ==========================================
-        // ❌ PRUEBAS DE FALLO (Unhappy Paths)
+        // âŒ PRUEBAS DE FALLO (Unhappy Paths)
         // ==========================================
 
         [Fact]
@@ -29,8 +29,8 @@ namespace COVAR_Tecnologia.Tests
             using var context = new CoTecDBContext(options);
             var controller = new CategoriaController(context);
 
-            // Simulamos que el usuario dejó el nombre en blanco y ASP.NET detecta el error
-            controller.ModelState.AddModelError("Nombre", "El nombre de la categoría es obligatorio");
+            // Simulamos que el usuario dejÃ³ el nombre en blanco y ASP.NET detecta el error
+            controller.ModelState.AddModelError("Nombre", "El nombre de la categorÃ­a es obligatorio");
             var categoriaInvalida = new cotec_categoria { Id = 0, Nombre = "" };
 
             // 2. ACT
@@ -39,7 +39,7 @@ namespace COVAR_Tecnologia.Tests
             // 3. ASSERT
             var viewResult = Assert.IsType<ViewResult>(result); // Retorna la vista, no redirige
             Assert.Equal(categoriaInvalida, viewResult.Model); // Devuelve los mismos datos ingresados
-            Assert.Empty(context.Categorias); // Verificamos que la BD siga vacía
+            Assert.Empty(context.Categorias); // Verificamos que la BD siga vacÃ­a
         }
 
         [Fact]
@@ -73,11 +73,11 @@ namespace COVAR_Tecnologia.Tests
             var result = await controller.Editar(1, categoriaHackeada);
 
             // 3. ASSERT
-            Assert.IsType<NotFoundResult>(result); // Detecta la manipulación y lanza NotFound
+            Assert.IsType<NotFoundResult>(result); // Detecta la manipulaciÃ³n y lanza NotFound
         }
 
         // ==========================================
-        // ✅ PRUEBAS DE ÉXITO (Happy Paths)
+        // âœ… PRUEBAS DE Ã‰XITO (Happy Paths)
         // ==========================================
 
         [Fact]
@@ -98,7 +98,7 @@ namespace COVAR_Tecnologia.Tests
             Assert.Equal("Index", redirectToActionResult.ActionName); // Redirige a la tabla
 
             var categoriaGuardada = await context.Categorias.FirstOrDefaultAsync(c => c.Nombre == "Almacenamiento");
-            Assert.NotNull(categoriaGuardada); // Comprobamos que sí se guardó físicamente
+            Assert.NotNull(categoriaGuardada); // Comprobamos que sÃ­ se guardÃ³ fÃ­sicamente
         }
 
         [Fact]
@@ -151,30 +151,8 @@ namespace COVAR_Tecnologia.Tests
             Assert.Equal("Index", redirectToActionResult.ActionName);
 
             var categoriaEnBd = await context.Categorias.FindAsync(1);
-            Assert.Equal("Laptops Gamers", categoriaEnBd.Nombre); // Validamos que la actualización fue exitosa
-        }
-        [Fact]
-        public async Task Eliminar_GET_IdValido_RetornaVista()
-        {
-            var options = GetDbContextOptions("TestDB_Cat_EliminarGetExito");
-
-            using (var setupContext = new CoTecDBContext(options))
-            {
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Teclados" });
-                await setupContext.SaveChangesAsync();
-            }
-
-            using var context = new CoTecDBContext(options);
-            var controller = new CategoriaController(context);
-
-            var result = await controller.Eliminar(1);
-
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<cotec_categoria>(viewResult.Model);
-            Assert.Equal(1, model.Id);
-        }
-
-        [Fact]
+            Assert.Equal("Laptops Gamers", categoriaEnBd.Nombre); // Validamos que la actualizaciÃ³n fue exitosa
+        }[Fact]
         public async Task EliminarConfirmado_POST_EliminaRegistro_Y_RedirigeAIndex()
         {
             var options = GetDbContextOptions("TestDB_Cat_EliminarPostExito");

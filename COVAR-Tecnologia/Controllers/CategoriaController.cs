@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -102,25 +102,8 @@ namespace COVAR_Tecnologia.Controllers
             return _context.Categorias.Any(e => e.Id == id);
         }
 
-        // 6. ELIMINAR - VISTA (GET)
-        public async Task<IActionResult> Eliminar(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var categoria = await _context.Categorias.FindAsync(id);
-            if (categoria == null)
-            {
-                return NotFound();
-            }
-
-            return View(categoria);
-        }
-
         // 7. ELIMINAR - LÓGICA (POST)
-        [HttpPost, ActionName("Eliminar")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarConfirmado(int id)
         {

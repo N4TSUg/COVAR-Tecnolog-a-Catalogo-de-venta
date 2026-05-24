@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -6,13 +6,11 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace COVAR_Tecnologia.Controllers
 {
-    // Bloqueamos el acceso solo para el Administrador y vendedor
     [Authorize(Roles = "Administrador,Vendedor")]
     public class MarcaController : Controller
     {
         private readonly CoTecDBContext _context;
 
-        // Inyección de dependencias para acceder a la base de datos
         public MarcaController(CoTecDBContext context)
         {
             _context = context;
@@ -48,17 +46,11 @@ namespace COVAR_Tecnologia.Controllers
 
         // 4. EDITAR - VISTA (GET)
         public async Task<IActionResult> Editar(int? id)
-        {          
-            if (id == null)
-            {
-                return NotFound();
-            }
+        {
+            if (id == null) return NotFound();
 
             var marca = await _context.Marcas.FindAsync(id);
-            if (marca == null)
-            {
-                return NotFound();
-            }
+            if (marca == null) return NotFound();
 
             return View(marca);
         }
@@ -69,11 +61,7 @@ namespace COVAR_Tecnologia.Controllers
         public async Task<IActionResult> Editar(int id, cotec_marca marca)
         {
             ModelState.Remove("Productos");
-
-            if (id != marca.Id)
-            {
-                return NotFound();
-            }
+            if (id != marca.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -84,14 +72,8 @@ namespace COVAR_Tecnologia.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MarcaExists(marca.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!MarcaExists(marca.Id)) return NotFound();
+                    else throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -103,25 +85,8 @@ namespace COVAR_Tecnologia.Controllers
             return _context.Marcas.Any(e => e.Id == id);
         }
 
-        // 6. ELIMINAR - VISTA (GET)
-        public async Task<IActionResult> Eliminar(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var marca = await _context.Marcas.FindAsync(id);
-            if (marca == null)
-            {
-                return NotFound();
-            }
-
-            return View(marca);
-        }
-
         // 7. ELIMINAR - LÓGICA (POST)
-        [HttpPost, ActionName("Eliminar")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EliminarConfirmado(int id)
         {

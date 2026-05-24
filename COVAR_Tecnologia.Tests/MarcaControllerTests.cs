@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
@@ -8,7 +8,7 @@ namespace COVAR_Tecnologia.Tests
 {
     public class MarcaControllerTests
     {
-        // Método auxiliar para configurar la base de datos en memoria
+        // MÃ©todo auxiliar para configurar la base de datos en memoria
         private DbContextOptions<CoTecDBContext> GetDbContextOptions(string dbName)
         {
             return new DbContextOptionsBuilder<CoTecDBContext>()
@@ -30,12 +30,12 @@ namespace COVAR_Tecnologia.Tests
                 await context.SaveChangesAsync();
             }
 
-            // 2. ACT (Ejecutar el método que queremos probar)
+            // 2. ACT (Ejecutar el mÃ©todo que queremos probar)
             using (var context = new CoTecDBContext(options))
             {
                 var controller = new MarcaController(context);
 
-                // Llamamos al método Index del controlador
+                // Llamamos al mÃ©todo Index del controlador
                 var result = await controller.Index();
 
                 // 3. ASSERT (Afirmar / Verificar resultados)
@@ -65,7 +65,7 @@ namespace COVAR_Tecnologia.Tests
             var result = await controller.Crear(nuevaMarca);
 
             // 3. ASSERT
-            // Comprobamos que el resultado sea una redirección (RedirectToAction)
+            // Comprobamos que el resultado sea una redirecciÃ³n (RedirectToAction)
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", redirectToActionResult.ActionName);
 
@@ -82,7 +82,7 @@ namespace COVAR_Tecnologia.Tests
             using var context = new CoTecDBContext(options);
             var controller = new MarcaController(context);
 
-            // Forzamos manualmente un error en el ModelState, simulando que la validación falló
+            // Forzamos manualmente un error en el ModelState, simulando que la validaciÃ³n fallÃ³
             controller.ModelState.AddModelError("Nombre", "El nombre de la marca es obligatorio");
 
             var marcaInvalida = new cotec_marca { Id = 0, Nombre = "" };
@@ -97,7 +97,7 @@ namespace COVAR_Tecnologia.Tests
             // Verificamos que la vista reciba el mismo modelo con el que intentamos fallar
             Assert.Equal(marcaInvalida, viewResult.Model);
 
-            // Lo más importante: Verificamos que la marca NO se haya guardado en la base de datos
+            // Lo mÃ¡s importante: Verificamos que la marca NO se haya guardado en la base de datos
             Assert.Empty(context.Marcas);
         }
 
@@ -124,7 +124,7 @@ namespace COVAR_Tecnologia.Tests
             // 3. ASSERT
             var viewResult = Assert.IsType<ViewResult>(result);
 
-            // Verificamos que el modelo que se envía a la vista sea de tipo cotec_marca
+            // Verificamos que el modelo que se envÃ­a a la vista sea de tipo cotec_marca
             var model = Assert.IsType<cotec_marca>(viewResult.Model);
 
             // Confirmamos que trajo la marca correcta
@@ -141,11 +141,11 @@ namespace COVAR_Tecnologia.Tests
             var controller = new MarcaController(context);
 
             // 2. ACT
-            // Le pasamos un nulo explícito simulando que faltó en la URL
+            // Le pasamos un nulo explÃ­cito simulando que faltÃ³ en la URL
             var result = await controller.Editar((int?)null);
 
             // 3. ASSERT
-            // Verificamos que el controlador detenga la ejecución y devuelva un NotFound
+            // Verificamos que el controlador detenga la ejecuciÃ³n y devuelva un NotFound
             Assert.IsType<NotFoundResult>(result);
         }
 
@@ -172,7 +172,7 @@ namespace COVAR_Tecnologia.Tests
             var result = await controller.Editar(1, marcaEditada);
 
             // 3. ASSERT
-            // Comprobamos la redirección
+            // Comprobamos la redirecciÃ³n
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", redirectToActionResult.ActionName);
 
@@ -201,34 +201,9 @@ namespace COVAR_Tecnologia.Tests
             Assert.IsType<NotFoundResult>(result);
         }
         // ==========================================
-        // ❌ PRUEBA DE FALLO: ELIMINAR UN PASO
-        // ==========================================
-
-         [Fact]
-        public async Task Eliminar_GET_IdValido_RetornaVista()
-        {
-            // 1. ARRANGE
-            var options = GetDbContextOptions("TestDB_Marcas_EliminarGetExito");
-            using (var setupContext = new CoTecDBContext(options))
-            {
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "HyperX" });
-                await setupContext.SaveChangesAsync();
-            }
-
-            using var context = new CoTecDBContext(options);
-            var controller = new MarcaController(context);
-
-            // 2. ACT
-            var result = await controller.Eliminar(1);
-
-            // 3. ASSERT
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<cotec_marca>(viewResult.Model);
-            Assert.Equal(1, model.Id);
-        }
-
-        [Fact]
-        public async Task EliminarConfirmado_POST_BorraDeBD_Y_RedirigeAIndex()
+        // âŒ PRUEBA DE FALLO: ELIMINAR UN PASO
+        // ==========================================[Fact]
+        [Fact] public async Task EliminarConfirmado_POST_BorraDeBD_Y_RedirigeAIndex()
         {
             // 1. ARRANGE
             var options = GetDbContextOptions("TestDB_Marcas_EliminarPostExito");
@@ -255,3 +230,4 @@ namespace COVAR_Tecnologia.Tests
         }
     }
 }
+

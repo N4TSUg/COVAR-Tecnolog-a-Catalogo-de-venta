@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_producto>
+﻿@model COVAR_Tecnologia.Models.CatalogoViewModel
 
 @{
     ViewData["Title"] = "Inicio - Catálogo";
@@ -10,24 +10,58 @@
 </div>
 
 <div class="container">
-    <div class="row mb-4">
-        <div class="col">
-            <h2 class="border-bottom pb-2">Destacados de la Semana</h2>
+    
+    <!-- Sección de Filtros -->
+    <div class="card shadow-sm mb-4 border-0 bg-light">
+        <div class="card-body">
+            <form method="get" asp-action="Index" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Buscar Producto</label>
+                    <input type="text" name="busqueda" class="form-control" placeholder="Ejem: Laptop, Mouse..." value="@Model.Busqueda" />
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Categoría</label>
+                    <select name="categoriaId" class="form-select" asp-items="@Model.Categorias">
+                        <option value="">Todas las Categorías</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Marca</label>
+                    <select name="marcaId" class="form-select" asp-items="@Model.Marcas">
+                        <option value="">Todas las Marcas</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button type="submit" class="btn btn-primary fw-bold">
+                        <i class="bi bi-search"></i> Filtrar
+                    </button>
+                    @if(!string.IsNullOrEmpty(Model.Busqueda) || Model.CategoriaId.HasValue || Model.MarcaId.HasValue)
+                    {
+                        <a asp-action="Index" class="btn btn-link text-danger mt-1 text-decoration-none">Limpiar filtros</a>
+                    }
+                </div>
+            </form>
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="border-bottom pb-2">Catálogo de Productos</h2>
+        </div>
+    </div>
 
-        @if (!Model.Any())
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mb-5">
+
+        @if (!Model.Productos.Any())
         {
             <div class="col-12 text-center py-5">
-                <h4 class="text-muted">Aún no hay productos en el catálogo.</h4>
-                <p>¡El administrador debe registrar algunos primero!</p>
+                <h4 class="text-muted">No se encontraron productos.</h4>
+                <p>Intenta con otros filtros o términos de búsqueda.</p>
             </div>
         }
         else
         {
-            @foreach (var item in Model)
+            @foreach (var item in Model.Productos)
             {
                 <div class="col">
                     <div class="card h-100 shadow-sm border-0">
@@ -75,4 +109,39 @@
             }
         }
     </div>
+
+    <!-- Paginación -->
+    @if (Model.TotalPaginas > 1)
+    {
+        <nav aria-label="Navegación de páginas de catálogo">
+            <ul class="pagination justify-content-center">
+                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" 
+                       asp-route-busqueda="@Model.Busqueda" 
+                       asp-route-categoriaId="@Model.CategoriaId" 
+                       asp-route-marcaId="@Model.MarcaId" 
+                       asp-route-pagina="@(Model.PaginaActual - 1)">Anterior</a>
+                </li>
+                
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                        <a class="page-link" asp-action="Index" 
+                           asp-route-busqueda="@Model.Busqueda" 
+                           asp-route-categoriaId="@Model.CategoriaId" 
+                           asp-route-marcaId="@Model.MarcaId" 
+                           asp-route-pagina="@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link" asp-action="Index" 
+                       asp-route-busqueda="@Model.Busqueda" 
+                       asp-route-categoriaId="@Model.CategoriaId" 
+                       asp-route-marcaId="@Model.MarcaId" 
+                       asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente</a>
+                </li>
+            </ul>
+        </nav>
+    }
 </div>

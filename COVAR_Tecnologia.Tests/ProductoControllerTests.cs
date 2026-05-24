@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +19,7 @@ namespace COVAR_Tecnologia.Tests
         }
 
         // ==========================================
-        // ❌ PRUEBAS DE FALLO (Unhappy Paths)
+        // âŒ PRUEBAS DE FALLO (Unhappy Paths)
         // ==========================================
 
         [Fact]
@@ -29,16 +29,16 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Prod_CrearFallo");
             using (var setupContext = new CoTecDBContext(options))
             {
-                // Agregamos una marca y categoría de prueba para que los ViewBag tengan algo que cargar
+                // Agregamos una marca y categorÃ­a de prueba para que los ViewBag tengan algo que cargar
                 setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Logitech" });
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Periférico" });
+                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "PerifÃ©rico" });
                 await setupContext.SaveChangesAsync();
             }
 
             using var context = new CoTecDBContext(options);
             var controller = new ProductoController(context);
 
-            // Forzamos un error de validación
+            // Forzamos un error de validaciÃ³n
             controller.ModelState.AddModelError("Precio", "El precio debe ser mayor a 0");
             var productoInvalido = new cotec_producto { Nombre = "Mouse", Precio = 0, MarcaId = 1, CategoriaId = 1 };
 
@@ -49,10 +49,10 @@ namespace COVAR_Tecnologia.Tests
             // 3. ASSERT
             var viewResult = Assert.IsType<ViewResult>(result);
 
-            // Verificamos que el producto NO se guardó
+            // Verificamos que el producto NO se guardÃ³
             Assert.Empty(await context.Productos.ToListAsync());
 
-            // ¡MUY IMPORTANTE! Verificamos que el controlador recargó las listas desplegables
+            // Â¡MUY IMPORTANTE! Verificamos que el controlador recargÃ³ las listas desplegables
             Assert.NotNull(viewResult.ViewData["Marcas"]);
             Assert.NotNull(viewResult.ViewData["Categorias"]);
 
@@ -87,7 +87,7 @@ namespace COVAR_Tecnologia.Tests
         }
 
         // ==========================================
-        // ✅ PRUEBAS DE ÉXITO (Happy Paths)
+        // âœ… PRUEBAS DE Ã‰XITO (Happy Paths)
         // ==========================================
 
         [Fact]
@@ -101,8 +101,8 @@ namespace COVAR_Tecnologia.Tests
             var nuevoProducto = new cotec_producto
             {
                 Id = 0,
-                Nombre = "Teclado Mecánico",
-                Descripcion = "Un excelente teclado RGB con switches azules.", // <-- CAMBIO AQUÍ: Agregado para cumplir la regla
+                Nombre = "Teclado MecÃ¡nico",
+                Descripcion = "Un excelente teclado RGB con switches azules.", // <-- CAMBIO AQUÃ: Agregado para cumplir la regla
                 Precio = 150.50m,
                 MarcaId = 1,
                 CategoriaId = 1,
@@ -116,7 +116,7 @@ namespace COVAR_Tecnologia.Tests
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", redirectToActionResult.ActionName);
 
-            var productoGuardado = await context.Productos.FirstOrDefaultAsync(p => p.Nombre == "Teclado Mecánico");
+            var productoGuardado = await context.Productos.FirstOrDefaultAsync(p => p.Nombre == "Teclado MecÃ¡nico");
             Assert.NotNull(productoGuardado);
             Assert.Equal("https://url-de-internet.com/foto.jpg", productoGuardado.ImagenURL);
         }
@@ -134,10 +134,10 @@ namespace COVAR_Tecnologia.Tests
                 setupContext.Productos.Add(new cotec_producto
                 {
                     Id = 1,
-                    Nombre = "Audífonos Kraken",
-                    Descripcion = "Audífonos gamer con sonido envolvente 7.1", // <-- CAMBIO AQUÍ
-                    ImagenURL = "/images/kraken.jpg",                         // <-- CAMBIO AQUÍ
-                    Precio = 200.00m,                                         // <-- CAMBIO AQUÍ (por buena práctica)
+                    Nombre = "AudÃ­fonos Kraken",
+                    Descripcion = "AudÃ­fonos gamer con sonido envolvente 7.1", // <-- CAMBIO AQUÃ
+                    ImagenURL = "/images/kraken.jpg",                         // <-- CAMBIO AQUÃ
+                    Precio = 200.00m,                                         // <-- CAMBIO AQUÃ (por buena prÃ¡ctica)
                     Marca = marca,
                     Categoria = cat
                 });
@@ -154,36 +154,11 @@ namespace COVAR_Tecnologia.Tests
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsType<cotec_producto>(viewResult.Model);
 
-            Assert.Equal("Audífonos Kraken", model.Nombre);
+            Assert.Equal("AudÃ­fonos Kraken", model.Nombre);
             Assert.NotNull(model.Marca);
             Assert.Equal("Razer", model.Marca.Nombre);
             Assert.NotNull(model.Categoria);
-        }
-
-        [Fact]
-        public async Task Eliminar_GET_IdValido_RetornaVista()
-        {
-            var options = GetDbContextOptions("TestDB_Prod_EliminarGetExito");
-
-            using (var setupContext = new CoTecDBContext(options))
-            {
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca" });
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Categoria" });
-                setupContext.Productos.Add(new cotec_producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
-                await setupContext.SaveChangesAsync();
-            }
-
-            using var context = new CoTecDBContext(options);
-            var controller = new ProductoController(context);
-
-            var result = await controller.Eliminar(1);
-
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<cotec_producto>(viewResult.Model);
-            Assert.Equal(1, model.Id);
-        }
-
-        [Fact]
+        }[Fact]
         public async Task EliminarConfirmado_POST_EliminaRegistro_Y_RedirigeAIndex()
         {
             var options = GetDbContextOptions("TestDB_Prod_EliminarPostExito");
