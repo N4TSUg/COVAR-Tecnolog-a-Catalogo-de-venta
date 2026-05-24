@@ -1,7 +1,7 @@
-ï»¿@model COVAR_Tecnologia.Models.cotec_categoria
+@model COVAR_Tecnologia.Models.cotec_categoria
 
 @{
-    ViewData["Title"] = "Nueva CategorÃ­a";
+    ViewData["Title"] = "Nueva Categoría";
 }
 
 <div class="container mt-4">
@@ -9,15 +9,15 @@
         <div class="col-md-6">
             <div class="card shadow">
                 <div class="card-header bg-success text-white">
-                    <h4 class="mb-0">âœ¨ Nueva CategorÃ­a</h4>
+                    <h4 class="mb-0">? Nueva Categoría</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Crear">
+                    <form autocomplete="off" asp-action="Crear">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="mb-3">
                             <label asp-for="Nombre" class="form-label">Nombre</label>
-                            <input asp-for="Nombre" class="form-control" placeholder="Ej: PerifÃ©ricos, Hardware, Laptops" />
+                            <input asp-for="Nombre" class="form-control" placeholder="Ej: Periféricos, Hardware, Laptops" />
                             <span asp-validation-for="Nombre" class="text-danger"></span>
                         </div>
 

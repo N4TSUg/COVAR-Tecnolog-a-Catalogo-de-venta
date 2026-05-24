@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -48,8 +48,7 @@ namespace COVAR_Tecnologia.Controllers
 
         // 4. EDITAR - VISTA (GET)
         public async Task<IActionResult> Editar(int? id)
-        {
-            ModelState.Remove("Productos");
+        {          
             if (id == null)
             {
                 return NotFound();
@@ -69,6 +68,8 @@ namespace COVAR_Tecnologia.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(int id, cotec_marca marca)
         {
+            ModelState.Remove("Productos");
+
             if (id != marca.Id)
             {
                 return NotFound();
@@ -76,14 +77,33 @@ namespace COVAR_Tecnologia.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(marca);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Update(marca);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MarcaExists(marca.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(marca);
         }
 
-        // 6. ELIMINAR (Lógica directa)
+        private bool MarcaExists(int id)
+        {
+            return _context.Marcas.Any(e => e.Id == id);
+        }
+
+        // 6. ELIMINAR - VISTA (GET)
         public async Task<IActionResult> Eliminar(int? id)
         {
             if (id == null)
@@ -92,11 +112,32 @@ namespace COVAR_Tecnologia.Controllers
             }
 
             var marca = await _context.Marcas.FindAsync(id);
+            if (marca == null)
+            {
+                return NotFound();
+            }
 
+            return View(marca);
+        }
+
+        // 7. ELIMINAR - LÓGICA (POST)
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarConfirmado(int id)
+        {
+            var marca = await _context.Marcas.FindAsync(id);
             if (marca != null)
             {
-                _context.Marcas.Remove(marca);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Marcas.Remove(marca);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    TempData["Error"] = "No se puede eliminar esta marca porque tiene productos asociados.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             return RedirectToAction(nameof(Index));

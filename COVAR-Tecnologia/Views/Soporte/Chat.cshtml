@@ -1,4 +1,4 @@
-﻿@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+@model COVAR_Tecnologia.Models.cotec_ticketSoporte
 @{
     ViewData["Title"] = "Chat de Soporte";
 }
@@ -6,11 +6,11 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4>Ticket #@Model.Id: <span class="text-primary">@Model.Asunto</span></h4>
-        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">← Volver</a>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">🔙 Volver</a>
     </div>
 
     <div class="card shadow-sm border-0">
-        <div class="card-body" style="height: 400px; overflow-y: auto; background-color: #e9ecef;">
+        <div class="card-body" id="chatContainer" style="height: 400px; overflow-y: auto; background-color: #e9ecef;">
             @foreach (var msj in Model.Mensajes.OrderBy(m => m.FechaEnvio))
             {
                 <div class="d-flex mb-3 @(!msj.EsRespuestaAdmin ? "justify-content-end" : "justify-content-start")">
@@ -28,9 +28,9 @@
         @if (Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
         {
             <div class="card-footer bg-white p-3">
-                <form asp-action="Chat" method="post" class="d-flex">
+                <form id="chatForm" asp-action="Chat" method="post" class="d-flex" autocomplete="off">
                     <input type="hidden" name="id" value="@Model.Id" />
-                    <input type="text" name="textoMensaje" class="form-control me-2" placeholder="Escribe tu respuesta..." required autocomplete="off" />
+                    <input type="text" id="textoMensaje" name="textoMensaje" class="form-control me-2" placeholder="Escribe tu respuesta..." required />
                     <button type="submit" class="btn btn-primary">Enviar</button>
                 </form>
             </div>
@@ -43,3 +43,61 @@
         }
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        var ticketId = "@Model.Id";
+        var isAdmin = false;
+
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveMessage", function (mensaje, fechaFormateada, sentByAdmin) {
+            var chatContainer = document.getElementById("chatContainer");
+
+            var isMine = sentByAdmin === isAdmin;
+            var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
+            var bgClass = isMine ? "bg-primary text-white" : "bg-white border";
+            var textClass = isMine ? "text-light" : "text-muted";
+            var senderName = sentByAdmin ? "(Soporte COVAR)" : "(Tú)";
+
+            var msgDiv = document.createElement("div");
+            msgDiv.className = "d-flex mb-3 " + alignmentClass;
+            msgDiv.innerHTML = `
+                <div class="p-3 rounded shadow-sm ` + bgClass + `" style="max-width: 75%;">
+                    <p class="mb-1">` + mensaje + `</p>
+                    <small class="` + textClass + `" style="font-size: 0.75rem;">
+                        ` + fechaFormateada + ` ` + senderName + `
+                    </small>
+                </div>
+            `;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+
+        connection.start().then(function () {
+            connection.invoke("JoinTicketGroup", ticketId);
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("chatForm")?.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var mensajeInput = document.getElementById("textoMensaje");
+            var mensaje = mensajeInput.value.trim();
+
+            if (mensaje) {
+                connection.invoke("SendMessage", parseInt(ticketId), mensaje, isAdmin).catch(function (err) {
+                    return console.error(err.toString());
+                });
+                mensajeInput.value = "";
+            }
+        });
+
+        // Scroll to bottom on load
+        var cc = document.getElementById("chatContainer");
+        if(cc) cc.scrollTop = cc.scrollHeight;
+    </script>
+}

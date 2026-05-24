@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
@@ -152,6 +152,49 @@ namespace COVAR_Tecnologia.Tests
 
             var categoriaEnBd = await context.Categorias.FindAsync(1);
             Assert.Equal("Laptops Gamers", categoriaEnBd.Nombre); // Validamos que la actualización fue exitosa
+        }
+        [Fact]
+        public async Task Eliminar_GET_IdValido_RetornaVista()
+        {
+            var options = GetDbContextOptions("TestDB_Cat_EliminarGetExito");
+
+            using (var setupContext = new CoTecDBContext(options))
+            {
+                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Teclados" });
+                await setupContext.SaveChangesAsync();
+            }
+
+            using var context = new CoTecDBContext(options);
+            var controller = new CategoriaController(context);
+
+            var result = await controller.Eliminar(1);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<cotec_categoria>(viewResult.Model);
+            Assert.Equal(1, model.Id);
+        }
+
+        [Fact]
+        public async Task EliminarConfirmado_POST_EliminaRegistro_Y_RedirigeAIndex()
+        {
+            var options = GetDbContextOptions("TestDB_Cat_EliminarPostExito");
+
+            using (var setupContext = new CoTecDBContext(options))
+            {
+                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Ratones" });
+                await setupContext.SaveChangesAsync();
+            }
+
+            using var context = new CoTecDBContext(options);
+            var controller = new CategoriaController(context);
+
+            var result = await controller.EliminarConfirmado(1);
+
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+
+            var categoriaEnBd = await context.Categorias.FindAsync(1);
+            Assert.Null(categoriaEnBd);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_marca>
+@model IEnumerable<COVAR_Tecnologia.Models.cotec_marca>
 
 @{
     ViewData["Title"] = "Marcas";
@@ -43,8 +43,7 @@
                                 <td class="fw-bold">@item.Nombre</td>
                                 <td class="text-center">
                                     <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
-                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm"
-                                       onclick="return confirm('¿Seguro que deseas eliminar esta marca?');">
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
                                         Eliminar
                                     </a>
                                 </td>

@@ -1,21 +1,23 @@
 using COVAR_Tecnologia.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using COVAR_Tecnologia.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 builder.Services.AddDbContext<CoTecDBContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-// Agregamos el servicio de autenticación por cookies
+// Agregamos el servicio de autenticaciÃ³n por cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Acceso/Login"; // A dónde lo manda si intenta entrar a algo bloqueado
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // La sesión dura 1 hora
+        options.LoginPath = "/Acceso/Login"; // A dÃ³nde lo manda si intenta entrar a algo bloqueado
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(60); // La sesiÃ³n dura 1 hora
     });
 var app = builder.Build();
 
@@ -38,5 +40,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

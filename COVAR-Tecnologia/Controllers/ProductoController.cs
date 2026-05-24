@@ -1,4 +1,4 @@
-﻿using COVAR_Tecnologia.Data;
+using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -100,7 +100,7 @@ namespace COVAR_Tecnologia.Controllers
         // 5. EDITAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, cotec_producto producto)
+        public async Task<IActionResult> Editar(int id, cotec_producto producto, IFormFile? archivoImagen)
         {
             ModelState.Remove("Marca");
             ModelState.Remove("Categoria");
@@ -111,8 +111,48 @@ namespace COVAR_Tecnologia.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(producto);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    if (archivoImagen != null && archivoImagen.Length > 0)
+                    {
+                        string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoImagen.FileName);
+                        string rutaCarpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/productos");
+
+                        if (!Directory.Exists(rutaCarpeta))
+                            Directory.CreateDirectory(rutaCarpeta);
+
+                        string rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
+
+                        using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                        {
+                            await archivoImagen.CopyToAsync(stream);
+                        }
+
+                        producto.ImagenURL = "/images/productos/" + nombreArchivo;
+                    }
+                    else if (string.IsNullOrEmpty(producto.ImagenURL))
+                    {
+                        var productoExistente = await _context.Productos.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
+                        if (productoExistente != null)
+                        {
+                            producto.ImagenURL = productoExistente.ImagenURL;
+                        }
+                    }
+
+                    _context.Update(producto);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductoExists(producto.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
@@ -120,16 +160,44 @@ namespace COVAR_Tecnologia.Controllers
             return View(producto);
         }
 
-        // 6. ELIMINAR
+        private bool ProductoExists(int id)
+        {
+            return _context.Productos.Any(e => e.Id == id);
+        }
+
+        // 6. ELIMINAR - VISTA (GET)
         public async Task<IActionResult> Eliminar(int? id)
         {
             if (id == null) return NotFound();
 
+            var producto = await _context.Productos
+                .Include(p => p.Marca)
+                .Include(p => p.Categoria)
+                .FirstOrDefaultAsync(m => m.Id == id);
+                
+            if (producto == null) return NotFound();
+
+            return View(producto);
+        }
+
+        // 7. ELIMINAR - LÓGICA (POST)
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarConfirmado(int id)
+        {
             var producto = await _context.Productos.FindAsync(id);
             if (producto != null)
             {
-                _context.Productos.Remove(producto);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Productos.Remove(producto);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    TempData["Error"] = "No se puede eliminar este producto porque está referenciado en otro lugar.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return RedirectToAction(nameof(Index));
         }

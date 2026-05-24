@@ -1,4 +1,4 @@
-ï»¿@model COVAR_Tecnologia.Models.cotec_usuario
+@model COVAR_Tecnologia.Models.cotec_usuario
 
 <div class="container mt-4">
     <div class="row justify-content-center">
@@ -9,13 +9,13 @@
                 </div>
                 <div class="card-body">
                     <div asp-validation-summary="All" class="text-danger"></div>
-                    <form asp-action="Crear">
+                    <form autocomplete="off" asp-action="Crear">
                         <div class="mb-3">
-                            <label class="form-label">Correo ElectrÃ³nico</label>
+                            <label class="form-label">Correo Electrónico</label>
                             <input asp-for="Email" class="form-control" type="email" required />
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">ContraseÃ±a Temporal</label>
+                            <label class="form-label">Contraseña Temporal</label>
                             <input name="claveRaw" class="form-control" type="password" required />
                         </div>
                         <div class="mb-3">

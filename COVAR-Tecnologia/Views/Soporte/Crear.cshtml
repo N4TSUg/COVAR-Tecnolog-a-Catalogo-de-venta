@@ -1,4 +1,4 @@
-ï»¿@{
+@{
     ViewData["Title"] = "Nueva Consulta";
 }
 
@@ -15,14 +15,14 @@
                         <div class="alert alert-danger">@ViewData["Mensaje"]</div>
                     }
 
-                    <form asp-action="Crear" method="post">
+                    <form autocomplete="off" asp-action="Crear" method="post">
                         <div class="mb-3">
                             <label class="form-label fw-bold">Asunto de la consulta</label>
-                            <input type="text" name="asunto" class="form-control" placeholder="Ej: Problema con garantÃ­a del Mouse" required />
+                            <input type="text" name="asunto" class="form-control" placeholder="Ej: Problema con garantía del Mouse" required />
                         </div>
                         <div class="mb-4">
                             <label class="form-label fw-bold">Detalla tu problema</label>
-                            <textarea name="mensajeInicial" class="form-control" rows="5" placeholder="Escribe aquÃ­ los detalles..." required></textarea>
+                            <textarea name="mensajeInicial" class="form-control" rows="5" placeholder="Escribe aquí los detalles..." required></textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <a asp-action="Index" class="btn btn-secondary me-2">Cancelar</a>

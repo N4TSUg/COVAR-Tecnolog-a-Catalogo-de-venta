@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Panel de Control";
 }
 
@@ -60,11 +60,15 @@
                     <div class="d-flex justify-content-between">
                         <div>
                             <h5 class="card-title">Tickets</h5>
-                            <h2 class="display-4">@ViewBag.TicketsAbiertos</h2>
+                            <h2 class="display-4 mb-0">@ViewBag.TotalTickets</h2>
+                            <small class="d-block mb-2 mt-1">
+                                <span class="badge bg-light text-danger me-1">@ViewBag.TicketsAbiertos Pendientes</span>
+                                <span class="badge bg-light text-danger">@ViewBag.TicketsCerrados Resueltos</span>
+                            </small>
                         </div>
                         <i class="bi bi-headset fs-1 opacity-50"></i>
                     </div>
-                    <a asp-controller="Ticket" asp-action="Index" class="text-white text-decoration-none small">Atender clientes →</a>
+                    <a asp-controller="Ticket" asp-action="Index" class="text-white text-decoration-none small">Atender clientes  </a>
                 </div>
             </div>
         </div>

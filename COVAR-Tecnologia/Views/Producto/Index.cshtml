@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_producto>
+@model IEnumerable<COVAR_Tecnologia.Models.cotec_producto>
 
 @{
     ViewData["Title"] = "Inventario de Productos";
@@ -51,7 +51,7 @@
                                     <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">
                                         Editar
                                     </a>
-                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?');">
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm">
                                         Eliminar
                                     </a>
                                 </td>

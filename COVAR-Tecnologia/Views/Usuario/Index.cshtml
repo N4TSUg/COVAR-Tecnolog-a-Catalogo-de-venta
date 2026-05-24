@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_usuario>
+@model IEnumerable<COVAR_Tecnologia.Models.cotec_usuario>
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between mb-3">
@@ -29,7 +29,7 @@
                             <td class="text-center">
                                 @if (item.Rol.Nombre != "Administrador")
                                 {
-                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm" onclick="return confirm('¿Revocar acceso?')">Eliminar</a>
+                                    <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">Eliminar</a>
                                 }
                             </td>
                         </tr>

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -46,26 +46,37 @@ namespace COVAR_Tecnologia.Controllers
             var ticket = await _context.TicketsSoporte.FindAsync(id);
             if (ticket == null) return NotFound();
 
-            if (!string.IsNullOrWhiteSpace(textoMensaje))
+            try
             {
-                var nuevoMensaje = new cotec_mensaje
+                if (!string.IsNullOrWhiteSpace(textoMensaje))
                 {
-                    TicketSoporteId = id,
-                    Texto = textoMensaje,
-                    FechaEnvio = DateTime.Now,
-                    EsRespuestaAdmin = true
-                };
+                    var nuevoMensaje = new cotec_mensaje
+                    {
+                        TicketSoporteId = id,
+                        Texto = textoMensaje,
+                        FechaEnvio = DateTime.Now,
+                        EsRespuestaAdmin = true
+                    };
 
-                _context.Add(nuevoMensaje);
+                    _context.Add(nuevoMensaje);
+                }
+
+                if (cerrarTicket)
+                {
+                    ticket.Estado = cotec_estadoTicket.Cerrado;
+                    _context.Update(ticket);
+                }
+
+                await _context.SaveChangesAsync();
             }
-
-            if (cerrarTicket)
+            catch (DbUpdateException)
             {
-                ticket.Estado = cotec_estadoTicket.Cerrado;
-                _context.Update(ticket);
+                // Manejar error si la BD falla
+                ModelState.AddModelError("", "Ocurrió un error al guardar la respuesta.");
+                // Retornar a la vista Responder requiere recargar el modelo completo, 
+                // para simplificar lo redirigimos al mismo lugar.
+                return RedirectToAction("Responder", new { id = id });
             }
-
-            await _context.SaveChangesAsync();
 
             return RedirectToAction("Responder", new { id = id });
         }

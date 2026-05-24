@@ -1,4 +1,4 @@
-ï»¿@model COVAR_Tecnologia.Models.cotec_producto
+@model COVAR_Tecnologia.Models.cotec_producto
 
 @{
     ViewData["Title"] = "Nuevo Producto";
@@ -9,17 +9,17 @@
         <div class="col-md-8">
             <div class="card shadow">
                 <div class="card-header bg-success text-white">
-                    <h3 class="card-title mb-0">âœ¨ Registrar Nuevo Producto</h3>
+                    <h3 class="card-title mb-0">? Registrar Nuevo Producto</h3>
                 </div>
                 <div class="card-body">
                     <div asp-validation-summary="All" class="text-danger"></div>
-                    <form asp-action="Crear" enctype="multipart/form-data" method="post">
+                    <form autocomplete="off" asp-action="Crear" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label asp-for="Nombre" class="form-label">Nombre del Producto</label>
-                                <input asp-for="Nombre" class="form-control" placeholder="Ej: Teclado MecÃ¡nico RGB" />
+                                <input asp-for="Nombre" class="form-control" placeholder="Ej: Teclado Mecánico RGB" />
                                 <span asp-validation-for="Nombre" class="text-danger"></span>
                             </div>
                             <div class="col-md-6 mb-3">
@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Descripcion" class="form-label">DescripciÃ³n</label>
+                            <label asp-for="Descripcion" class="form-label">Descripción</label>
                             <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
                             <span asp-validation-for="Descripcion" class="text-danger"></span>
                         </div>
@@ -47,9 +47,9 @@
                                 <span asp-validation-for="MarcaId" class="text-danger"></span>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label asp-for="CategoriaId" class="form-label">CategorÃ­a</label>
+                                <label asp-for="CategoriaId" class="form-label">Categoría</label>
                                 <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.Categorias">
-                                    <option value="">-- Seleccione CategorÃ­a --</option>
+                                    <option value="">-- Seleccione Categoría --</option>
                                 </select>
                                 <span asp-validation-for="CategoriaId" class="text-danger"></span>
                             </div>
@@ -62,12 +62,12 @@
 
                                 <div class="row align-items-center">
                                     <div class="col-md-6 border-end">
-                                        <label class="form-label fw-bold text-primary">OpciÃ³n 1: Subir desde PC</label>
+                                        <label class="form-label fw-bold text-primary">Opción 1: Subir desde PC</label>
                                         <input type="file" name="archivoImagen" class="form-control form-control-sm" accept="image/*" />
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label asp-for="ImagenURL" class="form-label fw-bold text-primary">OpciÃ³n 2: URL de Internet</label>
+                                        <label asp-for="ImagenURL" class="form-label fw-bold text-primary">Opción 2: URL de Internet</label>
                                         <input asp-for="ImagenURL" class="form-control form-control-sm" placeholder="https://..." />
                                         <span asp-validation-for="ImagenURL" class="text-danger"></span>
                                     </div>

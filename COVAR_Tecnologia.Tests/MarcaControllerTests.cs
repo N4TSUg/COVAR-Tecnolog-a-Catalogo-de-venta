@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
@@ -204,33 +204,11 @@ namespace COVAR_Tecnologia.Tests
         // ❌ PRUEBA DE FALLO: ELIMINAR UN PASO
         // ==========================================
 
-        [Fact]
-        public async Task Eliminar_IdNoExiste_NoHaceNada_Y_RedirigeAIndex()
+         [Fact]
+        public async Task Eliminar_GET_IdValido_RetornaVista()
         {
             // 1. ARRANGE
-            var options = GetDbContextOptions("TestDB_Marcas_EliminarNoExisteUnPaso");
-            using var context = new CoTecDBContext(options);
-            var controller = new MarcaController(context);
-
-            // 2. ACT
-            // Intentamos borrar un ID que no existe
-            var result = await controller.Eliminar(999);
-
-            // 3. ASSERT
-            // Como tu controlador no usa NotFound, verificamos que simplemente nos redirija de vuelta
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Index", redirectToActionResult.ActionName);
-        }
-
-        // ==========================================
-        // ✅ PRUEBA DE ÉXITO: ELIMINAR UN PASO
-        // ==========================================
-
-        [Fact]
-        public async Task Eliminar_IdValido_BorraDeBD_Y_RedirigeAIndex()
-        {
-            // 1. ARRANGE
-            var options = GetDbContextOptions("TestDB_Marcas_EliminarExitoUnPaso");
+            var options = GetDbContextOptions("TestDB_Marcas_EliminarGetExito");
             using (var setupContext = new CoTecDBContext(options))
             {
                 setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "HyperX" });
@@ -241,11 +219,32 @@ namespace COVAR_Tecnologia.Tests
             var controller = new MarcaController(context);
 
             // 2. ACT
-            // Borramos el ID 1
             var result = await controller.Eliminar(1);
 
             // 3. ASSERT
-            // Verificamos la redirección
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<cotec_marca>(viewResult.Model);
+            Assert.Equal(1, model.Id);
+        }
+
+        [Fact]
+        public async Task EliminarConfirmado_POST_BorraDeBD_Y_RedirigeAIndex()
+        {
+            // 1. ARRANGE
+            var options = GetDbContextOptions("TestDB_Marcas_EliminarPostExito");
+            using (var setupContext = new CoTecDBContext(options))
+            {
+                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "HyperX" });
+                await setupContext.SaveChangesAsync();
+            }
+
+            using var context = new CoTecDBContext(options);
+            var controller = new MarcaController(context);
+
+            // 2. ACT
+            var result = await controller.EliminarConfirmado(1);
+
+            // 3. ASSERT
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("Index", redirectToActionResult.ActionName);
 

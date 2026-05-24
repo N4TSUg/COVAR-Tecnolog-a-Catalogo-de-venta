@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_categoria>
+@model IEnumerable<COVAR_Tecnologia.Models.cotec_categoria>
 
 @{
     ViewData["Title"] = "Categorías";
@@ -35,8 +35,7 @@
                             <td class="fw-bold">@item.Nombre</td>
                             <td class="text-center">
                                 <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
-                                <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-danger btn-sm"
-                                   onclick="return confirm('¿Eliminar esta categoría? Los productos asociados podrían quedar sin clasificación.');">
+                                <a asp-action="Eliminar" asp-route-id="@item.Id" class="btn btn-outline-danger btn-sm">
                                     Eliminar
                                 </a>
                             </td>

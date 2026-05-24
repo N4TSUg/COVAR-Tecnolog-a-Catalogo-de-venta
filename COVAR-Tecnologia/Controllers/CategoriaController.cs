@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -76,14 +76,33 @@ namespace COVAR_Tecnologia.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(categoria);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Update(categoria);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CategoriaExists(categoria.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
         }
 
-        // 6. ELIMINAR (Lógica directa)
+        private bool CategoriaExists(int id)
+        {
+            return _context.Categorias.Any(e => e.Id == id);
+        }
+
+        // 6. ELIMINAR - VISTA (GET)
         public async Task<IActionResult> Eliminar(int? id)
         {
             if (id == null)
@@ -92,11 +111,32 @@ namespace COVAR_Tecnologia.Controllers
             }
 
             var categoria = await _context.Categorias.FindAsync(id);
+            if (categoria == null)
+            {
+                return NotFound();
+            }
 
+            return View(categoria);
+        }
+
+        // 7. ELIMINAR - LÓGICA (POST)
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarConfirmado(int id)
+        {
+            var categoria = await _context.Categorias.FindAsync(id);
             if (categoria != null)
             {
-                _context.Categorias.Remove(categoria);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Categorias.Remove(categoria);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    TempData["Error"] = "No se puede eliminar esta categoría porque tiene productos asociados.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             return RedirectToAction(nameof(Index));

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -81,7 +81,7 @@ namespace COVAR_Tecnologia.Tests
 
             var productoHackeado = new cotec_producto { Id = 5, Nombre = "Laptop" };
 
-            var result = await controller.Editar(1, productoHackeado);
+            var result = await controller.Editar(productoHackeado.Id);
 
             Assert.IsType<NotFoundResult>(result);
         }
@@ -158,6 +158,54 @@ namespace COVAR_Tecnologia.Tests
             Assert.NotNull(model.Marca);
             Assert.Equal("Razer", model.Marca.Nombre);
             Assert.NotNull(model.Categoria);
+        }
+
+        [Fact]
+        public async Task Eliminar_GET_IdValido_RetornaVista()
+        {
+            var options = GetDbContextOptions("TestDB_Prod_EliminarGetExito");
+
+            using (var setupContext = new CoTecDBContext(options))
+            {
+                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca" });
+                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Categoria" });
+                setupContext.Productos.Add(new cotec_producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                await setupContext.SaveChangesAsync();
+            }
+
+            using var context = new CoTecDBContext(options);
+            var controller = new ProductoController(context);
+
+            var result = await controller.Eliminar(1);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var model = Assert.IsType<cotec_producto>(viewResult.Model);
+            Assert.Equal(1, model.Id);
+        }
+
+        [Fact]
+        public async Task EliminarConfirmado_POST_EliminaRegistro_Y_RedirigeAIndex()
+        {
+            var options = GetDbContextOptions("TestDB_Prod_EliminarPostExito");
+
+            using (var setupContext = new CoTecDBContext(options))
+            {
+                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca" });
+                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Categoria" });
+                setupContext.Productos.Add(new cotec_producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                await setupContext.SaveChangesAsync();
+            }
+
+            using var context = new CoTecDBContext(options);
+            var controller = new ProductoController(context);
+
+            var result = await controller.EliminarConfirmado(1);
+
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+
+            var productoEnBd = await context.Productos.FindAsync(1);
+            Assert.Null(productoEnBd);
         }
     }
 }

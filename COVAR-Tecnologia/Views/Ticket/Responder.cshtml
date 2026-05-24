@@ -1,4 +1,4 @@
-﻿@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+@model COVAR_Tecnologia.Models.cotec_ticketSoporte
 
 @{
     ViewData["Title"] = "Responder Ticket";
@@ -15,14 +15,14 @@
                     <p><strong>Cliente:</strong> @(Model.Usuario?.Email ?? "Anónimo")</p>
                     <p><strong>Fecha:</strong> @Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</p>
                     <p><strong>Asunto:</strong> @Model.Asunto</p>
-                    <p><strong>Nivel:</strong> @(Model.EsComplejo ? "🚨 Complejo" : "✅ Estándar")</p>
+                    <p><strong>Nivel:</strong> @(Model.EsComplejo ? "🔴 Complejo" : "🟢 Estándar")</p>
                     <p>
                         <strong>Estado:</strong>
                         <span class="badge @(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto ? "bg-warning text-dark" : "bg-success")">
                             @Model.Estado
                         </span>
                     </p>
-                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">← Volver a la bandeja</a>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">🔙 Volver a la bandeja</a>
                 </div>
             </div>
         </div>
@@ -33,10 +33,10 @@
                     💬 Historial de Conversación
                 </div>
 
-                <div class="card-body" style="height: 400px; overflow-y: auto; background-color: #f8f9fa;">
+                <div class="card-body" id="chatContainer" style="height: 400px; overflow-y: auto; background-color: #f8f9fa;">
                     @if (Model.Mensajes == null || !Model.Mensajes.Any())
                     {
-                        <p class="text-center text-muted mt-5">No hay mensajes registrados. Esperando consulta del cliente.</p>
+                        <p class="text-center text-muted mt-5" id="noMessagesText">No hay mensajes registrados. Esperando consulta del cliente.</p>
                     }
                     else
                     {
@@ -58,11 +58,11 @@
                 @if (Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
                 {
                     <div class="card-footer bg-white">
-                        <form asp-action="Responder" method="post">
+                        <form id="chatForm" autocomplete="off" asp-action="Responder" method="post">
                             <input type="hidden" name="id" value="@Model.Id" />
 
                             <div class="mb-3">
-                                <textarea name="textoMensaje" class="form-control" rows="3" placeholder="Escribe la respuesta al cliente aquí..."></textarea>
+                                <textarea id="textoMensaje" name="textoMensaje" class="form-control" rows="3" placeholder="Escribe la respuesta al cliente aquí..."></textarea>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
@@ -89,3 +89,69 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        var ticketId = "@Model.Id";
+        var isAdmin = true;
+
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveMessage", function (mensaje, fechaFormateada, sentByAdmin) {
+            var chatContainer = document.getElementById("chatContainer");
+            var noMsgs = document.getElementById("noMessagesText");
+            if (noMsgs) noMsgs.style.display = "none";
+
+            var isMine = sentByAdmin === isAdmin;
+            var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
+            var bgClass = isMine ? "bg-primary text-white" : "bg-white border";
+            var textClass = isMine ? "text-light" : "text-muted";
+            var senderName = sentByAdmin ? "(Tú)" : "(Cliente)";
+
+            var msgDiv = document.createElement("div");
+            msgDiv.className = "d-flex mb-3 " + alignmentClass;
+            msgDiv.innerHTML = `
+                <div class="p-3 rounded shadow-sm ` + bgClass + `" style="max-width: 75%;">
+                    <p class="mb-1">` + mensaje + `</p>
+                    <small class="` + textClass + `" style="font-size: 0.75rem;">
+                        ` + fechaFormateada + ` ` + senderName + `
+                    </small>
+                </div>
+            `;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+
+        connection.start().then(function () {
+            connection.invoke("JoinTicketGroup", ticketId);
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("chatForm")?.addEventListener("submit", function (e) {
+            var checkCerrar = document.getElementById("checkCerrar");
+            if (checkCerrar && checkCerrar.checked) {
+                // If closing, do standard form post
+                return;
+            }
+
+            e.preventDefault();
+            var mensajeInput = document.getElementById("textoMensaje");
+            var mensaje = mensajeInput.value.trim();
+
+            if (mensaje) {
+                connection.invoke("SendMessage", parseInt(ticketId), mensaje, isAdmin).catch(function (err) {
+                    return console.error(err.toString());
+                });
+                mensajeInput.value = "";
+            }
+        });
+
+        // Scroll to bottom on load
+        var cc = document.getElementById("chatContainer");
+        if(cc) cc.scrollTop = cc.scrollHeight;
+    </script>
+}

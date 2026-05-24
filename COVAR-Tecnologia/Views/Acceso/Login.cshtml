@@ -1,13 +1,13 @@
-ï»¿@{
-    ViewData["Title"] = "Iniciar SesiÃ³n";
-    Layout = null; // Quitamos el menÃº superior para la pantalla de login
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = null; // Quitamos el menú superior para la pantalla de login
 }
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
-    <title>Login - COVAR TecnologÃ­a</title>
+    <title>Login - COVAR Tecnología</title>
     <style>
         body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; }
         .login-box { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
@@ -20,20 +20,20 @@
 </head>
 <body>
     <div class="login-box">
-        <h2 style="text-align: center;">COVAR TecnologÃ­a</h2>
+        <h2 style="text-align: center;">COVAR Tecnología</h2>
 
         @if (ViewData["Mensaje"] != null)
         {
             <p class="error">@ViewData["Mensaje"]</p>
         }
 
-        <form asp-controller="Acceso" asp-action="Login" method="post">
+        <form autocomplete="off" asp-controller="Acceso" asp-action="Login" method="post">
             <div class="form-group">
-                <label>Correo ElectrÃ³nico</label>
+                <label>Correo Electrónico</label>
                 <input type="email" name="correo" required placeholder="ejemplo@correo.com" />
             </div>
             <div class="form-group">
-                <label>ContraseÃ±a</label>
+                <label>Contraseña</label>
                 <input type="password" name="clave" required placeholder="********" />
             </div>
             <button type="submit">Ingresar</button>

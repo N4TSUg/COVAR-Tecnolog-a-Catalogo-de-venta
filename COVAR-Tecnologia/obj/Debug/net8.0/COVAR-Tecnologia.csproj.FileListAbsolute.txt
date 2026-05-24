@@ -162,7 +162,6 @@ D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\staticwebasset
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.build.json.cache
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.development.json
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Te.9AD866D8.Up2Date
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\COVAR-Tecnologia.dll
 D:\UNI\CALIPSO\COVAR-Tecnologia\COVAR-Tecnologia\obj\Debug\net8.0\refint\COVAR-Tecnologia.dll

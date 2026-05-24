@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
@@ -67,14 +67,35 @@ namespace COVAR_Tecnologia.Controllers
             return View(usuario);
         }
 
-        // Método para eliminar un acceso
-        public async Task<IActionResult> Eliminar(int id)
+        // Método para mostrar la confirmación de eliminación (GET)
+        public async Task<IActionResult> Eliminar(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var usuario = await _context.Usuarios.Include(u => u.Rol).FirstOrDefaultAsync(u => u.Id == id);
+            if (usuario == null) return NotFound();
+
+            return View(usuario);
+        }
+
+        // Método para eliminar un acceso (POST)
+        [HttpPost, ActionName("Eliminar")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EliminarConfirmado(int id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
             if (usuario != null && usuario.Email != "enriquearana1402@gmail.com") // Protegemos al admin
             {
-                _context.Usuarios.Remove(usuario);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Usuarios.Remove(usuario);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    TempData["Error"] = "No se puede eliminar este usuario porque tiene tickets de soporte u otros registros asociados.";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return RedirectToAction(nameof(Index));
         }

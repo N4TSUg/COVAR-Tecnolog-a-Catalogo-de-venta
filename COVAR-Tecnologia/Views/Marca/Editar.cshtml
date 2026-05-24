@@ -1,4 +1,4 @@
-﻿@model COVAR_Tecnologia.Models.cotec_marca
+@model COVAR_Tecnologia.Models.cotec_marca
 
 @{
     ViewData["Title"] = "Editar Marca";
@@ -12,7 +12,7 @@
                     <h4 class="mb-0">✏️ Editar Marca</h4>
                 </div>
                 <div class="card-body">
-                    <form asp-action="Editar">
+                    <form autocomplete="off" asp-action="Editar">
                         <input type="hidden" asp-for="Id" />
 
                         <div class="mb-3">

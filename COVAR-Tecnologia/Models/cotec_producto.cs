@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
@@ -13,7 +13,7 @@ namespace COVAR_Tecnologia.Models
         public string Descripcion { get; set; }
         [Required,Column(TypeName="decimal(18,2)")]
         public decimal Precio { get; set; }
-        public string ImagenURL { get; set; }
+        public string? ImagenURL { get; set; }
         [Required]
         public int MarcaId { get; set; }
         [ForeignKey("MarcaId")]
