@@ -142,17 +142,15 @@
     <footer class="mt-auto py-4 border-top modern-footer">
         <div class="container text-center text-muted">
             <p class="mb-1">&copy; 2026 - COVAR Tecnología - Soluciones Informáticas</p>
-            <p class="small mb-0">
-                <a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Privacidad</a> &bull; 
-                <a href="#" class="text-decoration-none">Términos de Servicio</a>
-            </p>
         </div>
     </footer>
 
-    <!-- Bootstrap 5.3.3 JS Bundle con Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Cargar jQuery ANTES de Bootstrap -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 5.3.3 JS Bundle con Popper (Sin hash por problemas de carga) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

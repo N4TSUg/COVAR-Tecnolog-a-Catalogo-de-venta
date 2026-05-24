@@ -10,8 +10,7 @@
 </div>
 
 <div class="container fade-in-up">
-    
-    <!-- Sección de Filtros Modernizada -->
+
     <div class="card shadow-sm mb-5 filter-panel">
         <div class="card-body p-4">
             <form method="get" asp-action="Index" class="row g-3 align-items-end">
@@ -38,7 +37,7 @@
                     <button type="submit" class="btn btn-primary fw-bold flex-grow-1 btn-hover-grow">
                         Filtrar
                     </button>
-                    @if(!string.IsNullOrEmpty(Model.Busqueda) || Model.CategoriaId.HasValue || Model.MarcaId.HasValue)
+                    @if (!string.IsNullOrEmpty(Model.Busqueda) || Model.CategoriaId.HasValue || Model.MarcaId.HasValue)
                     {
                         <a asp-action="Index" class="btn btn-outline-danger" title="Limpiar filtros">
                             <i class="bi bi-x-lg"></i>
@@ -70,7 +69,7 @@
             @foreach (var item in Model.Productos)
             {
                 <div class="col">
-                    <div class="card product-card">
+                    <div class="card product-card h-100">
                         <div class="product-img-wrapper position-relative">
                             @if (!string.IsNullOrEmpty(item.ImagenURL))
                             {
@@ -90,7 +89,7 @@
                             </div>
 
                             <h5 class="product-title" title="@item.Nombre">@item.Nombre</h5>
-                            
+
                             <p class="card-text text-muted small flex-grow-1">
                                 @if (item.Descripcion != null && item.Descripcion.Length > 60)
                                 {
@@ -106,10 +105,10 @@
                                 <h4 class="product-price mb-3">@item.Precio.ToString("C")</h4>
 
                                 <div class="d-grid gap-2">
-                                    <a href="@item.GetWhatsAppLink()" target="_blank" class="btn btn-success fw-bold btn-hover-grow">
+                                    <a href="@item.GetWhatsAppLink()" target="_blank" class="btn btn-success fw-bold btn-hover-grow position-relative" style="z-index: 2;">
                                         <i class="bi bi-whatsapp"></i> Lo quiero
                                     </a>
-                                    <a asp-action="Detalle" asp-route-id="@item.Id" class="btn btn-light fw-bold border">
+                                    <a asp-action="Detalle" asp-route-id="@item.Id" class="btn btn-light fw-bold border stretched-link">
                                         Ver Detalles
                                     </a>
                                 </div>
@@ -121,39 +120,37 @@
         }
     </div>
 
-    <!-- Paginación -->
     @if (Model.TotalPaginas > 1)
     {
         <nav aria-label="Navegación de catálogo">
             <ul class="pagination justify-content-center shadow-sm rounded-pill overflow-hidden">
                 <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
-                    <a class="page-link border-0 px-4" asp-action="Index" 
-                       asp-route-busqueda="@Model.Busqueda" 
-                       asp-route-categoriaId="@Model.CategoriaId" 
-                       asp-route-marcaId="@Model.MarcaId" 
+                    <a class="page-link border-0 px-4" asp-action="Index"
+                       asp-route-busqueda="@Model.Busqueda"
+                       asp-route-categoriaId="@Model.CategoriaId"
+                       asp-route-marcaId="@Model.MarcaId"
                        asp-route-pagina="@(Model.PaginaActual - 1)"><i class="bi bi-chevron-left"></i></a>
                 </li>
-                
+
                 @for (int i = 1; i <= Model.TotalPaginas; i++)
                 {
                     <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
-                        <a class="page-link border-0 fw-bold px-3" asp-action="Index" 
-                           asp-route-busqueda="@Model.Busqueda" 
-                           asp-route-categoriaId="@Model.CategoriaId" 
-                           asp-route-marcaId="@Model.MarcaId" 
+                        <a class="page-link border-0 fw-bold px-3" asp-action="Index"
+                           asp-route-busqueda="@Model.Busqueda"
+                           asp-route-categoriaId="@Model.CategoriaId"
+                           asp-route-marcaId="@Model.MarcaId"
                            asp-route-pagina="@i">@i</a>
                     </li>
                 }
 
                 <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
-                    <a class="page-link border-0 px-4" asp-action="Index" 
-                       asp-route-busqueda="@Model.Busqueda" 
-                       asp-route-categoriaId="@Model.CategoriaId" 
-                       asp-route-marcaId="@Model.MarcaId" 
+                    <a class="page-link border-0 px-4" asp-action="Index"
+                       asp-route-busqueda="@Model.Busqueda"
+                       asp-route-categoriaId="@Model.CategoriaId"
+                       asp-route-marcaId="@Model.MarcaId"
                        asp-route-pagina="@(Model.PaginaActual + 1)"><i class="bi bi-chevron-right"></i></a>
                 </li>
             </ul>
         </nav>
     }
 </div>
-
