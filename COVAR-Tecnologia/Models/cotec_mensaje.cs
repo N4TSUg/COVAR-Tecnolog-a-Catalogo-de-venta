@@ -19,3 +19,4 @@ namespace COVAR_Tecnologia.Models
         public cotec_ticketSoporte TicketSoporte { get; set; }
     }
 }
+

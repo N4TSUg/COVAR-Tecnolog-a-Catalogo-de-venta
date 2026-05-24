@@ -9,10 +9,11 @@ namespace COVAR_Tecnologia.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required, StringLength(50)]
+        [Required(ErrorMessage = "El Nombre del Rol es obligatorio"), StringLength(50, ErrorMessage = "Máximo 50 caracteres")]
         public string Nombre { get; set; }
 
         // Propiedad de navegación: Un rol tiene muchos usuarios
         public List<cotec_usuario> Usuarios { get; set; }
     }
 }
+

@@ -13,7 +13,7 @@ namespace COVAR_Tecnologia.Models
         [ForeignKey("UsuarioId")]
         public cotec_usuario Usuario { get; set; }
 
-        [Required, StringLength(200)]
+        [Required(ErrorMessage = "El Asunto es obligatorio"), StringLength(200, ErrorMessage = "Máximo 200 caracteres")]
         public string Asunto { get; set; }
 
         public bool EsComplejo { get; set; }
@@ -27,3 +27,4 @@ namespace COVAR_Tecnologia.Models
         public List<cotec_mensaje> Mensajes { get; set; }
     }
 }
+

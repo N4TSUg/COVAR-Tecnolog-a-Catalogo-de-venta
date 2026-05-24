@@ -7,9 +7,9 @@ namespace COVAR_Tecnologia.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required, EmailAddress, StringLength(150)]
+        [Required(ErrorMessage = "El Correo Electrónico es obligatorio"), EmailAddress(ErrorMessage = "Debe ser un correo válido"), StringLength(150, ErrorMessage = "Máximo 150 caracteres")]
         public string Email { get; set; }
-        [Required, StringLength(100)]
+        [Required(ErrorMessage = "La Contraseña es obligatoria"), StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
         public string Password { get; set; }
         [Required]
         public int RolId { get; set; }
@@ -18,3 +18,4 @@ namespace COVAR_Tecnologia.Models
         public List<cotec_ticketSoporte> Tickets { get; set; }
     }
 }
+

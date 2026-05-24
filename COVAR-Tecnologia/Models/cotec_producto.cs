@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
@@ -7,11 +7,11 @@ namespace COVAR_Tecnologia.Models
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required,StringLength(100)]
+        [Required(ErrorMessage = "El Nombre es obligatorio"), StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
         public string Nombre { get; set; }
-        [Required,StringLength(500)]
+        [Required(ErrorMessage = "La Descripción es obligatoria"), StringLength(500, ErrorMessage = "Máximo 500 caracteres")]
         public string Descripcion { get; set; }
-        [Required,Column(TypeName="decimal(18,2)")]
+        [Required(ErrorMessage = "El Precio es obligatorio"), Column(TypeName="decimal(18,2)")]
         public decimal Precio { get; set; }
         public string? ImagenURL { get; set; }
         [Required]
@@ -24,13 +24,13 @@ namespace COVAR_Tecnologia.Models
         public cotec_categoria Categoria { get; set; }
         public string GetWhatsAppLink()
         {
-            // 1. Define el número de tu negocio (Sin símbolos, usa el código de país. Ej: 51 para Perú)
+            // 1. Define el nÃºmero de tu negocio (Sin sÃ­mbolos, usa el cÃ³digo de paÃ­s. Ej: 51 para PerÃº)
             string numeroVendedor = "51928876259";
 
-            // 2. Arma el mensaje dinámico usando las propiedades de la clase
-            string mensaje = $"Hola, me interesa el producto '{Nombre}' que tiene un precio de {Precio:C}. ¿Aún está disponible?";
+            // 2. Arma el mensaje dinÃ¡mico usando las propiedades de la clase
+            string mensaje = $"Hola, me interesa el producto '{Nombre}' que tiene un precio de {Precio:C}. Â¿AÃºn estÃ¡ disponible?";
 
-            // 3. Codifica el texto para que la URL sea válida
+            // 3. Codifica el texto para que la URL sea vÃ¡lida
             string mensajeCodificado = Uri.EscapeDataString(mensaje);
 
             // 4. Retorna el enlace final armado
@@ -39,3 +39,4 @@ namespace COVAR_Tecnologia.Models
 
     }
 }
+

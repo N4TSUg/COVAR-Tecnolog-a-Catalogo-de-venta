@@ -1,83 +1,98 @@
-@model COVAR_Tecnologia.Models.cotec_producto
+ï»¿@model COVAR_Tecnologia.Models.cotec_producto
 
 @{
     ViewData["Title"] = "Nuevo Producto";
 }
 
-<div class="container mt-4">
+<div class="container mt-5 fade-in-up mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header bg-success text-white">
-                    <h3 class="card-title mb-0">Registrar Nuevo Producto</h3>
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden product-card">
+                
+                <div class="bg-success text-white p-4 d-flex align-items-center">
+                    <div class="display-5 me-3"><i class="bi bi-box-seam"></i></div>
+                    <div>
+                        <h2 class="fw-bold mb-0">Registrar Nuevo Producto</h2>
+                        <p class="small mb-0 opacity-75">Completa los detalles para aÃ±adirlo al inventario</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="card-body p-5">
+                    <div asp-validation-summary="All" class="text-danger small mb-3"></div>
                     <form autocomplete="off" asp-action="Crear" enctype="multipart/form-data" method="post">
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Nombre" class="form-label">Nombre del Producto</label>
-                                <input asp-for="Nombre" class="form-control" placeholder="Ej: Teclado Mecánico RGB" />
-                                <span asp-validation-for="Nombre" class="text-danger"></span>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="Precio" class="form-label">Precio</label>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label asp-for="Nombre" class="form-label text-muted small text-uppercase fw-bold">Nombre del Producto</label>
                                 <div class="input-group">
-                                    <span class="input-group-text">S/</span>
-                                    <input asp-for="Precio" class="form-control" type="number" step="0.01" />
+                                    <span class="input-group-text bg-transparent text-muted"><i class="bi bi-tag"></i></span>
+                                    <input asp-for="Nombre" class="form-control border-start-0 ps-0" placeholder="Ej: Teclado MecÃ¡nico RGB" />
                                 </div>
-                                <span asp-validation-for="Precio" class="text-danger"></span>
+                                <span asp-validation-for="Nombre" class="text-danger small mt-1 d-block"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Precio" class="form-label text-muted small text-uppercase fw-bold">Precio</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-transparent text-success fw-bold">S/</span>
+                                    <input asp-for="Precio" class="form-control border-start-0 ps-0 text-success fw-bold" type="number" step="0.01" />
+                                </div>
+                                <span asp-validation-for="Precio" class="text-danger small mt-1 d-block"></span>
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Descripcion" class="form-label">Descripción</label>
-                            <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
-                            <span asp-validation-for="Descripcion" class="text-danger"></span>
+                        <div class="mb-4">
+                            <label asp-for="Descripcion" class="form-label text-muted small text-uppercase fw-bold">DescripciÃ³n</label>
+                            <textarea asp-for="Descripcion" class="form-control" rows="3" placeholder="Describe las caracterÃ­sticas del producto..."></textarea>
+                            <span asp-validation-for="Descripcion" class="text-danger small mt-1 d-block"></span>
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="MarcaId" class="form-label">Marca</label>
+                        <div class="row g-4 mb-5">
+                            <div class="col-md-6">
+                                <label asp-for="MarcaId" class="form-label text-muted small text-uppercase fw-bold">Marca</label>
                                 <select asp-for="MarcaId" class="form-select" asp-items="ViewBag.Marcas">
                                     <option value="">-- Seleccione Marca --</option>
                                 </select>
-                                <span asp-validation-for="MarcaId" class="text-danger"></span>
+                                <span asp-validation-for="MarcaId" class="text-danger small mt-1 d-block"></span>
                             </div>
-                            <div class="col-md-6 mb-3">
-                                <label asp-for="CategoriaId" class="form-label">Categoría</label>
+                            <div class="col-md-6">
+                                <label asp-for="CategoriaId" class="form-label text-muted small text-uppercase fw-bold">CategorÃ­a</label>
                                 <select asp-for="CategoriaId" class="form-select" asp-items="ViewBag.Categorias">
-                                    <option value="">-- Seleccione Categoría --</option>
+                                    <option value="">-- Seleccione CategorÃ­a --</option>
                                 </select>
-                                <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                                <span asp-validation-for="CategoriaId" class="text-danger small mt-1 d-block"></span>
                             </div>
                         </div>
 
-                        <div class="card bg-light border mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title fs-6 fw-bold">Imagen del Producto</h5>
-                                <p class="small text-muted mb-3">Elige una de las dos opciones para agregar la imagen del producto:</p>
+                        <div class="card border-0 rounded-4 mb-5" style="background-color: var(--bs-tertiary-bg);">
+                            <div class="card-body p-4">
+                                <h5 class="fw-bold text-primary mb-1"><i class="bi bi-image"></i> Imagen del Producto</h5>
+                                <p class="small text-muted mb-4">Elige una de las dos opciones para agregar la imagen.</p>
 
-                                <div class="row align-items-center">
-                                    <div class="col-md-6 border-end">
-                                        <label class="form-label fw-bold text-primary">Opción 1: Subir desde PC</label>
-                                        <input type="file" name="archivoImagen" class="form-control form-control-sm" accept="image/*" />
+                                <div class="row align-items-center g-4">
+                                    <div class="col-md-6 border-end-md">
+                                        <label class="form-label fw-bold small text-uppercase">Subir desde PC</label>
+                                        <input type="file" name="archivoImagen" class="form-control" accept="image/*" />
                                     </div>
-
                                     <div class="col-md-6">
-                                        <label asp-for="ImagenURL" class="form-label fw-bold text-primary">Opción 2: URL de Internet</label>
-                                        <input asp-for="ImagenURL" class="form-control form-control-sm" placeholder="https://..." />
-                                        <span asp-validation-for="ImagenURL" class="text-danger"></span>
+                                        <label asp-for="ImagenURL" class="form-label fw-bold small text-uppercase">O URL de Internet</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-transparent text-muted"><i class="bi bi-link-45deg"></i></span>
+                                            <input asp-for="ImagenURL" class="form-control border-start-0 ps-0" placeholder="https://..." />
+                                        </div>
+                                        <span asp-validation-for="ImagenURL" class="text-danger small mt-1 d-block"></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
-                            <button type="submit" class="btn btn-success">Guardar Producto</button>
+                        <div class="d-flex justify-content-between align-items-center pt-3 border-top">
+                            <a asp-action="Index" class="btn btn-light rounded-pill px-4 fw-bold text-muted">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success btn-lg rounded-pill px-5 fw-bold shadow-sm btn-hover-grow">
+                                Guardar Producto <i class="bi bi-check2"></i>
+                            </button>
                         </div>
                     </form>
                 </div>

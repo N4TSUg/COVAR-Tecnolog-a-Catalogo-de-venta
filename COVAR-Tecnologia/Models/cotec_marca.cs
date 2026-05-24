@@ -7,8 +7,9 @@ namespace COVAR_Tecnologia.Models
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required,StringLength(50)]
+        [Required(ErrorMessage = "El Nombre de la Marca es obligatorio"), StringLength(50, ErrorMessage = "Máximo 50 caracteres")]
         public string Nombre { get; set; }
         public List<cotec_producto> Productos { get; set; }
     }
 }
+
