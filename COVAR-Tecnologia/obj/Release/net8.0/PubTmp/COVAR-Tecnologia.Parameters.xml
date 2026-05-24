@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
   <parameter name="IIS Web Application Name" description="" value="COVAR-Tecnologia" tags="IisApp">
-    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\dali_\\Downloads\\COVAR-Tecnolog-a-Catalogo-de-venta-main\ \(1\)\\COVAR-Tecnolog-a-Catalogo-de-venta-main\\COVAR-Tecnologia\\obj\\Release\\net8\.0\\PubTmp\\Out\\$" />
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\obj\\Release\\net8\.0\\PubTmp\\Out\\$" />
   </parameter>
 </parameters>

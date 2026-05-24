@@ -43,7 +43,9 @@
                     <h2 class="card-title fw-bolder mb-3 display-6">@Model.Nombre</h2>
 
                     <div class="d-flex align-items-end gap-2 mb-4">
-                        <h1 class="product-price display-4 fw-bolder text-success mb-0">@Model.Precio.ToString("C")</h1>
+                        <h1 class="product-price display-4 fw-bolder text-success mb-0">
+                            @Model.Precio.ToString("C", new System.Globalization.CultureInfo("es-PE"))
+                        </h1>
                         <span class="text-muted mb-2">Precio Online</span>
                     </div>
 

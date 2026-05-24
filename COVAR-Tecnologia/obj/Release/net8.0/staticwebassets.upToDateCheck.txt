@@ -1,5 +1,8 @@
 wwwroot\css\site.css
 wwwroot\favicon.ico
+wwwroot\images\productos\055536d8-1f2f-4734-836a-c79e45a9ee07.png
+wwwroot\images\productos\2505a025-d7d2-4af2-b31d-9526ef28c44a.jpeg
+wwwroot\images\productos\52035651-ada1-4f29-865a-621178915ea1.png
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
@@ -58,3 +61,4 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\images\productos\1b4a79e1-46d3-4784-b611-aafd19e3525c.jpg

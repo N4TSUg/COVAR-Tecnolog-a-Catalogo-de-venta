@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("712351d2-faad-43a6-ace2-a86fd465f8ab")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("COVAR-Tecnologia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3c03a8e16e816fedf9180022c848b08121ec00fb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e3ff6195bb49c975e72192e79da5de3e1dc5949")]
 [assembly: System.Reflection.AssemblyProductAttribute("COVAR-Tecnologia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("COVAR-Tecnologia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
