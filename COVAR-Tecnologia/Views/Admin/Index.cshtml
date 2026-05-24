@@ -1,89 +1,89 @@
-@{
+﻿@{
     ViewData["Title"] = "Panel de Control";
 }
 
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Hola Enrique, bienvenido al Panel de COVAR</h2>
-        <span class="badge bg-dark">Administrador</span>
+<div class="container mt-4 mb-5 fade-in-up">
+    <div class="d-flex justify-content-between align-items-center mb-5 border-bottom pb-3">
+        <div>
+            <h2 class="fw-bold mb-0"><i class="bi bi-speedometer2 text-primary"></i> Hola @User.Identity.Name, bienvenido al Panel</h2>
+            <p class="text-muted small mb-0 mt-1">Resumen general del sistema COVAR</p>
+        </div>
+        <span class="badge bg-dark rounded-pill fs-6 px-3 py-2 shadow-sm">
+            <i class="bi bi-shield-lock-fill text-warning"></i> Administrador
+        </span>
     </div>
 
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card text-white bg-primary mb-3 shadow">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Productos</h5>
-                            <h2 class="display-4">@ViewBag.TotalProductos</h2>
-                        </div>
-                        <i class="bi bi-box-seam fs-1 opacity-50"></i>
-                    </div>
-                    <a asp-controller="Producto" asp-action="Index" class="text-white text-decoration-none small">Gestionar inventario →</a>
+    <div class="row g-4">
+        <!-- Productos -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card text-white product-card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);">
+                <div class="card-body p-4 position-relative overflow-hidden">
+                    <i class="bi bi-box-seam position-absolute opacity-25" style="font-size: 8rem; right: -20px; top: -10px;"></i>
+                    <h5 class="card-title fw-medium opacity-75">Productos</h5>
+                    <h2 class="display-4 fw-bold mb-3">@ViewBag.TotalProductos</h2>
+                    <a asp-controller="Producto" asp-action="Index" class="btn btn-light btn-sm fw-bold shadow-sm rounded-pill px-3 mt-auto stretched-link">
+                        Gestionar inventario <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-success mb-3 shadow">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Marcas</h5>
-                            <h2 class="display-4">@ViewBag.TotalMarcas</h2>
-                        </div>
-                        <i class="bi bi-tags fs-1 opacity-50"></i>
-                    </div>
-                    <a asp-controller="Marca" asp-action="Index" class="text-white text-decoration-none small">Ver marcas →</a>
+        <!-- Marcas -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card text-white product-card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #198754 0%, #146c43 100%);">
+                <div class="card-body p-4 position-relative overflow-hidden">
+                    <i class="bi bi-tags position-absolute opacity-25" style="font-size: 8rem; right: -20px; top: -10px;"></i>
+                    <h5 class="card-title fw-medium opacity-75">Marcas</h5>
+                    <h2 class="display-4 fw-bold mb-3">@ViewBag.TotalMarcas</h2>
+                    <a asp-controller="Marca" asp-action="Index" class="btn btn-light btn-sm fw-bold shadow-sm rounded-pill px-3 stretched-link">
+                        Ver marcas <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-info mb-3 shadow">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Categorías</h5>
-                            <h2 class="display-4">@ViewBag.TotalCategorias</h2>
-                        </div>
-                        <i class="bi bi-folder fs-1 opacity-50"></i>
-                    </div>
-                    <a asp-controller="Categoria" asp-action="Index" class="text-white text-decoration-none small">Organizar grupos →</a>
+        <!-- Categorías -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card text-white product-card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #0dcaf0 0%, #0aa2c0 100%);">
+                <div class="card-body p-4 position-relative overflow-hidden">
+                    <i class="bi bi-folder2-open position-absolute opacity-25" style="font-size: 8rem; right: -20px; top: -10px;"></i>
+                    <h5 class="card-title fw-medium opacity-75">Categorías</h5>
+                    <h2 class="display-4 fw-bold mb-3">@ViewBag.TotalCategorias</h2>
+                    <a asp-controller="Categoria" asp-action="Index" class="btn btn-light btn-sm fw-bold shadow-sm rounded-pill px-3 stretched-link">
+                        Organizar grupos <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-danger mb-3 shadow">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Tickets</h5>
-                            <h2 class="display-4 mb-0">@ViewBag.TotalTickets</h2>
-                            <small class="d-block mb-2 mt-1">
-                                <span class="badge bg-light text-danger me-1">@ViewBag.TicketsAbiertos Pendientes</span>
-                                <span class="badge bg-light text-danger">@ViewBag.TicketsCerrados Resueltos</span>
-                            </small>
-                        </div>
-                        <i class="bi bi-headset fs-1 opacity-50"></i>
+        <!-- Tickets -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card text-white product-card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #dc3545 0%, #b02a37 100%);">
+                <div class="card-body p-4 position-relative overflow-hidden">
+                    <i class="bi bi-headset position-absolute opacity-25" style="font-size: 8rem; right: -20px; top: -10px;"></i>
+                    <h5 class="card-title fw-medium opacity-75">Tickets de Soporte</h5>
+                    <h2 class="display-4 fw-bold mb-1">@ViewBag.TotalTickets</h2>
+                    <div class="mb-3">
+                        <span class="badge bg-white text-danger shadow-sm me-1">@ViewBag.TicketsAbiertos Pendientes</span>
+                        <span class="badge bg-dark text-white shadow-sm">@ViewBag.TicketsCerrados Resueltos</span>
                     </div>
-                    <a asp-controller="Ticket" asp-action="Index" class="text-white text-decoration-none small">Atender clientes  </a>
+                    <a asp-controller="Ticket" asp-action="Index" class="btn btn-light btn-sm fw-bold shadow-sm rounded-pill px-3 stretched-link">
+                        Atender clientes <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-white bg-dark mb-3 shadow">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title">Personal</h5>
-                            <h2 class="display-4">@ViewBag.TotalUsuarios</h2>
-                        </div>
-                        <i class="bi bi-people fs-1 opacity-50"></i>
-                    </div>
-                    <a asp-controller="Usuario" asp-action="Index" class="text-white text-decoration-none small">Gestionar accesos →</a>
+        <!-- Personal -->
+        <div class="col-md-4 col-lg-3">
+            <div class="card text-white product-card border-0 shadow-sm h-100" style="background: linear-gradient(135deg, #212529 0%, #15171a 100%);">
+                <div class="card-body p-4 position-relative overflow-hidden">
+                    <i class="bi bi-people-fill position-absolute opacity-25" style="font-size: 8rem; right: -20px; top: -10px;"></i>
+                    <h5 class="card-title fw-medium opacity-75">Personal Registrado</h5>
+                    <h2 class="display-4 fw-bold mb-3">@ViewBag.TotalUsuarios</h2>
+                    <a asp-controller="Usuario" asp-action="Index" class="btn btn-light btn-sm fw-bold shadow-sm rounded-pill px-3 stretched-link">
+                        Gestionar accesos <i class="bi bi-arrow-right-short"></i>
+                    </a>
                 </div>
             </div>
         </div>

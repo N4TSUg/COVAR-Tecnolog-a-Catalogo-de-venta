@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
@@ -67,6 +67,12 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link px-3" asp-controller="Usuario" asp-action="Index"><i class="bi bi-people"></i> Personal</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Vendedor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" asp-controller="Vendedor" asp-action="Index"><i class="bi bi-briefcase"></i> Mi Panel</a>
                                 </li>
                             }
                             @if (User.IsInRole("Cliente"))
@@ -153,4 +159,6 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
 

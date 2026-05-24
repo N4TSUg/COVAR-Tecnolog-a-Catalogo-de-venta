@@ -4,67 +4,95 @@
     ViewData["Title"] = "Bandeja de Soporte";
 }
 
-<div class="container mt-4">
-    <h2 class="text-danger mb-4">🎧 Bandeja de Soporte y Consultas</h2>
+<div class="container mt-4 mb-5 fade-in-up">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="text-danger fw-bold mb-0"><i class="bi bi-headset"></i> Bandeja de Soporte</h2>
+            <p class="text-muted small mt-1 mb-0">Gestiona las consultas y solicitudes de los clientes.</p>
+        </div>
+    </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-hover align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Cliente / Correo</th>
-                        <th>Asunto</th>
-                        <th>Estado</th>
-                        <th class="text-center">Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (!Model.Any())
-                    {
-                        <tr><td colspan="6" class="text-center py-4">No hay tickets registrados.</td></tr>
-                    }
-                    @foreach (var item in Model)
-                    {
+    <!-- Mostrar alerta de error o éxito si viene en el TempData -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> <strong>Atención:</strong> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden product-card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead style="background-color: var(--bs-tertiary-bg);">
                         <tr>
-                            <td>#@item.Id</td>
-                            <td>@item.FechaCreacion.ToString("dd/MM/yyyy")</td>
-                            <td>
-                                @if (item.Usuario != null)
-                                {
-                                    <span class="fw-bold">@item.Usuario.Email</span>
-                                }
-                                else
-                                {
-                                    <span class="text-muted"><i>Cliente Anónimo</i></span>
-                                }
-                            </td>
-                            <td>@item.Asunto</td>
-                            <td>
-                                @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
-                                {
-                                    <span class="badge bg-warning text-dark">Pendiente</span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-success">Resuelto</span>
-                                }
-                            </td>
-                            <td class="text-center">
-                                @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
-                                {
-                                    <a asp-action="Responder" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Responder</a>
-                                }
-                                else
-                                {
-                                    <a asp-action="Responder" asp-route-id="@item.Id" class="btn btn-secondary btn-sm">Ver Detalles</a>
-                                }
-                            </td>
+                            <th class="ps-4 py-3 text-muted text-uppercase small fw-bold">ID</th>
+                            <th class="py-3 text-muted text-uppercase small fw-bold">Fecha</th>
+                            <th class="py-3 text-muted text-uppercase small fw-bold">Cliente / Correo</th>
+                            <th class="py-3 text-muted text-uppercase small fw-bold">Asunto</th>
+                            <th class="py-3 text-muted text-uppercase small fw-bold">Estado</th>
+                            <th class="pe-4 py-3 text-muted text-uppercase small fw-bold text-center">Acción</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="border-top-0">
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-5">
+                                    <div class="display-4 mb-3"><i class="bi bi-envelope-check"></i></div>
+                                    <p class="fw-medium mb-0">No hay tickets registrados todavía. ¡Todo está en orden!</p>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 text-muted fw-bold">#@item.Id</td>
+                                    <td><span class="text-muted small"><i class="bi bi-calendar3"></i> @item.FechaCreacion.ToString("dd/MM/yyyy")</span></td>
+                                    <td>
+                                        @if (item.Usuario != null)
+                                        {
+                                            <span class="fw-bold"><i class="bi bi-person-fill text-primary"></i> @item.Usuario.Email</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted"><i><i class="bi bi-person text-secondary"></i> Cliente Anónimo</i></span>
+                                        }
+                                    </td>
+                                    <td class="text-truncate" style="max-width: 250px;" title="@item.Asunto">@item.Asunto</td>
+                                    <td>
+                                        @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+                                        {
+                                            <span class="badge bg-warning text-dark rounded-pill fw-normal px-3"><i class="bi bi-clock-history"></i> Pendiente</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success rounded-pill fw-normal px-3"><i class="bi bi-check-circle"></i> Resuelto</span>
+                                        }
+                                    </td>
+                                    <td class="pe-4 text-center">
+                                        @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+                                        {
+                                            <a asp-action="Responder" asp-route-id="@item.Id" class="btn btn-danger btn-sm shadow-sm btn-hover-grow rounded-pill px-3">
+                                                <i class="bi bi-reply-fill"></i> Responder
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a asp-action="Responder" asp-route-id="@item.Id" class="btn btn-outline-secondary btn-sm shadow-sm btn-hover-grow rounded-pill px-3">
+                                                <i class="bi bi-eye"></i> Detalles
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

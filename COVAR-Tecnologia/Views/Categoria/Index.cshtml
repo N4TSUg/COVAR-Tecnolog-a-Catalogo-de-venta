@@ -4,45 +4,70 @@
     ViewData["Title"] = "Categorías";
 }
 
-<div class="container mt-4">
-    <div class="row mb-3">
-        <div class="col-md-8">
-            <h2 class="text-primary">📁 Gestión de Categorías</h2>
-            <p class="text-muted">Organiza los productos de COVAR Tecnología por grupos.</p>
+<div class="container mt-4 mb-5 fade-in-up">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="text-primary fw-bold mb-0"><i class="bi bi-folder2-open"></i> Gestión de Categorías</h2>
+            <p class="text-muted small mt-1 mb-0">Organiza los productos de COVAR Tecnología por grupos.</p>
         </div>
-        <div class="col-md-4 text-end align-self-center">
-            <a asp-action="Crear" class="btn btn-success">
-                <i class="bi bi-plus-circle"></i> + Nueva Categoría
+        <div>
+            <a asp-action="Crear" class="btn btn-success fw-bold shadow-sm btn-hover-grow rounded-pill px-4">
+                <i class="bi bi-plus-lg"></i> Nueva Categoría
             </a>
         </div>
     </div>
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <table class="table table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre de la Categoría</th>
-                        <th class="text-center">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+    <!-- Mostrar alerta de error si viene en el TempData -->
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> <strong>Atención:</strong> @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden product-card">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead style="background-color: var(--bs-tertiary-bg);">
                         <tr>
-                            <td>@item.Id</td>
-                            <td class="fw-bold">@item.Nombre</td>
-                            <td class="text-center">
-                                <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Editar</a>
-                                <button type="button" class="btn btn-outline-danger btn-sm" onclick="setEliminarId(@item.Id)" data-bs-toggle="modal" data-bs-target="#eliminarModal">
-                                    Eliminar
-                                </button>
-                            </td>
+                            <th class="ps-4 py-3 text-muted text-uppercase small fw-bold" style="width: 10%;">ID</th>
+                            <th class="py-3 text-muted text-uppercase small fw-bold">Nombre de la Categoría</th>
+                            <th class="pe-4 py-3 text-muted text-uppercase small fw-bold text-center" style="width: 25%;">Acciones</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="border-top-0">
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center text-muted py-5">
+                                    <div class="display-4 mb-3"><i class="bi bi-inbox"></i></div>
+                                    <p class="fw-medium mb-0">No hay categorías registradas todavía.</p>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="ps-4 text-muted">@item.Id</td>
+                                    <td class="fw-bold">@item.Nombre</td>
+                                    <td class="pe-4 text-center">
+                                        <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm shadow-sm btn-hover-grow me-2 rounded-pill px-3" title="Editar">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                        <button type="button" class="btn btn-outline-danger btn-sm shadow-sm btn-hover-grow rounded-pill px-3" title="Eliminar" onclick="setEliminarId(@item.Id)" data-bs-toggle="modal" data-bs-target="#eliminarModal">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -50,20 +75,21 @@
 <!-- Modal de Eliminación -->
 <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="eliminarModalLabel">Confirmar Eliminación</h5>
+    <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+      <div class="modal-header bg-danger text-white border-0">
+        <h5 class="modal-title fw-bold" id="eliminarModalLabel"><i class="bi bi-exclamation-octagon"></i> Confirmar Eliminación</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
       </div>
-      <div class="modal-body">
-        <p>¿Estás seguro de que deseas eliminar esta categoría?</p>
+      <div class="modal-body p-4 text-center">
+        <div class="display-1 text-danger mb-3"><i class="bi bi-x-circle"></i></div>
+        <p class="fs-5 mb-2">¿Estás seguro de que deseas eliminar esta categoría?</p>
         <p class="text-muted small">Nota: No podrás eliminar la categoría si existen productos asociados a la misma.</p>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      <div class="modal-footer border-0 p-4 pt-0 justify-content-center gap-3">
+        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
         <form asp-action="EliminarConfirmado" method="post">
             <input type="hidden" id="categoriaIdAEliminar" name="id" value="" />
-            <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+            <button type="submit" class="btn btn-danger rounded-pill px-4 shadow-sm btn-hover-grow">Sí, eliminar</button>
         </form>
       </div>
     </div>

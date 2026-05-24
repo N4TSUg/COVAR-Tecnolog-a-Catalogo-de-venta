@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\views\\home\\privacy.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|d:\\uni\\calipso\\covar-tecnologia\\covar-tecnologia\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{3E8B3AE6-83B2-488B-8B7E-16BD33C7DB64}|COVAR-Tecnologia\\COVAR-Tecnologia.csproj|solutionrelative:covar-tecnologia\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,50 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 170,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "COVAR-Tecnologia\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAH0AAAAAAAAAAAAAAI8AAABYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-24T17:54:44.923Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Privacy.cshtml",
-              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Home\\Privacy.cshtml",
-              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Views\\Home\\Privacy.cshtml",
-              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Home\\Privacy.cshtml",
-              "RelativeToolTip": "COVAR-Tecnologia\\Views\\Home\\Privacy.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-24T17:54:32.391Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "COVAR-Tecnologia\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\UNI\\CALIPSO\\COVAR-Tecnologia\\COVAR-Tecnologia\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "COVAR-Tecnologia\\Views\\Home\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-05-24T17:51:02.141Z",
-              "EditorCaption": ""
             }
           ]
         }

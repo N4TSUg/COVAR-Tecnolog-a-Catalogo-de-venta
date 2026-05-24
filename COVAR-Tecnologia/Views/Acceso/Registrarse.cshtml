@@ -1,60 +1,72 @@
-@model COVAR_Tecnologia.Models.cotec_usuario
+ï»¿@model COVAR_Tecnologia.Models.cotec_usuario
 
 @{
     ViewData["Title"] = "Crear Cuenta";
-    Layout = "_Layout"; // Usamos el layout normal para que vean el menú
+    Layout = "_Layout";
 }
 
-<div class="container mt-5">
+<div class="container mt-5 fade-in-up mb-5">
     <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow-lg border-0 rounded-3">
-                <div class="card-body p-5">
-                    <div class="text-center mb-4">
-                        <h2 class="fw-bold text-primary">Únete a COVAR</h2>
-                        <p class="text-muted">Crea tu cuenta para gestionar tus consultas técnicas.</p>
-                    </div>
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden product-card">
+                
+                <div class="bg-primary text-white text-center p-4">
+                    <h2 class="fw-bold mb-0"><i class="bi bi-person-plus"></i> Ãšnete a COVAR</h2>
+                    <p class="small mb-0 opacity-75">Crea tu cuenta para comprar y gestionar consultas.</p>
+                </div>
 
+                <div class="card-body p-5">
                     @if (ViewData["Mensaje"] != null)
                     {
-                        <div class="alert alert-danger">@ViewData["Mensaje"]</div>
+                        <div class="alert alert-danger shadow-sm border-0 d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> @ViewData["Mensaje"]
+                        </div>
                     }
 
                     <form autocomplete="off" asp-action="Registrarse" method="post">
-                        <div class="mb-3">
-                            <label class="form-label">Correo Electrónico</label>
+                        
+                        <div class="mb-4">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Correo ElectrÃ³nico</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-envelope"></i></span>
-                                <input asp-for="Email" class="form-control" type="email" placeholder="nombre@ejemplo.com" required />
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-lock"></i></span>
-                                <input name="claveRaw" class="form-control" type="password" placeholder="Mínimo 6 caracteres" required />
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
+                                <input asp-for="Email" class="form-control border-start-0 ps-0" type="email" placeholder="nombre@ejemplo.com" required />
                             </div>
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label">Confirmar Contraseña</label>
+                            <label class="form-label text-muted small text-uppercase fw-bold">ContraseÃ±a</label>
                             <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="bi bi-shield-check"></i></span>
-                                <input name="confirmarClave" class="form-control" type="password" required />
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-lock"></i></span>
+                                <input name="claveRaw" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="MÃ­nimo 6 caracteres" required />
+                                <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Confirmar ContraseÃ±a</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-shield-check"></i></span>
+                                <input name="confirmarClave" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Repite tu contraseÃ±a" required />
+                                <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
                             </div>
                         </div>
 
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary btn-lg shadow-sm">Registrarme Ahora</button>
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm btn-hover-grow">Registrarme Ahora</button>
                         </div>
                     </form>
 
-                    <div class="text-center mt-4">
-                        <p class="mb-0">¿Ya tienes cuenta? <a asp-action="Login" class="text-decoration-none fw-bold">Inicia sesión aquí</a></p>
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="mb-0 text-muted small">Â¿Ya tienes cuenta? <br>
+                        <a asp-action="Login" class="text-decoration-none fw-bold mt-1 d-inline-block">Inicia sesiÃ³n aquÃ­</a></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
