@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
@@ -14,11 +14,11 @@ namespace COVAR_Tecnologia.Models
         [Required(ErrorMessage = "El Precio es obligatorio"), Column(TypeName="decimal(18,2)")]
         public decimal Precio { get; set; }
         public string? ImagenURL { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Debe seleccionar una Marca.")]
         public int MarcaId { get; set; }
         [ForeignKey("MarcaId")]
         public cotec_marca Marca { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Debe seleccionar una Categoría.")]
         public int CategoriaId { get; set; }
         [ForeignKey("CategoriaId")]
         public cotec_categoria Categoria { get; set; }

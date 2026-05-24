@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
@@ -18,7 +18,7 @@ namespace COVAR_Tecnologia.Models
 
         public bool EsComplejo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "El Estado del ticket es obligatorio.")]
         public cotec_estadoTicket Estado { get; set; }
 
         public DateTime FechaCreacion { get; set; } = DateTime.Now;

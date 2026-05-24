@@ -1,4 +1,4 @@
-@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+﻿@model COVAR_Tecnologia.Models.cotec_ticketSoporte
 
 @{
     ViewData["Title"] = "Responder Ticket";
@@ -12,17 +12,17 @@
                     Detalles del Caso #@Model.Id
                 </div>
                 <div class="card-body">
-                    <p><strong>Cliente:</strong> @(Model.Usuario?.Email ?? "Anónimo")</p>
+                    <p><strong>Cliente:</strong> @(Model.Usuario?.Email ?? "AnÃ³nimo")</p>
                     <p><strong>Fecha:</strong> @Model.FechaCreacion.ToString("dd/MM/yyyy HH:mm")</p>
                     <p><strong>Asunto:</strong> @Model.Asunto</p>
-                    <p><strong>Nivel:</strong> @(Model.EsComplejo ? "🔴 Complejo" : "🟢 Estándar")</p>
+                    <p><strong>Nivel:</strong> @(Model.EsComplejo ? "ðŸ”´ Complejo" : "ðŸŸ¢ EstÃ¡ndar")</p>
                     <p>
                         <strong>Estado:</strong>
                         <span class="badge @(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto ? "bg-warning text-dark" : "bg-success")">
                             @Model.Estado
                         </span>
                     </p>
-                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">🔙 Volver a la bandeja</a>
+                    <a asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">ðŸ”™ Volver a la bandeja</a>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-dark text-white fw-bold">
-                    💬 Historial de Conversación
+                    ðŸ’¬ Historial de ConversaciÃ³n
                 </div>
 
                 <div class="card-body" id="chatContainer" style="height: 400px; overflow-y: auto; background-color: #f8f9fa;">
@@ -47,7 +47,7 @@
                                     <p class="mb-1">@msj.Texto</p>
                                     <small class="@(msj.EsRespuestaAdmin ? "text-light" : "text-muted")" style="font-size: 0.75rem;">
                                         @msj.FechaEnvio.ToString("dd/MM HH:mm")
-                                        @(msj.EsRespuestaAdmin ? "(Tú)" : "(Cliente)")
+                                        @(msj.EsRespuestaAdmin ? "(TÃº)" : "(Cliente)")
                                     </small>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                             <input type="hidden" name="id" value="@Model.Id" />
 
                             <div class="mb-3">
-                                <textarea id="textoMensaje" name="textoMensaje" class="form-control" rows="3" placeholder="Escribe la respuesta al cliente aquí..."></textarea>
+                                <textarea id="textoMensaje" name="textoMensaje" class="form-control" rows="3" placeholder="Escribe la respuesta al cliente aquÃ­..."></textarea>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
@@ -81,8 +81,8 @@
                 }
                 else
                 {
-                    <div class="card-footer text-center bg-light text-muted fw-bold">
-                        🔒 Este ticket ha sido cerrado. Ya no admite respuestas.
+                    <div class="card-footer text-center border-top text-muted fw-bold">
+                        ðŸ”’ Este ticket ha sido cerrado. Ya no admite respuestas.
                     </div>
                 }
             </div>
@@ -109,7 +109,7 @@
             var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
             var bgClass = isMine ? "bg-primary text-white" : "bg-white border";
             var textClass = isMine ? "text-light" : "text-muted";
-            var senderName = sentByAdmin ? "(Tú)" : "(Cliente)";
+            var senderName = sentByAdmin ? "(TÃº)" : "(Cliente)";
 
             var msgDiv = document.createElement("div");
             msgDiv.className = "d-flex mb-3 " + alignmentClass;
@@ -155,3 +155,4 @@
         if(cc) cc.scrollTop = cc.scrollHeight;
     </script>
 }
+

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
@@ -11,7 +11,7 @@ namespace COVAR_Tecnologia.Models
         public string Email { get; set; }
         [Required(ErrorMessage = "La Contraseña es obligatoria"), StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Debe asignar un Rol al usuario.")]
         public int RolId { get; set; }
         [ForeignKey("RolId")]
         public cotec_rol Rol { get; set; }

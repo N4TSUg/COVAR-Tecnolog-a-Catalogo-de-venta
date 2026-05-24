@@ -27,7 +27,7 @@
                             <label class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="correo" class="form-control border-start-0 ps-0" required placeholder="ejemplo@correo.com" />
+                                <input type="email" name="correo" class="form-control border-start-0 ps-0" required placeholder="ejemplo@correo.com" oninvalid="this.setCustomValidity('El Correo Electrónico es obligatorio.')" oninput="this.setCustomValidity('')" />
                             </div>
                         </div>
 
@@ -56,4 +56,5 @@
         </div>
     </div>
 </div>
+
 

@@ -86,7 +86,7 @@
         <p class="text-muted small">Nota: No podrás eliminar la marca si existen productos asociados a la misma.</p>
       </div>
       <div class="modal-footer border-0 p-4 pt-0 justify-content-center gap-3">
-        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
         <form asp-action="EliminarConfirmado" method="post">
             <input type="hidden" id="marcaIdAEliminar" name="id" value="" />
             <button type="submit" class="btn btn-danger rounded-pill px-4 shadow-sm btn-hover-grow">Sí, eliminar</button>
@@ -103,3 +103,4 @@
         }
     </script>
 }
+

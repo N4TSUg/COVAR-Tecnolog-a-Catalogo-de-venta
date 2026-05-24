@@ -1,4 +1,4 @@
-@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+﻿@model COVAR_Tecnologia.Models.cotec_ticketSoporte
 @{
     ViewData["Title"] = "Chat de Soporte";
 }
@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h4>Ticket #@Model.Id: <span class="text-primary">@Model.Asunto</span></h4>
-        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">🔙 Volver</a>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm">ðŸ”™ Volver</a>
     </div>
 
     <div class="card shadow-sm border-0">
@@ -18,7 +18,7 @@
                         <p class="mb-1">@msj.Texto</p>
                         <small class="@(!msj.EsRespuestaAdmin ? "text-light" : "text-muted")" style="font-size: 0.75rem;">
                             @msj.FechaEnvio.ToString("dd/MM HH:mm")
-                            @(!msj.EsRespuestaAdmin ? "(Tú)" : "(Soporte COVAR)")
+                            @(!msj.EsRespuestaAdmin ? "(TÃº)" : "(Soporte COVAR)")
                         </small>
                     </div>
                 </div>
@@ -37,8 +37,8 @@
         }
         else
         {
-            <div class="card-footer text-center bg-light text-success fw-bold p-3">
-                ✅ Este caso ha sido marcado como resuelto.
+            <div class="card-footer text-center border-top text-success fw-bold p-3">
+                âœ… Este caso ha sido marcado como resuelto.
             </div>
         }
     </div>
@@ -61,7 +61,7 @@
             var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
             var bgClass = isMine ? "bg-primary text-white" : "bg-white border";
             var textClass = isMine ? "text-light" : "text-muted";
-            var senderName = sentByAdmin ? "(Soporte COVAR)" : "(Tú)";
+            var senderName = sentByAdmin ? "(Soporte COVAR)" : "(TÃº)";
 
             var msgDiv = document.createElement("div");
             msgDiv.className = "d-flex mb-3 " + alignmentClass;
@@ -101,3 +101,4 @@
         if(cc) cc.scrollTop = cc.scrollHeight;
     </script>
 }
+
