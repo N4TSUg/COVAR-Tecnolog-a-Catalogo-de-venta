@@ -26,7 +26,7 @@
                     }
                     else
                     {
-                        <img src="https://via.placeholder.com/500x500?text=Sin+Imagen" class="product-img img-fluid opacity-50" alt="Sin imagen">
+                        <img src="https://via.placeholder.com/500x500?text=Sin+Imagen" class="product-img img-fluid opacity-50" alt="">
                     }
                 </div>
             </div>
@@ -44,7 +44,7 @@
 
                     <div class="d-flex align-items-end gap-2 mb-4">
                         <h1 class="product-price display-4 fw-bolder text-success mb-0">
-                            @Model.Precio.ToString("C", new System.Globalization.CultureInfo("es-PE"))
+                            @Model.Precio?.ToString("C", new System.Globalization.CultureInfo("es-PE"))
                         </h1>
                         <span class="text-muted mb-2">Precio Online</span>
                     </div>

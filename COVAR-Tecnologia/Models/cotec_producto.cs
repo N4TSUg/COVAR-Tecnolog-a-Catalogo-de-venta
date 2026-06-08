@@ -28,7 +28,7 @@ namespace COVAR_Tecnologia.Models
             string numeroVendedor = "51928876259";
 
             // 2. Arma el mensaje dinámico usando las propiedades de la clase
-            string mensaje = $"Hola, me interesa el producto '{Nombre}' que tiene un precio de S/ {Precio.ToString("0.00")}. ¿Aún está disponible?";
+            string mensaje = $"Hola, me interesa el producto '{Nombre}' que tiene un precio de S/ {Precio?.ToString("0.00")}. ¿Aún está disponible?";
 
             // 3. Codifica el texto para que la URL sea válida
             string mensajeCodificado = Uri.EscapeDataString(mensaje);

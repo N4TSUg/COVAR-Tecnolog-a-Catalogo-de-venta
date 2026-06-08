@@ -26,7 +26,7 @@
                     <form autocomplete="off" asp-action="Registrarse" method="post">
                         
                         <div class="mb-4">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
+                            <label for="Email" class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
                                 <input asp-for="Email" class="form-control border-start-0 ps-0" type="email" placeholder="nombre@ejemplo.com" required oninvalid="this.setCustomValidity('El Correo Electrónico es obligatorio y debe ser válido.')" oninput="this.setCustomValidity('')" />
@@ -35,10 +35,10 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Contraseña</label>
+                            <label for="claveRaw" class="form-label text-muted small text-uppercase fw-bold">Contraseña</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-transparent text-muted"><i class="bi bi-lock"></i></span>
-                                <input name="claveRaw" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Mínimo 6 caracteres" required oninvalid="this.setCustomValidity('La Contraseña es obligatoria.')" oninput="this.setCustomValidity('')" />
+                                <input id="claveRaw" name="claveRaw" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Mínimo 6 caracteres" required oninvalid="this.setCustomValidity('La Contraseña es obligatoria.')" oninput="this.setCustomValidity('')" />
                                 <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
                                     <i class="bi bi-eye"></i>
                                 </button>
@@ -46,10 +46,10 @@
                         </div>
 
                         <div class="mb-5">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Confirmar Contraseña</label>
+                            <label for="confirmarClave" class="form-label text-muted small text-uppercase fw-bold">Confirmar Contraseña</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-transparent text-muted"><i class="bi bi-shield-check"></i></span>
-                                <input name="confirmarClave" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Repite tu contraseña" required oninvalid="this.setCustomValidity('Debes confirmar tu contraseña.')" oninput="this.setCustomValidity('')" />
+                                <input id="confirmarClave" name="confirmarClave" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Repite tu contraseña" required oninvalid="this.setCustomValidity('Debes confirmar tu contraseña.')" oninput="this.setCustomValidity('')" />
                                 <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
                                     <i class="bi bi-eye"></i>
                                 </button>

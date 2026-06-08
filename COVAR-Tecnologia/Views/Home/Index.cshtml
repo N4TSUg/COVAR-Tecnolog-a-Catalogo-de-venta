@@ -21,21 +21,21 @@
         <div class="card-body p-4" style="background-color: var(--bs-tertiary-bg);">
             <form method="get" asp-action="Index" class="row g-3 align-items-end">
                 <div class="col-md-5">
-                    <label class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-search"></i> Buscar Producto</label>
+                    <label for="busqueda" class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-search"></i> Buscar Producto</label>
                     <div class="input-group">
-                        <input type="text" name="busqueda" class="form-control rounded-start-pill ps-4 border-end-0 shadow-none" placeholder="Ej: Laptop, Mouse, Teclado..." value="@Model.Busqueda" />
+                        <input id="busqueda" type="text" name="busqueda" class="form-control rounded-start-pill ps-4 border-end-0 shadow-none" placeholder="Ej: Laptop, Mouse, Teclado..." value="@Model.Busqueda" />
                         <span class="input-group-text bg-transparent rounded-end-pill"><i class="bi bi-keyboard text-muted"></i></span>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <label class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-folder"></i> Categoría</label>
-                    <select name="categoriaId" class="form-select rounded-pill shadow-none px-4" asp-items="@Model.Categorias">
+                    <label for="categoriaId" class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-folder"></i> Categoría</label>
+                    <select id="categoriaId" name="categoriaId" class="form-select rounded-pill shadow-none px-4" asp-items="@Model.Categorias">
                         <option value="">Todas las Categorías</option>
                     </select>
                 </div>
                 <div class="col-md-2">
-                    <label class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-tag"></i> Marca</label>
-                    <select name="marcaId" class="form-select rounded-pill shadow-none px-4" asp-items="@Model.Marcas">
+                    <label for="marcaId" class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-tag"></i> Marca</label>
+                    <select id="marcaId" name="marcaId" class="form-select rounded-pill shadow-none px-4" asp-items="@Model.Marcas">
                         <option value="">Todas las Marcas</option>
                     </select>
                 </div>
@@ -86,7 +86,7 @@
                             }
                             else
                             {
-                                <img src="https://via.placeholder.com/300x200?text=Sin+Imagen" class="product-img img-fluid opacity-50" alt="Sin imagen" style="object-fit: contain; height: 200px; width: 100%;">
+                                <img src="https://via.placeholder.com/300x200?text=Sin+Imagen" class="product-img img-fluid opacity-50" alt="" style="object-fit: contain; height: 200px; width: 100%;">
                             }
                             <span class="position-absolute top-0 end-0 badge bg-danger m-3 shadow rounded-pill px-3 py-2 border border-light"><i class="bi bi-fire"></i> Hot</span>
                         </div>
@@ -105,7 +105,7 @@
                                 <div>
                                     <span class="text-muted small d-block mb-1">Precio Online</span>
                                     <h3 class="product-price display-4 fw-bolder text-success mb-0">
-                                        @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-PE"))
+                                        @item.Precio?.ToString("C", new System.Globalization.CultureInfo("es-PE"))
                                     </h3>
                                 </div>
                                 <div style="z-index: 2;">
@@ -117,7 +117,7 @@
                         </div>
                         
                         <!-- Stretched link for making the whole card clickable EXCEPT the WhatsApp button -->
-                        <a asp-action="Detalle" asp-route-id="@item.Id" class="stretched-link"></a>
+                        <a asp-action="Detalle" asp-route-id="@item.Id" class="stretched-link" aria-label="Ver detalles de @item.Nombre"></a>
                     </div>
                 </div>
             }
