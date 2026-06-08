@@ -12,14 +12,14 @@ namespace COVAR_Tecnologia.Models
         [Required(ErrorMessage = "La Descripción es obligatoria"), StringLength(500, ErrorMessage = "Máximo 500 caracteres")]
         public string Descripcion { get; set; }
         [Required(ErrorMessage = "El Precio es obligatorio"), Column(TypeName="decimal(18,2)")]
-        public decimal Precio { get; set; }
+        public decimal? Precio { get; set; }
         public string? ImagenURL { get; set; }
         [Required(ErrorMessage = "Debe seleccionar una Marca.")]
-        public int MarcaId { get; set; }
+        public int? MarcaId { get; set; }
         [ForeignKey("MarcaId")]
         public cotec_marca Marca { get; set; }
         [Required(ErrorMessage = "Debe seleccionar una Categoría.")]
-        public int CategoriaId { get; set; }
+        public int? CategoriaId { get; set; }
         [ForeignKey("CategoriaId")]
         public cotec_categoria Categoria { get; set; }
         public string GetWhatsAppLink()

@@ -12,7 +12,7 @@ namespace COVAR_Tecnologia.Models
         [Required(ErrorMessage = "La Contraseña es obligatoria"), StringLength(100, ErrorMessage = "Máximo 100 caracteres")]
         public string Password { get; set; }
         [Required(ErrorMessage = "Debe asignar un Rol al usuario.")]
-        public int RolId { get; set; }
+        public int? RolId { get; set; }
         [ForeignKey("RolId")]
         public cotec_rol Rol { get; set; }
         public List<cotec_ticketSoporte> Tickets { get; set; }
