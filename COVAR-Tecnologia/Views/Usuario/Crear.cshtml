@@ -22,7 +22,7 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3 small"></div>
 
                         <div class="mb-4">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
+                            <label for="Email" class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
                                 <input asp-for="Email" class="form-control border-start-0 ps-0" type="email" placeholder="nombre@covar.com" required />
@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label text-muted small text-uppercase fw-bold">Contraseña Temporal</label>
+                            <label for="passTemporal" class="form-label text-muted small text-uppercase fw-bold">Contraseña Temporal</label>
                             <div class="input-group">
                                 <span class="input-group-text bg-transparent text-muted"><i class="bi bi-key"></i></span>
                                 <input name="claveRaw" id="passTemporal" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Mínimo 6 caracteres" required />

@@ -29,18 +29,18 @@
                     <form autocomplete="off" asp-action="Crear" method="post" class="needs-validation">
                         
                         <div class="mb-4">
-                            <label class="form-label fw-bold text-muted small text-uppercase">Asunto de la consulta <span class="text-danger">*</span></label>
+                            <label for="asunto" class="form-label fw-bold text-muted small text-uppercase">Asunto de la consulta <span class="text-danger">*</span></label>
                             <div class="input-group input-group-lg shadow-sm rounded-3 overflow-hidden">
                                 <span class="input-group-text bg-body-tertiary border-0 text-primary px-4"><i class="bi bi-chat-left-text-fill"></i></span>
-                                <input type="text" name="asunto" class="form-control bg-body-tertiary border-0" placeholder="Ej: Problema con garantía del Mouse" required />
+                                <input id="asunto" type="text" name="asunto" class="form-control bg-body-tertiary border-0" placeholder="Ej: Problema con garantía del Mouse" required />
                             </div>
                         </div>
 
                         <div class="mb-5">
-                            <label class="form-label fw-bold text-muted small text-uppercase">Detalla tu problema <span class="text-danger">*</span></label>
+                            <label for="mensajeInicial" class="form-label fw-bold text-muted small text-uppercase">Detalla tu problema <span class="text-danger">*</span></label>
                             <div class="input-group shadow-sm rounded-3 overflow-hidden">
                                 <span class="input-group-text bg-body-tertiary border-0 text-primary px-4 align-items-start pt-3"><i class="bi bi-pencil-square"></i></span>
-                                <textarea name="mensajeInicial" class="form-control bg-body-tertiary border-0 py-3" rows="5" placeholder="Escribe aquí todos los detalles posibles para poder ayudarte mejor..." required></textarea>
+                                <textarea id="mensajeInicial" name="mensajeInicial" class="form-control bg-body-tertiary border-0 py-3" rows="5" placeholder="Escribe aquí todos los detalles posibles para poder ayudarte mejor..." required></textarea>
                             </div>
                         </div>
 
