@@ -1,0 +1,160 @@
+@model COVAR_Tecnologia.Models.CatalogoViewModel
+
+@{
+    ViewData["Title"] = "Inicio - Catálogo";
+}
+
+<div class="bg-primary text-white text-center py-5 mb-5 rounded-4 shadow-lg fade-in-up position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--bs-primary) 0%, #002244 100%) !important;">
+    <!-- Elementos decorativos de fondo -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="background-image: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.05) 0%, transparent 50%); pointer-events: none;"></div>
+    
+    <div class="position-relative z-1 py-4">
+        <h1 class="display-4 fw-bolder mb-3"><i class="bi bi-rocket-takeoff-fill text-warning"></i> Bienvenido a COVAR</h1>
+        <p class="lead fs-4 fw-light opacity-75">Componentes premium, periféricos avanzados y el mejor servicio garantizado.</p>
+    </div>
+</div>
+
+<div class="container fade-in-up">
+
+    <!-- Panel de Filtros -->
+    <div class="card shadow-lg border-0 rounded-4 mb-5 filter-panel overflow-hidden">
+        <div class="card-body p-4" style="background-color: var(--bs-tertiary-bg);">
+            <form method="get" asp-action="Index" class="row g-3 align-items-end">
+                <div class="col-md-5">
+                    <label class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-search"></i> Buscar Producto</label>
+                    <div class="input-group">
+                        <input type="text" name="busqueda" class="form-control rounded-start-pill ps-4 border-end-0 shadow-none" placeholder="Ej: Laptop, Mouse, Teclado..." value="@Model.Busqueda" />
+                        <span class="input-group-text bg-transparent rounded-end-pill"><i class="bi bi-keyboard text-muted"></i></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-folder"></i> Categoría</label>
+                    <select name="categoriaId" class="form-select rounded-pill shadow-none px-4" asp-items="@Model.Categorias">
+                        <option value="">Todas las Categorías</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label fw-bold text-muted small text-uppercase"><i class="bi bi-tag"></i> Marca</label>
+                    <select name="marcaId" class="form-select rounded-pill shadow-none px-4" asp-items="@Model.Marcas">
+                        <option value="">Todas las Marcas</option>
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary fw-bold flex-grow-1 rounded-pill shadow-sm btn-hover-grow">
+                        Filtrar
+                    </button>
+                    @if (!string.IsNullOrEmpty(Model.Busqueda) || Model.CategoriaId.HasValue || Model.MarcaId.HasValue)
+                    {
+                        <a asp-action="Index" class="btn btn-outline-danger rounded-circle shadow-sm" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;" title="Limpiar filtros">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                    }
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary"><i class="bi bi-grid-fill"></i> Catálogo de Productos</h2>
+            <p class="text-muted small mt-1 mb-0">Explora nuestra colección de alta tecnología.</p>
+        </div>
+        <div>
+            <span class="badge bg-secondary rounded-pill px-3 py-2 fw-normal fs-6">@Model.Productos.Count() Resultados</span>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5 fade-in-up">
+        @if (!Model.Productos.Any())
+        {
+            <div class="col-12 text-center py-5">
+                <div class="display-1 text-muted mb-3 opacity-50"><i class="bi bi-box-seam-fill"></i></div>
+                <h4 class="text-muted fw-bold">No se encontraron productos.</h4>
+                <p>Intenta con otros filtros o términos de búsqueda.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model.Productos)
+            {
+                <div class="col">
+                    <div class="card product-card h-100 shadow-lg border-0 rounded-4 overflow-hidden position-relative">
+                        <div class="product-img-wrapper position-relative" style="background-color: var(--bs-tertiary-bg); padding: 1.5rem;">
+                            @if (!string.IsNullOrEmpty(item.ImagenURL))
+                            {
+                                <img src="@item.ImagenURL" class="product-img img-fluid" alt="@item.Nombre" style="object-fit: contain; height: 200px; width: 100%; transition: transform 0.3s ease;">
+                            }
+                            else
+                            {
+                                <img src="https://via.placeholder.com/300x200?text=Sin+Imagen" class="product-img img-fluid opacity-50" alt="Sin imagen" style="object-fit: contain; height: 200px; width: 100%;">
+                            }
+                            <span class="position-absolute top-0 end-0 badge bg-danger m-3 shadow rounded-pill px-3 py-2 border border-light"><i class="bi bi-fire"></i> Hot</span>
+                        </div>
+
+                        <div class="card-body d-flex flex-column p-4">
+                            <div class="mb-3 d-flex gap-2 flex-wrap">
+                                <span class="badge bg-primary rounded-pill fw-normal shadow-sm px-3">@item.Categoria.Nombre</span>
+                                <span class="badge bg-secondary rounded-pill fw-normal shadow-sm px-3"><i class="bi bi-tags-fill"></i> @item.Marca.Nombre</span>
+                            </div>
+
+                            <h5 class="product-title fw-bold mb-2" title="@item.Nombre" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 3em;">
+                                @item.Nombre
+                            </h5>
+
+                            <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-end">
+                                <div>
+                                    <span class="text-muted small d-block mb-1">Precio Online</span>
+                                    <h3 class="product-price display-4 fw-bolder text-success mb-0">
+                                        @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-PE"))
+                                    </h3>
+                                </div>
+                                <div style="z-index: 2;">
+                                    <a href="@item.GetWhatsAppLink()" target="_blank" class="btn btn-success rounded-circle shadow-sm btn-hover-grow" style="width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;" title="Pedir por WhatsApp">
+                                        <i class="bi bi-whatsapp fs-5"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Stretched link for making the whole card clickable EXCEPT the WhatsApp button -->
+                        <a asp-action="Detalle" asp-route-id="@item.Id" class="stretched-link"></a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    @if (Model.TotalPaginas > 1)
+    {
+        <nav aria-label="Navegación de catálogo">
+            <ul class="pagination justify-content-center shadow-sm rounded-pill overflow-hidden d-inline-flex m-auto">
+                <li class="page-item @(Model.PaginaActual == 1 ? "disabled" : "")">
+                    <a class="page-link border-0 px-4 py-2" asp-action="Index"
+                       asp-route-busqueda="@Model.Busqueda"
+                       asp-route-categoriaId="@Model.CategoriaId"
+                       asp-route-marcaId="@Model.MarcaId"
+                       asp-route-pagina="@(Model.PaginaActual - 1)"><i class="bi bi-chevron-left"></i> Anterior</a>
+                </li>
+
+                @for (int i = 1; i <= Model.TotalPaginas; i++)
+                {
+                    <li class="page-item @(i == Model.PaginaActual ? "active" : "")">
+                        <a class="page-link border-0 fw-bold px-4 py-2" asp-action="Index"
+                           asp-route-busqueda="@Model.Busqueda"
+                           asp-route-categoriaId="@Model.CategoriaId"
+                           asp-route-marcaId="@Model.MarcaId"
+                           asp-route-pagina="@i">@i</a>
+                    </li>
+                }
+
+                <li class="page-item @(Model.PaginaActual == Model.TotalPaginas ? "disabled" : "")">
+                    <a class="page-link border-0 px-4 py-2" asp-action="Index"
+                       asp-route-busqueda="@Model.Busqueda"
+                       asp-route-categoriaId="@Model.CategoriaId"
+                       asp-route-marcaId="@Model.MarcaId"
+                       asp-route-pagina="@(Model.PaginaActual + 1)">Siguiente <i class="bi bi-chevron-right"></i></a>
+                </li>
+            </ul>
+        </nav>
+    }
+</div>

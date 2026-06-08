@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5 fade-in-up">
+    <div class="row justify-content-center">
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden product-card">
+                
+                <div class="bg-primary text-white text-center p-4">
+                    <h2 class="fw-bold mb-0"><i class="bi bi-box-arrow-in-right"></i> Ingresar</h2>
+                    <p class="small mb-0 opacity-75">Bienvenido de nuevo a COVAR</p>
+                </div>
+
+                <div class="card-body p-5">
+                    @if (ViewData["Mensaje"] != null)
+                    {
+                        <div class="alert alert-danger shadow-sm border-0 d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> @ViewData["Mensaje"]
+                        </div>
+                    }
+
+                    <form autocomplete="off" asp-controller="Acceso" asp-action="Login" method="post">
+                        
+                        <div class="mb-4">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
+                                <input type="email" name="correo" class="form-control border-start-0 ps-0" required placeholder="ejemplo@correo.com" oninvalid="this.setCustomValidity('El Correo Electrónico es obligatorio.')" oninput="this.setCustomValidity('')" />
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-key"></i></span>
+                                <input type="password" name="clave" class="form-control border-start-0 border-end-0 ps-0" required placeholder="••••••••" />
+                                <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm btn-hover-grow">Ingresar</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="mb-0 text-muted small">¿No tienes una cuenta? <br>
+                        <a asp-action="Registrarse" class="text-decoration-none fw-bold mt-1 d-inline-block">Regístrate gratis</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

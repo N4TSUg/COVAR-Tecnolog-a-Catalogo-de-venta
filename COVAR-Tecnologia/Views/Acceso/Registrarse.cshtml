@@ -1,0 +1,74 @@
+@model COVAR_Tecnologia.Models.cotec_usuario
+
+@{
+    ViewData["Title"] = "Crear Cuenta";
+    Layout = "_Layout";
+}
+
+<div class="container mt-5 fade-in-up mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4 overflow-hidden product-card">
+                
+                <div class="bg-primary text-white text-center p-4">
+                    <h2 class="fw-bold mb-0"><i class="bi bi-person-plus"></i> Únete a COVAR</h2>
+                    <p class="small mb-0 opacity-75">Crea tu cuenta para comprar y gestionar consultas.</p>
+                </div>
+
+                <div class="card-body p-5">
+                    @if (ViewData["Mensaje"] != null)
+                    {
+                        <div class="alert alert-danger shadow-sm border-0 d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> @ViewData["Mensaje"]
+                        </div>
+                    }
+
+                    <form autocomplete="off" asp-action="Registrarse" method="post">
+                        
+                        <div class="mb-4">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Correo Electrónico</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-envelope"></i></span>
+                                <input asp-for="Email" class="form-control border-start-0 ps-0" type="email" placeholder="nombre@ejemplo.com" required oninvalid="this.setCustomValidity('El Correo Electrónico es obligatorio y debe ser válido.')" oninput="this.setCustomValidity('')" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-lock"></i></span>
+                                <input name="claveRaw" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Mínimo 6 caracteres" required oninvalid="this.setCustomValidity('La Contraseña es obligatoria.')" oninput="this.setCustomValidity('')" />
+                                <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-5">
+                            <label class="form-label text-muted small text-uppercase fw-bold">Confirmar Contraseña</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-transparent text-muted"><i class="bi bi-shield-check"></i></span>
+                                <input name="confirmarClave" class="form-control border-start-0 border-end-0 ps-0" type="password" placeholder="Repite tu contraseña" required oninvalid="this.setCustomValidity('Debes confirmar tu contraseña.')" oninput="this.setCustomValidity('')" />
+                                <button class="btn btn-outline-secondary border-start-0 bg-transparent text-muted" type="button" onclick="togglePassword(this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold shadow-sm btn-hover-grow">Registrarme Ahora</button>
+                        </div>
+                    </form>
+
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="mb-0 text-muted small">¿Ya tienes cuenta? <br>
+                        <a asp-action="Login" class="text-decoration-none fw-bold mt-1 d-inline-block">Inicia sesión aquí</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

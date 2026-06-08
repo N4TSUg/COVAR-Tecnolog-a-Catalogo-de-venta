@@ -1,0 +1,118 @@
+@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+@{
+    ViewData["Title"] = "Chat de Soporte";
+}
+
+<div class="container mt-4 mb-5 fade-in-up">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="fw-bold mb-0">Ticket #@Model.Id</h3>
+            <p class="text-primary fw-bold mb-0">@Model.Asunto</p>
+        </div>
+        <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold">
+            <i class="bi bi-arrow-left"></i> Volver
+        </a>
+    </div>
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header bg-primary text-white p-3 border-0" style="background: linear-gradient(135deg, var(--bs-primary) 0%, #004085 100%) !important;">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-headset fs-4"></i>
+                <h5 class="mb-0 fw-bold">Soporte COVAR</h5>
+            </div>
+        </div>
+
+        <div class="card-body p-4" id="chatContainer" style="height: 500px; overflow-y: auto; background-color: var(--bs-tertiary-bg);">
+            @foreach (var msj in Model.Mensajes.OrderBy(m => m.FechaEnvio))
+            {
+                <div class="d-flex mb-3 @(!msj.EsRespuestaAdmin ? "justify-content-end" : "justify-content-start")">
+                    <div class="p-3 shadow-sm @(!msj.EsRespuestaAdmin ? "bg-primary text-white text-end" : "bg-body border")" style="max-width: 80%; border-radius: 1.5rem; @(!msj.EsRespuestaAdmin ? "border-bottom-right-radius: 0.25rem;" : "border-bottom-left-radius: 0.25rem;")">
+                        <p class="mb-1" style="word-wrap: break-word;">@msj.Texto</p>
+                        <small class="@(!msj.EsRespuestaAdmin ? "text-white-50" : "text-muted")" style="font-size: 0.75rem;">
+                            @msj.FechaEnvio.ToString("dd/MM HH:mm")
+                            @(!msj.EsRespuestaAdmin ? "(Tú)" : "(Soporte)")
+                        </small>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+        {
+            <div class="card-footer bg-body p-3 border-top-0">
+                <form id="chatForm" asp-action="Chat" method="post" class="d-flex gap-2" autocomplete="off">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="text" id="textoMensaje" name="textoMensaje" class="form-control rounded-pill px-4 shadow-none bg-body-tertiary border-0" placeholder="Escribe tu mensaje..." required />
+                    <button type="submit" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center shadow-sm btn-hover-grow" style="width: 45px; height: 45px; flex-shrink: 0;">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="card-footer text-center border-top text-success fw-bold p-3 bg-body">
+                <i class="bi bi-check-circle-fill"></i> Este caso ha sido marcado como resuelto.
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script>
+        var ticketId = "@Model.Id";
+        var isAdmin = false;
+
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveMessage", function (mensaje, fechaFormateada, sentByAdmin) {
+            var chatContainer = document.getElementById("chatContainer");
+
+            var isMine = sentByAdmin === isAdmin;
+            var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
+            var bgClass = isMine ? "bg-primary text-white text-end" : "bg-body border";
+            var textClass = isMine ? "text-white-50" : "text-muted";
+            var senderName = sentByAdmin ? "(Soporte)" : "(Tú)";
+            var radiusStyle = isMine ? "border-radius: 1.5rem; border-bottom-right-radius: 0.25rem;" : "border-radius: 1.5rem; border-bottom-left-radius: 0.25rem;";
+
+            var msgDiv = document.createElement("div");
+            msgDiv.className = "d-flex mb-3 " + alignmentClass;
+            msgDiv.innerHTML = `
+                <div class="p-3 shadow-sm ` + bgClass + `" style="max-width: 80%; ` + radiusStyle + `">
+                    <p class="mb-1" style="word-wrap: break-word;">` + mensaje + `</p>
+                    <small class="` + textClass + `" style="font-size: 0.75rem;">
+                        ` + fechaFormateada + ` ` + senderName + `
+                    </small>
+                </div>
+            `;
+            chatContainer.appendChild(msgDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        });
+
+        connection.start().then(function () {
+            connection.invoke("JoinTicketGroup", ticketId);
+        }).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        document.getElementById("chatForm")?.addEventListener("submit", function (e) {
+            e.preventDefault();
+            var mensajeInput = document.getElementById("textoMensaje");
+            var mensaje = mensajeInput.value.trim();
+
+            if (mensaje) {
+                connection.invoke("SendMessage", parseInt(ticketId), mensaje, isAdmin).catch(function (err) {
+                    return console.error(err.toString());
+                });
+                mensajeInput.value = "";
+            }
+        });
+
+        // Scroll to bottom on load
+        var cc = document.getElementById("chatContainer");
+        if(cc) cc.scrollTop = cc.scrollHeight;
+    </script>
+}

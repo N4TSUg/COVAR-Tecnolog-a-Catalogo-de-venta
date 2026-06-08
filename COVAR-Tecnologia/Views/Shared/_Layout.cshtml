@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - COVAR Tecnología</title>
+    
+    <!-- Evitar parpadeo de tema -->
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    </script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap 5.3.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- CSS del Proyecto -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/COVAR_Tecnologia.styles.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg border-bottom shadow-sm modern-navbar mb-4">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-primary brand-logo" asp-area="" asp-controller="Home" asp-action="Index">
+                    <i class="bi bi-cpu"></i> COVAR <span class="fw-light">Tecnología</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="navbarMain">
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link px-3" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-house-door"></i> Inicio</a>
+                        </li>
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Administrador") || User.IsInRole("Vendedor"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle px-3" href="#" id="navbarGest" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-grid"></i> Gestión
+                                    </a>
+                                    <ul class="dropdown-menu border-0 shadow" aria-labelledby="navbarGest">
+                                        <li><a class="dropdown-item" asp-controller="Producto" asp-action="Index"><i class="bi bi-box-seam"></i> Productos</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Marca" asp-action="Index"><i class="bi bi-tags"></i> Marcas</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Categoria" asp-action="Index"><i class="bi bi-folder2-open"></i> Categorías</a></li>
+                                    </ul>
+                                </li>
+                            }
+
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" asp-controller="Admin" asp-action="Index"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" asp-controller="Usuario" asp-action="Index"><i class="bi bi-people"></i> Personal</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Vendedor"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" asp-controller="Vendedor" asp-action="Index"><i class="bi bi-briefcase"></i> Mi Panel</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Cliente"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link px-3" asp-controller="Soporte" asp-action="Index">
+                                        <i class="bi bi-headset"></i> Mis Consultas
+                                    </a>
+                                </li>
+                            }
+                        }
+                    </ul>
+
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <!-- Theme Switcher -->
+                        <li class="nav-item me-3">
+                            <button id="theme-toggle" class="btn btn-link nav-link text-warning p-0" title="Cambiar Tema Oscuro/Claro">
+                                <i class="bi bi-sun-fill" id="theme-icon"></i>
+                            </button>
+                        </li>
+
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item me-3">
+                                <span class="nav-link text-muted fw-medium">
+                                    <i class="bi bi-person-circle"></i> @User.Identity.Name
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-danger btn-sm rounded-pill px-3" asp-controller="Acceso" asp-action="Salir">Salir</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item me-2">
+                                <a class="nav-link fw-medium" asp-controller="Acceso" asp-action="Login">Entrar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-primary rounded-pill px-4 shadow-sm btn-hover-grow" asp-controller="Acceso" asp-action="Registrarse">Registrarse</a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container flex-grow-1">
+        <main role="main" class="pb-5">
+            <!-- Global Alerts -->
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"></i>
+                    @TempData["Error"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            }
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="bi bi-check-circle-fill flex-shrink-0 me-2"></i>
+                    @TempData["Mensaje"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            }
+            
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="mt-auto py-4 border-top modern-footer">
+        <div class="container text-center text-muted">
+            <p class="mb-1">&copy; 2026 - COVAR Tecnología - Soluciones Informáticas</p>
+        </div>
+    </footer>
+
+    <!-- Cargar jQuery ANTES de Bootstrap -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 5.3.3 JS Bundle con Popper (Sin hash por problemas de carga) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
