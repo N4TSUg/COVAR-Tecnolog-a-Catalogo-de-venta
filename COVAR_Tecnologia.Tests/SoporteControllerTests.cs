@@ -42,8 +42,8 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 1, UsuarioId = 1, Asunto = "T1" });
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 2, UsuarioId = 2, Asunto = "T2" });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 1, UsuarioId = 1, Asunto = "T1" });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 2, UsuarioId = 2, Asunto = "T2" });
                 await context.SaveChangesAsync();
             }
 
@@ -53,7 +53,7 @@ namespace COVAR_Tecnologia.Tests
                 var result = await controller.Index();
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsAssignableFrom<IEnumerable<cotec_ticketSoporte>>(viewResult.ViewData.Model);
+                var model = Assert.IsAssignableFrom<IEnumerable<TicketSoporte>>(viewResult.ViewData.Model);
                 Assert.Single(model);
                 Assert.Equal(1, model.First().Id);
             }

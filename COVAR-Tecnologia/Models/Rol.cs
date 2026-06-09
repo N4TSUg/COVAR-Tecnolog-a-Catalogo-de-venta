@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
 {
-    public class cotec_rol
+    public class Rol
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -13,7 +13,7 @@ namespace COVAR_Tecnologia.Models
         public string Nombre { get; set; }
 
         // Propiedad de navegación: Un rol tiene muchos usuarios
-        public List<cotec_usuario> Usuarios { get; set; }
+        public List<Usuario> Usuarios { get; set; }
     }
 }
 

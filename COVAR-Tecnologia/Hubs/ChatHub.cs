@@ -31,9 +31,9 @@ namespace COVAR_Tecnologia.Hubs
             if (string.IsNullOrWhiteSpace(textoMensaje)) return;
 
             var ticket = await _context.TicketsSoporte.FindAsync(ticketId);
-            if (ticket == null || ticket.Estado != cotec_estadoTicket.Abierto) return;
+            if (ticket == null || ticket.Estado != EstadoTicket.Abierto) return;
 
-            var nuevoMensaje = new cotec_mensaje
+            var nuevoMensaje = new Mensaje
             {
                 TicketSoporteId = ticketId,
                 Texto = textoMensaje,

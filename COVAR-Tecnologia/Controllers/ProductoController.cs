@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using COVAR_Tecnologia.Data;
+﻿using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using System.IO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace COVAR_Tecnologia.Controllers
@@ -17,6 +18,8 @@ namespace COVAR_Tecnologia.Controllers
     public class ProductoController : Controller
     {
         private readonly CoTecDBContext _context;
+        private const string KeyName = "Nombre";
+        private const string KeyId = "Id";
 
         public ProductoController(CoTecDBContext context)
         {
@@ -36,15 +39,15 @@ namespace COVAR_Tecnologia.Controllers
         // 2. CREAR - VISTA (GET)
         public IActionResult Crear()
         {
-            ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre");
-            ViewBag.Categorias = new SelectList(_context.Categorias, "Id", "Nombre");
+            ViewBag.Marcas = new SelectList(_context.Marcas, KeyId, KeyName);
+            ViewBag.Categorias = new SelectList(_context.Categorias, KeyId, KeyName);
             return View();
         }
 
         // 3. CREAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear(cotec_producto producto, IFormFile? archivoImagen)
+        public async Task<IActionResult> Crear(Producto producto, IFormFile? archivoImagen)
         {
             ModelState.Remove("Marca");
             ModelState.Remove("Categoria");
@@ -76,8 +79,8 @@ namespace COVAR_Tecnologia.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
-            ViewBag.Categorias = new SelectList(_context.Categorias, "Id", "Nombre", producto.CategoriaId);
+            ViewBag.Marcas = new SelectList(_context.Marcas, KeyId, KeyName, producto.MarcaId);
+            ViewBag.Categorias = new SelectList(_context.Categorias, KeyId, KeyName, producto.CategoriaId);
             return View(producto);
         }
 
@@ -89,66 +92,80 @@ namespace COVAR_Tecnologia.Controllers
             var producto = await _context.Productos.FindAsync(id);
             if (producto == null) return NotFound();
 
-            ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
-            ViewBag.Categorias = new SelectList(_context.Categorias, "Id", "Nombre", producto.CategoriaId);
+            ViewBag.Marcas = new SelectList(_context.Marcas, KeyId, KeyName, producto.MarcaId);
+            ViewBag.Categorias = new SelectList(_context.Categorias, KeyId, KeyName, producto.CategoriaId);
             return View(producto);
         }
 
         // 5. EDITAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, cotec_producto producto, IFormFile? archivoImagen)
+        public async Task<IActionResult> Editar(int id, Producto producto, IFormFile? archivoImagen)
         {
             ModelState.Remove("Marca");
             ModelState.Remove("Categoria");
             ModelState.Remove("archivoImagen");
             ModelState.Remove("ImagenURL");
 
+            // 1. Cláusulas de guarda tempranas
             if (id != producto.Id) return NotFound();
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    if (archivoImagen != null && archivoImagen.Length > 0)
-                    {
-                        string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoImagen.FileName);
-                        string rutaCarpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/productos");
-
-                        if (!Directory.Exists(rutaCarpeta))
-                            Directory.CreateDirectory(rutaCarpeta);
-
-                        string rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
-
-                        using (var stream = new FileStream(rutaCompleta, FileMode.Create))
-                        {
-                            await archivoImagen.CopyToAsync(stream);
-                        }
-
-                        producto.ImagenURL = "/images/productos/" + nombreArchivo;
-                    }
-                    else if (string.IsNullOrEmpty(producto.ImagenURL))
-                    {
-                        var productoExistente = await _context.Productos.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
-                        if (productoExistente != null)
-                        {
-                            producto.ImagenURL = productoExistente.ImagenURL;
-                        }
-                    }
-
-                    _context.Update(producto);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductoExists(producto.Id)) return NotFound();
-                    else throw;
-                }
-                return RedirectToAction(nameof(Index));
+                // Si no es válido, preparamos los ViewBags y retornamos la vista
+                ViewBag.Marcas = new SelectList(_context.Marcas, KeyId, KeyName, producto.MarcaId);
+                ViewBag.Categorias = new SelectList(_context.Categorias, KeyId, KeyName, producto.CategoriaId);
+                return View(producto);
             }
-            ViewBag.Marcas = new SelectList(_context.Marcas, "Id", "Nombre", producto.MarcaId);
-            ViewBag.Categorias = new SelectList(_context.Categorias, "Id", "Nombre", producto.CategoriaId);
-            return View(producto);
+
+            // 2. Lógica principal (ahora sin tanta anidación)
+            try
+            {
+                // Delegamos la complejidad de la imagen a un método externo
+                producto.ImagenURL = await ProcesarImagenProducto(producto.Id, producto.ImagenURL, archivoImagen);
+
+                _context.Update(producto);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ProductoExists(producto.Id)) return NotFound();
+                throw; // Se omite el 'else' innecesario
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // 3. Nuevo método privado exclusivo para manejar la imagen
+        private async Task<string> ProcesarImagenProducto(int productoId, string imagenUrlActual, IFormFile? archivoImagen)
+        {
+            if (archivoImagen != null && archivoImagen.Length > 0)
+            {
+                string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(archivoImagen.FileName);
+                string rutaCarpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/productos");
+
+                if (!Directory.Exists(rutaCarpeta))
+                    Directory.CreateDirectory(rutaCarpeta);
+
+                string rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
+
+                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                {
+                    await archivoImagen.CopyToAsync(stream);
+                }
+
+                return "/images/productos/" + nombreArchivo;
+            }
+
+            // Si no se subió una nueva imagen y la actual está vacía, recuperamos la anterior
+            if (string.IsNullOrEmpty(imagenUrlActual))
+            {
+                var productoExistente = await _context.Productos.AsNoTracking().FirstOrDefaultAsync(p => p.Id == productoId);
+                return productoExistente?.ImagenURL;
+            }
+
+            // Si no se subió nada pero ya había una URL, conservamos la que venía en el modelo
+            return imagenUrlActual;
         }
 
         private bool ProductoExists(int id)

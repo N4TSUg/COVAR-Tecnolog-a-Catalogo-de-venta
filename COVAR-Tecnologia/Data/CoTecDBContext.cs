@@ -8,13 +8,13 @@ namespace COVAR_Tecnologia.Data
         public CoTecDBContext(DbContextOptions<CoTecDBContext>options) : base(options) { }
 
         // Estas propiedades DbSet representan cada tabla en tu base de datos SQL
-        public DbSet<cotec_usuario> Usuarios { get; set; }
-        public DbSet<cotec_rol> Roles { get; set; }
-        public DbSet<cotec_producto> Productos { get; set; }
-        public DbSet<cotec_marca> Marcas { get; set; }
-        public DbSet<cotec_categoria> Categorias { get; set; }
-        public DbSet<cotec_ticketSoporte> TicketsSoporte { get; set; }
-        public DbSet<cotec_mensaje> MensajesSoporte { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Rol> Roles { get; set; }
+        public DbSet<Producto> Productos { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<TicketSoporte> TicketsSoporte { get; set; }
+        public DbSet<Mensaje> MensajesSoporte { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,7 +23,7 @@ namespace COVAR_Tecnologia.Data
 
             // 1. Relación TicketSoporte -> Mensajes
             // Si se borra un ticket, está bien que se borren todos sus mensajes (Cascade)
-            modelBuilder.Entity<cotec_mensaje>()
+            modelBuilder.Entity<Mensaje>()
                 .HasOne(m => m.TicketSoporte)
                 .WithMany(t => t.Mensajes)
                 .HasForeignKey(m => m.TicketSoporteId)
@@ -31,7 +31,7 @@ namespace COVAR_Tecnologia.Data
 
             // 2. Relación Usuario -> TicketsSoporte
             // Evitamos borrar los tickets accidentalmente si se elimina un usuario (Restrict)
-            modelBuilder.Entity<cotec_ticketSoporte>()
+            modelBuilder.Entity<TicketSoporte>()
                 .HasOne(t => t.Usuario)
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UsuarioId)
@@ -39,7 +39,7 @@ namespace COVAR_Tecnologia.Data
 
             // 3. Relación Producto -> Marca
             // Evitamos borrar productos si se elimina una marca por error (Restrict)
-            modelBuilder.Entity<cotec_producto>()
+            modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Marca)
                 .WithMany(m => m.Productos)
                 .HasForeignKey(p => p.MarcaId)
@@ -47,25 +47,25 @@ namespace COVAR_Tecnologia.Data
 
             // 4. Relación Producto -> Categoria
             // Evitamos borrar productos si se elimina una categoría (Restrict)
-            modelBuilder.Entity<cotec_producto>()
+            modelBuilder.Entity<Producto>()
                 .HasOne(p => p.Categoria)
                 .WithMany(c => c.Productos)
                 .HasForeignKey(p => p.CategoriaId)
                 .OnDelete(DeleteBehavior.Restrict);
             // 5. Relación Rol -> Usuario
-            modelBuilder.Entity<cotec_usuario>()
+            modelBuilder.Entity<Usuario>()
             .HasOne(u => u.Rol)
             .WithMany(r => r.Usuarios)
             .HasForeignKey(u => u.RolId)
             .OnDelete(DeleteBehavior.Restrict);
             //6. Creación de roles por defecto
-            modelBuilder.Entity<cotec_rol>().HasData(
-            new cotec_rol { Id = 1, Nombre = "Administrador" },
-            new cotec_rol { Id = 2, Nombre = "Vendedor" },
-            new cotec_rol { Id = 3, Nombre = "Cliente" });
+            modelBuilder.Entity<Rol>().HasData(
+            new Rol { Id = 1, Nombre = "Administrador" },
+            new Rol { Id = 2, Nombre = "Vendedor" },
+            new Rol { Id = 3, Nombre = "Cliente" });
             //7. Creacion de credenciales de administrador
-            modelBuilder.Entity<cotec_usuario>().HasData(
-                new cotec_usuario
+            modelBuilder.Entity<Usuario>().HasData(
+                new Usuario
                 {
                     Id = 1,
                     Email = "enriquearana1402@gmail.com",

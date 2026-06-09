@@ -11,6 +11,8 @@ namespace COVAR_Tecnologia.Controllers
     public class AccesoController : Controller
     {
         private readonly CoTecDBContext _context;
+        private const string KeyMensaje = "Mensaje";
+        private const string ActionIndex = "Index";
 
         // Inyectamos la base de datos
         public AccesoController(CoTecDBContext context)
@@ -37,7 +39,7 @@ namespace COVAR_Tecnologia.Controllers
             // 2. Verificamos si existe y si la contraseña coincide con el Hash
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(clave, usuario.Password))
             {
-                ViewData["Mensaje"] = "Correo o contraseña incorrectos.";
+                ViewData[KeyMensaje] = "Correo o contraseña incorrectos.";
                 return View();
             }
 
@@ -60,20 +62,19 @@ namespace COVAR_Tecnologia.Controllers
             {
                 case "Administrador":
                     // Redirige al Index del AdminController que creamos hace un momento
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction(ActionIndex, "Admin");
 
                 case "Vendedor":
                     // Aquí podrías redirigir a un VendedorController (si decides crearlo)
                     // Por ahora lo mandaremos al Home o al inventario
-                    return RedirectToAction("Index", "Vendedor");
+                    return RedirectToAction(ActionIndex, "Vendedor");
 
                 case "Cliente":
                     // El cliente debe ir directamente a ver el catálogo de productos
-                    return RedirectToAction("Index", "Home");
-
+                    return RedirectToAction(ActionIndex, "Home");   
                 default:
                     // Por si ocurre algo inesperado, lo mandamos al Home
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(ActionIndex, "Home");
             }
         }
 
@@ -86,12 +87,12 @@ namespace COVAR_Tecnologia.Controllers
         // LÓGICA DE REGISTRO (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registrarse(cotec_usuario usuario, string claveRaw, string confirmarClave)
+        public async Task<IActionResult> Registrarse(Usuario usuario, string claveRaw, string confirmarClave)
         {
             // Validaciones manuales básicas
             if (claveRaw != confirmarClave)
             {
-                ViewData["Mensaje"] = "Las contraseñas no coinciden.";
+                ViewData[KeyMensaje] = "Las contraseñas no coinciden.";
                 return View();
             }
 
@@ -106,7 +107,7 @@ namespace COVAR_Tecnologia.Controllers
                 var existe = await _context.Usuarios.AnyAsync(u => u.Email == usuario.Email);
                 if (existe)
                 {
-                    ViewData["Mensaje"] = "Este correo ya está registrado.";
+                    ViewData[KeyMensaje] = "Este correo ya está registrado.";
                     return View();
                 }
 
@@ -114,7 +115,7 @@ namespace COVAR_Tecnologia.Controllers
                 var rolCliente = await _context.Roles.FirstOrDefaultAsync(r => r.Nombre == "Cliente");
                 if (rolCliente == null)
                 {
-                    ViewData["Mensaje"] = "Error interno: El rol Cliente no existe.";
+                    ViewData[KeyMensaje] = "Error interno: El rol Cliente no existe.";
                     return View();
                 }
 

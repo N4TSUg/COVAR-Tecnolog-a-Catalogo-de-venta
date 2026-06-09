@@ -48,17 +48,17 @@ namespace COVAR_Tecnologia.Controllers
         {
             if (!string.IsNullOrWhiteSpace(asunto) && !string.IsNullOrWhiteSpace(mensajeInicial))
             {
-                var nuevoTicket = new cotec_ticketSoporte
+                var nuevoTicket = new TicketSoporte
                 {
                     UsuarioId = ObtenerUsuarioId(),
                     Asunto = asunto,
-                    Estado = cotec_estadoTicket.Abierto,
+                    Estado = EstadoTicket.Abierto,
                     FechaCreacion = DateTime.Now,
                     EsComplejo = false, // Por defecto
                     // Creamos el primer mensaje automáticamente
-                    Mensajes = new List<cotec_mensaje>
+                    Mensajes = new List<Mensaje>
                     {
-                        new cotec_mensaje
+                        new Mensaje
                         {
                             Texto = mensajeInicial,
                             FechaEnvio = DateTime.Now,
@@ -102,9 +102,9 @@ namespace COVAR_Tecnologia.Controllers
             if (ticket == null) return NotFound();
 
             // Si el ticket está abierto y el mensaje no está vacío, lo guardamos
-            if (!string.IsNullOrWhiteSpace(textoMensaje) && ticket.Estado == cotec_estadoTicket.Abierto)
+            if (!string.IsNullOrWhiteSpace(textoMensaje) && ticket.Estado == EstadoTicket.Abierto)
             {
-                var nuevoMensaje = new cotec_mensaje
+                var nuevoMensaje = new Mensaje
                 {
                     TicketSoporteId = id,
                     Texto = textoMensaje,

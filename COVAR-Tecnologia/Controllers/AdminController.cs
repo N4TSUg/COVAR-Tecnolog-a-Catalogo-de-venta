@@ -25,8 +25,8 @@ namespace COVAR_Tecnologia.Controllers
             
             // Tickets stats
             ViewBag.TotalTickets = await _context.TicketsSoporte.CountAsync();
-            ViewBag.TicketsAbiertos = await _context.TicketsSoporte.CountAsync(t => t.Estado == cotec_estadoTicket.Abierto);
-            ViewBag.TicketsCerrados = await _context.TicketsSoporte.CountAsync(t => t.Estado == cotec_estadoTicket.Cerrado);
+            ViewBag.TicketsAbiertos = await _context.TicketsSoporte.CountAsync(t => t.Estado == EstadoTicket.Abierto);
+            ViewBag.TicketsCerrados = await _context.TicketsSoporte.CountAsync(t => t.Estado == EstadoTicket.Cerrado);
             
             ViewBag.TotalUsuarios = await _context.Usuarios.CountAsync();
 

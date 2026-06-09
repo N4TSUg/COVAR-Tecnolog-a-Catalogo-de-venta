@@ -4,7 +4,7 @@ namespace COVAR_Tecnologia.Models
 {
     public class CatalogoViewModel
     {
-        public IEnumerable<cotec_producto> Productos { get; set; } = new List<cotec_producto>();
+        public IEnumerable<Producto> Productos { get; set; } = new List<Producto>();
         
         // Paginación
         public int PaginaActual { get; set; }

@@ -1,4 +1,4 @@
-@model IEnumerable<COVAR_Tecnologia.Models.cotec_ticketSoporte>
+@model IEnumerable<COVAR_Tecnologia.Models.TicketSoporte>
 @{
     ViewData["Title"] = "Mis Consultas";
 }
@@ -47,7 +47,7 @@
                                     <td class="fw-bold text-wrap" style="max-width: 300px;">@item.Asunto</td>
                                     <td><span class="text-muted"><i class="bi bi-calendar-event"></i> @item.FechaCreacion.ToString("dd/MM/yyyy")</span></td>
                                     <td>
-                                        @if (item.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+                                        @if (item.Estado == COVAR_Tecnologia.Models.EstadoTicket.Abierto)
                                         {
                                             <span class="badge bg-warning text-dark rounded-pill shadow-sm px-3 py-2"><i class="bi bi-clock-history"></i> En Proceso</span>
                                         }

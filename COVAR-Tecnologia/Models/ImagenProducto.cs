@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
 {
-    public class cotec_imagenProducto
+    public class ImagenProducto
     {
         [Key]
         public int Id { get; set; }
@@ -13,6 +13,6 @@ namespace COVAR_Tecnologia.Models
         [Required]
         public int ProductoId { get; set; }        
         [ForeignKey("ProductoId")]
-        public cotec_producto Producto { get; set; }
+        public Producto Producto { get; set; }
     }
 }

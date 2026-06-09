@@ -24,13 +24,13 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Productos.Add(new cotec_producto { Id = 1, Nombre = "Prod 1", Descripcion = "Desc", ImagenURL = "url" });
-                context.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca 1" });
-                context.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Cat 1" });
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 1, Estado = cotec_estadoTicket.Abierto, Asunto = "Asunto" });
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 2, Estado = cotec_estadoTicket.Cerrado, Asunto = "Asunto" });
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Rol" });
-                context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
+                context.Productos.Add(new Producto { Id = 1, Nombre = "Prod 1", Descripcion = "Desc", ImagenURL = "url" });
+                context.Marcas.Add(new Marca { Id = 1, Nombre = "Marca 1" });
+                context.Categorias.Add(new Categoria { Id = 1, Nombre = "Cat 1" });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 1, Estado = EstadoTicket.Abierto, Asunto = "Asunto" });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 2, Estado = EstadoTicket.Cerrado, Asunto = "Asunto" });
+                context.Roles.Add(new Rol { Id = 1, Nombre = "Rol" });
+                context.Usuarios.Add(new Usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
                 await context.SaveChangesAsync();
             }
 

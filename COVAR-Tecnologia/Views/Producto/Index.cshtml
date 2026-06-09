@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.cotec_producto>
+﻿@model IEnumerable<COVAR_Tecnologia.Models.Producto>
 
 @{
     ViewData["Title"] = "Inventario de Productos";
@@ -57,7 +57,7 @@
                                     <td class="ps-4 fw-bold">@item.Nombre</td>
                                     <td><span class="badge bg-secondary rounded-pill fw-normal">@item.Marca.Nombre</span></td>
                                     <td><span class="badge bg-dark rounded-pill fw-normal">@item.Categoria.Nombre</span></td>
-                                    <td class="text-success fw-bold">@item.Precio.ToString("C")</td>
+                                    <td class="text-success fw-bold">@item.Precio?.ToString("C")</td>
                                     <td class="pe-4 text-center">
                                         <a asp-action="Editar" asp-route-id="@item.Id" class="btn btn-warning btn-sm shadow-sm btn-hover-grow me-2 rounded-pill px-3" title="Editar">
                                             <i class="bi bi-pencil-square"></i> Editar

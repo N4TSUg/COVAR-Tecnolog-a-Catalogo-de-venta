@@ -1,6 +1,6 @@
 ﻿namespace COVAR_Tecnologia.Models
 {
-    public enum cotec_estadoTicket
+    public enum EstadoTicket
     {
         Abierto = 1,
         EnProceso = 2,

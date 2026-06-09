@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
 {
-    public class cotec_usuario
+    public class Usuario
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -14,7 +14,7 @@ namespace COVAR_Tecnologia.Models
         [Required(ErrorMessage = "Debe asignar un Rol al usuario.")]
         public int? RolId { get; set; }
         [ForeignKey("RolId")]
-        public cotec_rol Rol { get; set; }
-        public List<cotec_ticketSoporte> Tickets { get; set; }
+        public Rol Rol { get; set; }
+        public List<TicketSoporte> Tickets { get; set; }
     }
 }

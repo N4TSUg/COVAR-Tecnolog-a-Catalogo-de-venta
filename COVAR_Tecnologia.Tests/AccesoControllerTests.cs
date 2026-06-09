@@ -25,7 +25,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Acceso_ClavesDistintas");
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
-            var nuevoUsuario = new cotec_usuario { Email = "test@covar.com" };
+            var nuevoUsuario = new Usuario { Email = "test@covar.com" };
 
             // 2. ACT
             // Simulamos que el usuario escribió contraseñas diferentes
@@ -45,14 +45,14 @@ namespace COVAR_Tecnologia.Tests
             using (var setupContext = new CoTecDBContext(options))
             {
                 // Inyectamos el rol y un usuario ya existente
-                setupContext.Roles.Add(new cotec_rol { Id = 1, Nombre = "Cliente" });
-                setupContext.Usuarios.Add(new cotec_usuario { Id = 1, Email = "existe@covar.com", Password = "hash" });
+                setupContext.Roles.Add(new Rol { Id = 1, Nombre = "Cliente" });
+                setupContext.Usuarios.Add(new Usuario { Id = 1, Email = "existe@covar.com", Password = "hash" });
                 await setupContext.SaveChangesAsync();
             }
 
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
-            var usuarioDuplicado = new cotec_usuario { Email = "existe@covar.com" };
+            var usuarioDuplicado = new Usuario { Email = "existe@covar.com" };
 
             // 2. ACT
             var result = await controller.Registrarse(usuarioDuplicado, "123456", "123456");
@@ -91,7 +91,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Acceso_LoginClaveMal");
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Usuarios.Add(new cotec_usuario
+                setupContext.Usuarios.Add(new Usuario
                 {
                     Id = 1,
                     Email = "real@covar.com",
@@ -121,13 +121,13 @@ namespace COVAR_Tecnologia.Tests
             using (var setupContext = new CoTecDBContext(options))
             {
                 // El sistema necesita que el rol "Cliente" exista para poder asignarlo
-                setupContext.Roles.Add(new cotec_rol { Id = 1, Nombre = "Cliente" });
+                setupContext.Roles.Add(new Rol { Id = 1, Nombre = "Cliente" });
                 await setupContext.SaveChangesAsync();
             }
 
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
-            var nuevoUsuario = new cotec_usuario { Email = "nuevo@covar.com" };
+            var nuevoUsuario = new Usuario { Email = "nuevo@covar.com" };
             string clavePlana = "MiClaveSecreta";
 
             // 2. ACT

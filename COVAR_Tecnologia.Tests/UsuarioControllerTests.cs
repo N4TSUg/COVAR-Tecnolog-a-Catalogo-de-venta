@@ -27,8 +27,8 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Rol" });
-                context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "test1@test.com", Password = "pass", RolId = 1 });
+                context.Roles.Add(new Rol { Id = 1, Nombre = "Rol" });
+                context.Usuarios.Add(new Usuario { Id = 1, Email = "test1@test.com", Password = "pass", RolId = 1 });
                 await context.SaveChangesAsync();
             }
 
@@ -38,7 +38,7 @@ namespace COVAR_Tecnologia.Tests
                 var result = await controller.Index();
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsAssignableFrom<IEnumerable<cotec_usuario>>(viewResult.ViewData.Model);
+                var model = Assert.IsAssignableFrom<IEnumerable<Usuario>>(viewResult.ViewData.Model);
                 Assert.Single(model);
             }
         }
@@ -50,8 +50,8 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Administrador" });
-                context.Roles.Add(new cotec_rol { Id = 2, Nombre = "Vendedor" });
+                context.Roles.Add(new Rol { Id = 1, Nombre = "Administrador" });
+                context.Roles.Add(new Rol { Id = 2, Nombre = "Vendedor" });
                 context.SaveChanges();
             }
 
@@ -69,7 +69,7 @@ namespace COVAR_Tecnologia.Tests
         public async Task CrearPost_ModeloValido_DebeCrearYRedirigir()
         {
             var options = GetDbContextOptions("TestDB_Usuario_CrearPost");
-            var nuevoUsuario = new cotec_usuario { Email = "nuevo@test.com", Password = "pass" };
+            var nuevoUsuario = new Usuario { Email = "nuevo@test.com", Password = "pass" };
 
             using (var context = new CoTecDBContext(options))
             {
@@ -93,8 +93,8 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Administrador" });
-                context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
+                context.Roles.Add(new Rol { Id = 1, Nombre = "Administrador" });
+                context.Usuarios.Add(new Usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
                 await context.SaveChangesAsync();
             }
 
@@ -104,7 +104,7 @@ namespace COVAR_Tecnologia.Tests
                 var result = await controller.Editar(1);
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsType<cotec_usuario>(viewResult.Model);
+                var model = Assert.IsType<Usuario>(viewResult.Model);
                 Assert.Equal(1, model.Id);
             }
         }
@@ -116,15 +116,15 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Administrador" });
-                context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "viejo@test.com", Password = "pass", RolId = 1 });
+                context.Roles.Add(new Rol { Id = 1, Nombre = "Administrador" });
+                context.Usuarios.Add(new Usuario { Id = 1, Email = "viejo@test.com", Password = "pass", RolId = 1 });
                 await context.SaveChangesAsync();
             }
 
             using (var context = new CoTecDBContext(options))
             {
                 var controller = new UsuarioController(context);
-                var usuarioEditado = new cotec_usuario { Id = 1, Email = "nuevo@test.com", Password = "pass", RolId = 1 };
+                var usuarioEditado = new Usuario { Id = 1, Email = "nuevo@test.com", Password = "pass", RolId = 1 };
                 var result = await controller.Editar(1, usuarioEditado, "nuevaclave");
 
                 var redirectResult = Assert.IsType<RedirectToActionResult>(result);
@@ -147,9 +147,9 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Roles.Add(new cotec_rol { Id = 1, Nombre = "Rol" });
-                context.Usuarios.Add(new cotec_usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
-                context.Usuarios.Add(new cotec_usuario { Id = 2, Email = "enriquearana1402@gmail.com", Password = "pass", RolId = 1 });
+                context.Roles.Add(new Rol { Id = 1, Nombre = "Rol" });
+                context.Usuarios.Add(new Usuario { Id = 1, Email = "test@test.com", Password = "pass", RolId = 1 });
+                context.Usuarios.Add(new Usuario { Id = 2, Email = "enriquearana1402@gmail.com", Password = "pass", RolId = 1 });
                 await context.SaveChangesAsync();
             }
 

@@ -1,4 +1,4 @@
-@model COVAR_Tecnologia.Models.cotec_ticketSoporte
+@model COVAR_Tecnologia.Models.TicketSoporte
 
 @{
     ViewData["Title"] = "Responder Ticket";
@@ -45,8 +45,8 @@
 
                     <div class="mb-4 d-flex justify-content-between align-items-center">
                         <small class="text-muted text-uppercase fw-bold">Estado</small>
-                        <span class="badge rounded-pill px-3 py-2 @(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto ? "bg-warning text-dark" : "bg-success")">
-                            @if(Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto) { <i class="bi bi-door-open-fill"></i> } else { <i class="bi bi-door-closed-fill"></i> } @Model.Estado
+                        <span class="badge rounded-pill px-3 py-2 @(Model.Estado == COVAR_Tecnologia.Models.EstadoTicket.Abierto ? "bg-warning text-dark" : "bg-success")">
+                            @if(Model.Estado == COVAR_Tecnologia.Models.EstadoTicket.Abierto) { <i class="bi bi-door-open-fill"></i> } else { <i class="bi bi-door-closed-fill"></i> } @Model.Estado
                         </span>
                     </div>
                     
@@ -93,7 +93,7 @@
                     }
                 </div>
 
-                @if (Model.Estado == COVAR_Tecnologia.Models.cotec_estadoTicket.Abierto)
+                @if (Model.Estado == COVAR_Tecnologia.Models.EstadoTicket.Abierto)
                 {
                     <div class="card-footer bg-body p-3 border-top-0">
                         <form id="chatForm" autocomplete="off" asp-action="Responder" method="post">

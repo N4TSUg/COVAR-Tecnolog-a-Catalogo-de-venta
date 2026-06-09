@@ -23,7 +23,7 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 1, Asunto = "Error" });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 1, Asunto = "Error" });
                 await context.SaveChangesAsync();
             }
 
@@ -33,7 +33,7 @@ namespace COVAR_Tecnologia.Tests
                 var result = await controller.Index();
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsAssignableFrom<IEnumerable<cotec_ticketSoporte>>(viewResult.ViewData.Model);
+                var model = Assert.IsAssignableFrom<IEnumerable<TicketSoporte>>(viewResult.ViewData.Model);
                 Assert.Single(model);
             }
         }
@@ -57,7 +57,7 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 1, Asunto = "Duda", Estado = cotec_estadoTicket.Abierto });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 1, Asunto = "Duda", Estado = EstadoTicket.Abierto });
                 await context.SaveChangesAsync();
             }
 
@@ -73,7 +73,7 @@ namespace COVAR_Tecnologia.Tests
             using (var context = new CoTecDBContext(options))
             {
                 var ticket = await context.TicketsSoporte.Include(t => t.Mensajes).FirstAsync();
-                Assert.Equal(cotec_estadoTicket.Cerrado, ticket.Estado);
+                Assert.Equal(EstadoTicket.Cerrado, ticket.Estado);
                 Assert.Single(ticket.Mensajes);
                 Assert.Equal("Respuesta desde test", ticket.Mensajes[0].Texto);
             }

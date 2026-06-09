@@ -30,8 +30,8 @@ namespace COVAR_Tecnologia.Tests
             using (var setupContext = new CoTecDBContext(options))
             {
                 // Agregamos una marca y categorÃ­a de prueba para que los ViewBag tengan algo que cargar
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Logitech" });
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "PerifÃ©rico" });
+                setupContext.Marcas.Add(new Marca { Id = 1, Nombre = "Logitech" });
+                setupContext.Categorias.Add(new Categoria { Id = 1, Nombre = "PerifÃ©rico" });
                 await setupContext.SaveChangesAsync();
             }
 
@@ -40,7 +40,7 @@ namespace COVAR_Tecnologia.Tests
 
             // Forzamos un error de validaciÃ³n
             controller.ModelState.AddModelError("Precio", "El precio debe ser mayor a 0");
-            var productoInvalido = new cotec_producto { Nombre = "Mouse", Precio = 0, MarcaId = 1, CategoriaId = 1 };
+            var productoInvalido = new Producto { Nombre = "Mouse", Precio = 0, MarcaId = 1, CategoriaId = 1 };
 
             // 2. ACT
             // Pasamos 'null' como archivo de imagen
@@ -79,7 +79,7 @@ namespace COVAR_Tecnologia.Tests
             using var context = new CoTecDBContext(options);
             var controller = new ProductoController(context);
 
-            var productoHackeado = new cotec_producto { Id = 5, Nombre = "Laptop" };
+            var productoHackeado = new Producto { Id = 5, Nombre = "Laptop" };
 
             var result = await controller.Editar(productoHackeado.Id);
 
@@ -98,7 +98,7 @@ namespace COVAR_Tecnologia.Tests
             using var context = new CoTecDBContext(options);
             var controller = new ProductoController(context);
 
-            var nuevoProducto = new cotec_producto
+            var nuevoProducto = new Producto
             {
                 Id = 0,
                 Nombre = "Teclado MecÃ¡nico",
@@ -128,10 +128,10 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Prod_DetalleExito");
             using (var setupContext = new CoTecDBContext(options))
             {
-                var marca = new cotec_marca { Id = 1, Nombre = "Razer" };
-                var cat = new cotec_categoria { Id = 1, Nombre = "Audio" };
+                var marca = new Marca { Id = 1, Nombre = "Razer" };
+                var cat = new Categoria { Id = 1, Nombre = "Audio" };
 
-                setupContext.Productos.Add(new cotec_producto
+                setupContext.Productos.Add(new Producto
                 {
                     Id = 1,
                     Nombre = "AudÃ­fonos Kraken",
@@ -152,7 +152,7 @@ namespace COVAR_Tecnologia.Tests
 
             // 3. ASSERT
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<cotec_producto>(viewResult.Model);
+            var model = Assert.IsType<Producto>(viewResult.Model);
 
             Assert.Equal("AudÃ­fonos Kraken", model.Nombre);
             Assert.NotNull(model.Marca);
@@ -165,9 +165,9 @@ namespace COVAR_Tecnologia.Tests
 
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca" });
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Categoria" });
-                setupContext.Productos.Add(new cotec_producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                setupContext.Marcas.Add(new Marca { Id = 1, Nombre = "Marca" });
+                setupContext.Categorias.Add(new Categoria { Id = 1, Nombre = "Categoria" });
+                setupContext.Productos.Add(new Producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
                 await setupContext.SaveChangesAsync();
             }
 

@@ -50,7 +50,7 @@ namespace COVAR_Tecnologia.Controllers
             {
                 if (!string.IsNullOrWhiteSpace(textoMensaje))
                 {
-                    var nuevoMensaje = new cotec_mensaje
+                    var nuevoMensaje = new Mensaje
                     {
                         TicketSoporteId = id,
                         Texto = textoMensaje,
@@ -63,7 +63,7 @@ namespace COVAR_Tecnologia.Controllers
 
                 if (cerrarTicket)
                 {
-                    ticket.Estado = cotec_estadoTicket.Cerrado;
+                    ticket.Estado = EstadoTicket.Cerrado;
                     _context.Update(ticket);
                 }
 

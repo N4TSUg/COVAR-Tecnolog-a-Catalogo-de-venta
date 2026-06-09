@@ -12,6 +12,9 @@ namespace COVAR_Tecnologia.Controllers
     public class UsuarioController : Controller
     {
         private readonly CoTecDBContext _context;
+        private const string KeyAdmin = "Administrador";
+        private const string KeyNombre = "Nombre";
+        private const string KeyId = "Id";
 
         public UsuarioController(CoTecDBContext context)
         {
@@ -30,13 +33,13 @@ namespace COVAR_Tecnologia.Controllers
         {
             // Filtramos para que solo se pueda asignar el rol de Vendedor o Cliente
             // (Administrador solo hay uno por ahora)
-            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre");
+            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != KeyAdmin), KeyId, KeyNombre);
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear(cotec_usuario usuario, string claveRaw)
+        public async Task<IActionResult> Crear(Usuario usuario, string claveRaw)
         {
             ModelState.Remove("Password");
             ModelState.Remove("Rol");
@@ -58,7 +61,7 @@ namespace COVAR_Tecnologia.Controllers
                 }
             }
 
-            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre");
+            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != KeyAdmin), KeyId, KeyNombre);
             return View(usuario);
         }
 
@@ -70,14 +73,14 @@ namespace COVAR_Tecnologia.Controllers
             var usuario = await _context.Usuarios.FindAsync(id);
             if (usuario == null) return NotFound();
 
-            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre", usuario.RolId);
+            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != KeyAdmin), KeyId, KeyNombre, usuario.RolId);
             return View(usuario);
         }
 
         // POST: Usuario/Editar/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, cotec_usuario usuario, string? claveRaw)
+        public async Task<IActionResult> Editar(int id, Usuario usuario, string? claveRaw)
         {
             if (id != usuario.Id) return NotFound();
 
@@ -116,7 +119,7 @@ namespace COVAR_Tecnologia.Controllers
                 }
             }
 
-            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != "Administrador"), "Id", "Nombre", usuario.RolId);
+            ViewBag.Roles = new SelectList(_context.Roles.Where(r => r.Nombre != KeyAdmin), KeyId, KeyNombre, usuario.RolId);
             return View(usuario);
         }
 

@@ -23,7 +23,7 @@ namespace COVAR_Tecnologia.Controllers
             ViewBag.TotalProductos = await _context.Productos.CountAsync();
 
             // Suponiendo que tu enum tiene un estado 'Abierto' o 'Pendiente'
-            ViewBag.TicketsPendientes = await _context.TicketsSoporte.CountAsync(t => t.Estado == cotec_estadoTicket.Abierto);
+            ViewBag.TicketsPendientes = await _context.TicketsSoporte.CountAsync(t => t.Estado == EstadoTicket.Abierto);
 
             return View();
         }

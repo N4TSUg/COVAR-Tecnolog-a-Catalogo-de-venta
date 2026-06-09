@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
 {
-    public class cotec_producto
+    public class Producto
     {
         [Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -17,11 +17,11 @@ namespace COVAR_Tecnologia.Models
         [Required(ErrorMessage = "Debe seleccionar una Marca.")]
         public int? MarcaId { get; set; }
         [ForeignKey("MarcaId")]
-        public cotec_marca Marca { get; set; }
+        public Marca Marca { get; set; }
         [Required(ErrorMessage = "Debe seleccionar una Categoría.")]
         public int? CategoriaId { get; set; }
         [ForeignKey("CategoriaId")]
-        public cotec_categoria Categoria { get; set; }
+        public Categoria Categoria { get; set; }
         public string GetWhatsAppLink()
         {
             // 1. Define el número de tu negocio (Sin símbolos, usa el código de país. Ej: 51 para Perú)

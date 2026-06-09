@@ -25,10 +25,10 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca" });
-                context.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Categoria" });
-                context.Productos.Add(new cotec_producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
-                context.Productos.Add(new cotec_producto { Id = 2, Nombre = "Producto 2", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                context.Marcas.Add(new Marca { Id = 1, Nombre = "Marca" });
+                context.Categorias.Add(new Categoria { Id = 1, Nombre = "Categoria" });
+                context.Productos.Add(new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                context.Productos.Add(new Producto { Id = 2, Nombre = "Producto 2", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
                 await context.SaveChangesAsync();
             }
 
@@ -61,9 +61,9 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Home_Detalle_Exito");
             using (var context = new CoTecDBContext(options))
             {
-                context.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca" });
-                context.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Categoria" });
-                context.Productos.Add(new cotec_producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                context.Marcas.Add(new Marca { Id = 1, Nombre = "Marca" });
+                context.Categorias.Add(new Categoria { Id = 1, Nombre = "Categoria" });
+                context.Productos.Add(new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
                 await context.SaveChangesAsync();
             }
 
@@ -73,7 +73,7 @@ namespace COVAR_Tecnologia.Tests
                 var result = await controller.Detalle(1);
 
                 var viewResult = Assert.IsType<ViewResult>(result);
-                var model = Assert.IsAssignableFrom<cotec_producto>(viewResult.ViewData.Model);
+                var model = Assert.IsAssignableFrom<Producto>(viewResult.ViewData.Model);
                 Assert.Equal(1, model.Id);
             }
         }

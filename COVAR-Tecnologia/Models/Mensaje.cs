@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace COVAR_Tecnologia.Models
 {
-    public class cotec_mensaje
+    public class Mensaje
     {
         [Key]
         public int Id { get; set; }
@@ -16,7 +16,7 @@ namespace COVAR_Tecnologia.Models
         [Required]
         public int TicketSoporteId { get; set; }
         [ForeignKey("TicketSoporteId")]
-        public cotec_ticketSoporte TicketSoporte { get; set; }
+        public TicketSoporte TicketSoporte { get; set; }
     }
 }
 

@@ -31,7 +31,7 @@ namespace COVAR_Tecnologia.Tests
 
             // Simulamos que el usuario dejÃ³ el nombre en blanco y ASP.NET detecta el error
             controller.ModelState.AddModelError("Nombre", "El nombre de la categorÃ­a es obligatorio");
-            var categoriaInvalida = new cotec_categoria { Id = 0, Nombre = "" };
+            var categoriaInvalida = new Categoria { Id = 0, Nombre = "" };
 
             // 2. ACT
             var result = await controller.Crear(categoriaInvalida);
@@ -66,7 +66,7 @@ namespace COVAR_Tecnologia.Tests
             var controller = new CategoriaController(context);
 
             // Simulamos un formulario manipulado con ID 99
-            var categoriaHackeada = new cotec_categoria { Id = 99, Nombre = "Hack" };
+            var categoriaHackeada = new Categoria { Id = 99, Nombre = "Hack" };
 
             // 2. ACT
             // Simulamos que la URL original apuntaba al ID 1
@@ -88,7 +88,7 @@ namespace COVAR_Tecnologia.Tests
             using var context = new CoTecDBContext(options);
             var controller = new CategoriaController(context);
 
-            var nuevaCategoria = new cotec_categoria { Id = 0, Nombre = "Almacenamiento" };
+            var nuevaCategoria = new Categoria { Id = 0, Nombre = "Almacenamiento" };
 
             // 2. ACT
             var result = await controller.Crear(nuevaCategoria);
@@ -109,7 +109,7 @@ namespace COVAR_Tecnologia.Tests
 
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Monitores" });
+                setupContext.Categorias.Add(new Categoria { Id = 1, Nombre = "Monitores" });
                 await setupContext.SaveChangesAsync();
             }
 
@@ -121,7 +121,7 @@ namespace COVAR_Tecnologia.Tests
 
             // 3. ASSERT
             var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsType<cotec_categoria>(viewResult.Model);
+            var model = Assert.IsType<Categoria>(viewResult.Model);
             Assert.Equal("Monitores", model.Nombre); // Validamos que el formulario se llene con "Monitores"
             Assert.Equal(1, model.Id);
         }
@@ -134,14 +134,14 @@ namespace COVAR_Tecnologia.Tests
 
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Laptops" });
+                setupContext.Categorias.Add(new Categoria { Id = 1, Nombre = "Laptops" });
                 await setupContext.SaveChangesAsync();
             }
 
             using var context = new CoTecDBContext(options);
             var controller = new CategoriaController(context);
 
-            var categoriaEditada = new cotec_categoria { Id = 1, Nombre = "Laptops Gamers" };
+            var categoriaEditada = new Categoria { Id = 1, Nombre = "Laptops Gamers" };
 
             // 2. ACT
             var result = await controller.Editar(1, categoriaEditada);
@@ -159,7 +159,7 @@ namespace COVAR_Tecnologia.Tests
 
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Categorias.Add(new cotec_categoria { Id = 1, Nombre = "Ratones" });
+                setupContext.Categorias.Add(new Categoria { Id = 1, Nombre = "Ratones" });
                 await setupContext.SaveChangesAsync();
             }
 

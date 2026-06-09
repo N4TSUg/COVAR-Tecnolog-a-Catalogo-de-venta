@@ -25,8 +25,8 @@ namespace COVAR_Tecnologia.Tests
             // Insertamos datos falsos en la BD en memoria
             using (var context = new CoTecDBContext(options))
             {
-                context.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Logitech" });
-                context.Marcas.Add(new cotec_marca { Id = 2, Nombre = "Razer" });
+                context.Marcas.Add(new Marca { Id = 1, Nombre = "Logitech" });
+                context.Marcas.Add(new Marca { Id = 2, Nombre = "Razer" });
                 await context.SaveChangesAsync();
             }
 
@@ -43,7 +43,7 @@ namespace COVAR_Tecnologia.Tests
                 var viewResult = Assert.IsType<ViewResult>(result);
 
                 // Verificamos que el modelo enviado a la vista sea una lista de marcas
-                var model = Assert.IsAssignableFrom<IEnumerable<cotec_marca>>(viewResult.ViewData.Model);
+                var model = Assert.IsAssignableFrom<IEnumerable<Marca>>(viewResult.ViewData.Model);
 
                 // Verificamos que la lista contenga exactamente las 2 marcas que insertamos
                 Assert.Equal(2, model.Count());
@@ -59,7 +59,7 @@ namespace COVAR_Tecnologia.Tests
             var controller = new MarcaController(context);
 
             // Simulamos una marca nueva (con Id 0 porque la base de datos se encarga de asignarlo)
-            var nuevaMarca = new cotec_marca { Id = 0, Nombre = "Corsair" };
+            var nuevaMarca = new Marca { Id = 0, Nombre = "Corsair" };
 
             // 2. ACT
             var result = await controller.Crear(nuevaMarca);
@@ -85,7 +85,7 @@ namespace COVAR_Tecnologia.Tests
             // Forzamos manualmente un error en el ModelState, simulando que la validaciÃ³n fallÃ³
             controller.ModelState.AddModelError("Nombre", "El nombre de la marca es obligatorio");
 
-            var marcaInvalida = new cotec_marca { Id = 0, Nombre = "" };
+            var marcaInvalida = new Marca { Id = 0, Nombre = "" };
 
             // 2. ACT
             var result = await controller.Crear(marcaInvalida);
@@ -110,7 +110,7 @@ namespace COVAR_Tecnologia.Tests
             // Preparamos la base de datos insertando un registro primero
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Asus" });
+                setupContext.Marcas.Add(new Marca { Id = 1, Nombre = "Asus" });
                 await setupContext.SaveChangesAsync();
             }
 
@@ -125,7 +125,7 @@ namespace COVAR_Tecnologia.Tests
             var viewResult = Assert.IsType<ViewResult>(result);
 
             // Verificamos que el modelo que se envÃ­a a la vista sea de tipo cotec_marca
-            var model = Assert.IsType<cotec_marca>(viewResult.Model);
+            var model = Assert.IsType<Marca>(viewResult.Model);
 
             // Confirmamos que trajo la marca correcta
             Assert.Equal("Asus", model.Nombre);
@@ -158,7 +158,7 @@ namespace COVAR_Tecnologia.Tests
             // Insertamos la marca original
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "Marca Vieja" });
+                setupContext.Marcas.Add(new Marca { Id = 1, Nombre = "Marca Vieja" });
                 await setupContext.SaveChangesAsync();
             }
 
@@ -166,7 +166,7 @@ namespace COVAR_Tecnologia.Tests
             var controller = new MarcaController(context);
 
             // Creamos el objeto con los datos ya modificados por el usuario
-            var marcaEditada = new cotec_marca { Id = 1, Nombre = "Marca Renombrada" };
+            var marcaEditada = new Marca { Id = 1, Nombre = "Marca Renombrada" };
 
             // 2. ACT
             var result = await controller.Editar(1, marcaEditada);
@@ -190,7 +190,7 @@ namespace COVAR_Tecnologia.Tests
             var controller = new MarcaController(context);
 
             // Simulamos los datos que vienen del formulario con ID = 5
-            var marcaModificada = new cotec_marca { Id = 5, Nombre = "Marca Hackeada" };
+            var marcaModificada = new Marca { Id = 5, Nombre = "Marca Hackeada" };
 
             // 2. ACT
             // Simulamos que la URL dice "/Marca/Editar/1", pero el modelo trae el ID 5
@@ -209,7 +209,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Marcas_EliminarPostExito");
             using (var setupContext = new CoTecDBContext(options))
             {
-                setupContext.Marcas.Add(new cotec_marca { Id = 1, Nombre = "HyperX" });
+                setupContext.Marcas.Add(new Marca { Id = 1, Nombre = "HyperX" });
                 await setupContext.SaveChangesAsync();
             }
 

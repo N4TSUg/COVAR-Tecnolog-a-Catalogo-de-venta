@@ -24,8 +24,8 @@ namespace COVAR_Tecnologia.Tests
 
             using (var context = new CoTecDBContext(options))
             {
-                context.Productos.Add(new cotec_producto { Id = 1, Nombre = "Prod 1", Descripcion = "Desc", ImagenURL = "url" });
-                context.TicketsSoporte.Add(new cotec_ticketSoporte { Id = 1, Estado = cotec_estadoTicket.Abierto, Asunto = "Asunto" });
+                context.Productos.Add(new Producto { Id = 1, Nombre = "Prod 1", Descripcion = "Desc", ImagenURL = "url" });
+                context.TicketsSoporte.Add(new TicketSoporte { Id = 1, Estado = EstadoTicket.Abierto, Asunto = "Asunto" });
                 await context.SaveChangesAsync();
             }
 

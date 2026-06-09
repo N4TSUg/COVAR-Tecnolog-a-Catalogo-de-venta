@@ -34,7 +34,7 @@ namespace COVAR_Tecnologia.Controllers
         // 3. CREAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear(cotec_categoria categoria)
+        public async Task<IActionResult> Crear(Categoria categoria)
         {
             ModelState.Remove("Productos");
             if (ModelState.IsValid)
@@ -66,7 +66,7 @@ namespace COVAR_Tecnologia.Controllers
         // 5. EDITAR - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Editar(int id, cotec_categoria categoria)
+        public async Task<IActionResult> Editar(int id, Categoria categoria)
         {
             ModelState.Remove("Productos");
             if (id != categoria.Id)
