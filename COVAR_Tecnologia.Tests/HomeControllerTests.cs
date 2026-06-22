@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
@@ -27,8 +27,8 @@ namespace COVAR_Tecnologia.Tests
             {
                 context.Marcas.Add(new Marca { Id = 1, Nombre = "Marca" });
                 context.Categorias.Add(new Categoria { Id = 1, Nombre = "Categoria" });
-                context.Productos.Add(new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
-                context.Productos.Add(new Producto { Id = 2, Nombre = "Producto 2", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                context.Productos.Add(new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", Precio = 10, ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                context.Productos.Add(new Producto { Id = 2, Nombre = "Producto 2", Descripcion = "Desc", Precio = 20, ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
                 await context.SaveChangesAsync();
             }
 
@@ -63,7 +63,7 @@ namespace COVAR_Tecnologia.Tests
             {
                 context.Marcas.Add(new Marca { Id = 1, Nombre = "Marca" });
                 context.Categorias.Add(new Categoria { Id = 1, Nombre = "Categoria" });
-                context.Productos.Add(new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                context.Productos.Add(new Producto { Id = 1, Nombre = "Producto 1", Descripcion = "Desc", Precio = 10, ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
                 await context.SaveChangesAsync();
             }
 

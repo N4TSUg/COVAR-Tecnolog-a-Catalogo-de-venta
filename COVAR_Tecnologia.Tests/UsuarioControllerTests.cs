@@ -69,7 +69,7 @@ namespace COVAR_Tecnologia.Tests
         public async Task CrearPost_ModeloValido_DebeCrearYRedirigir()
         {
             var options = GetDbContextOptions("TestDB_Usuario_CrearPost");
-            var nuevoUsuario = new Usuario { Email = "nuevo@test.com", Password = "pass" };
+            var nuevoUsuario = new Usuario { Email = "nuevo@test.com", Password = "pass", RolId = 1 };
 
             using (var context = new CoTecDBContext(options))
             {

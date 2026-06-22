@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
@@ -25,7 +25,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Acceso_ClavesDistintas");
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
-            var nuevoUsuario = new Usuario { Email = "test@covar.com" };
+            var nuevoUsuario = new Usuario { Email = "test@covar.com", RolId = 1 };
 
             // 2. ACT
             // Simulamos que el usuario escribió contraseñas diferentes
@@ -46,13 +46,13 @@ namespace COVAR_Tecnologia.Tests
             {
                 // Inyectamos el rol y un usuario ya existente
                 setupContext.Roles.Add(new Rol { Id = 1, Nombre = "Cliente" });
-                setupContext.Usuarios.Add(new Usuario { Id = 1, Email = "existe@covar.com", Password = "hash" });
+                setupContext.Usuarios.Add(new Usuario { Id = 1, Email = "existe@covar.com", Password = "hash", RolId = 1 });
                 await setupContext.SaveChangesAsync();
             }
 
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
-            var usuarioDuplicado = new Usuario { Email = "existe@covar.com" };
+            var usuarioDuplicado = new Usuario { Email = "existe@covar.com", RolId = 1 };
 
             // 2. ACT
             var result = await controller.Registrarse(usuarioDuplicado, "123456", "123456");
@@ -96,7 +96,8 @@ namespace COVAR_Tecnologia.Tests
                     Id = 1,
                     Email = "real@covar.com",
                     // Guardamos la contraseña YA hasheada, como estaría en la vida real
-                    Password = BCrypt.Net.BCrypt.HashPassword("ClaveCorrecta123")
+                    Password = BCrypt.Net.BCrypt.HashPassword("ClaveCorrecta123"),
+                    RolId = 1
                 });
                 await setupContext.SaveChangesAsync();
             }
@@ -127,7 +128,7 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
-            var nuevoUsuario = new Usuario { Email = "nuevo@covar.com" };
+            var nuevoUsuario = new Usuario { Email = "nuevo@covar.com", RolId = 1 };
             string clavePlana = "MiClaveSecreta";
 
             // 2. ACT

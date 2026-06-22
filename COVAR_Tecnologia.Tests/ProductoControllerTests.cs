@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -167,7 +167,7 @@ namespace COVAR_Tecnologia.Tests
             {
                 setupContext.Marcas.Add(new Marca { Id = 1, Nombre = "Marca" });
                 setupContext.Categorias.Add(new Categoria { Id = 1, Nombre = "Categoria" });
-                setupContext.Productos.Add(new Producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
+                setupContext.Productos.Add(new Producto { Id = 1, Nombre = "ProductoTest", Descripcion = "Desc", Precio = 10, ImagenURL = "url", MarcaId = 1, CategoriaId = 1 });
                 await setupContext.SaveChangesAsync();
             }
 
