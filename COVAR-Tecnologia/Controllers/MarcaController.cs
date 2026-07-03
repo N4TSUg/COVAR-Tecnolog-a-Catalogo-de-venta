@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -39,6 +39,7 @@ namespace COVAR_Tecnologia.Controllers
             {
                 _context.Add(marca);
                 await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "Marca creada exitosamente.";
                 return RedirectToAction(nameof(Index));
             }
             return View(marca);
@@ -75,6 +76,7 @@ namespace COVAR_Tecnologia.Controllers
                     if (!MarcaExists(marca.Id)) return NotFound();
                     else throw;
                 }
+                TempData["Mensaje"] = "Marca actualizada exitosamente.";
                 return RedirectToAction(nameof(Index));
             }
             return View(marca);
@@ -97,6 +99,7 @@ namespace COVAR_Tecnologia.Controllers
                 {
                     _context.Marcas.Remove(marca);
                     await _context.SaveChangesAsync();
+                    TempData["Mensaje"] = "Marca eliminada exitosamente.";
                 }
                 catch (DbUpdateException)
                 {

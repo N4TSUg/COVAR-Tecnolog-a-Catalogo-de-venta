@@ -1,4 +1,4 @@
-﻿@model IEnumerable<COVAR_Tecnologia.Models.TicketSoporte>
+@model IEnumerable<COVAR_Tecnologia.Models.TicketSoporte>
 
 @{
     ViewData["Title"] = "Bandeja de Soporte";
@@ -62,7 +62,13 @@
                                             <span class="text-muted"><i><i class="bi bi-person text-secondary"></i> Cliente Anónimo</i></span>
                                         }
                                     </td>
-                                    <td class="text-truncate" style="max-width: 250px;" title="@item.Asunto">@item.Asunto</td>
+                                    <td class="text-truncate" style="max-width: 250px;" title="@item.Asunto">
+                                        @item.Asunto
+                                        @if (item.Producto != null)
+                                        {
+                                            <br /><span class="badge bg-info text-dark mt-1" style="font-size:0.75rem;"><i class="bi bi-box-seam"></i> @item.Producto.Nombre</span>
+                                        }
+                                    </td>
                                     <td>
                                         @if (item.Estado == COVAR_Tecnologia.Models.EstadoTicket.Abierto)
                                         {

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -41,6 +41,7 @@ namespace COVAR_Tecnologia.Controllers
             {
                 _context.Add(categoria);
                 await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "Categoría creada exitosamente.";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
@@ -92,6 +93,7 @@ namespace COVAR_Tecnologia.Controllers
                         throw;
                     }
                 }
+                TempData["Mensaje"] = "Categoría actualizada exitosamente.";
                 return RedirectToAction(nameof(Index));
             }
             return View(categoria);
@@ -114,6 +116,7 @@ namespace COVAR_Tecnologia.Controllers
                 {
                     _context.Categorias.Remove(categoria);
                     await _context.SaveChangesAsync();
+                    TempData["Mensaje"] = "Categoría eliminada exitosamente.";
                 }
                 catch (DbUpdateException)
                 {

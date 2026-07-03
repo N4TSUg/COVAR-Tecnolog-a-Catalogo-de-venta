@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
@@ -29,6 +29,7 @@ namespace COVAR_Tecnologia.Controllers
         {
             int usuarioId = ObtenerUsuarioId();
             var misTickets = await _context.TicketsSoporte
+                                           .Include(t => t.Producto)
                                            .Where(t => t.UsuarioId == usuarioId)
                                            .OrderByDescending(t => t.FechaCreacion)
                                            .ToListAsync();
@@ -38,19 +39,21 @@ namespace COVAR_Tecnologia.Controllers
         // 2. CREAR TICKET - VISTA (GET)
         public IActionResult Crear()
         {
+            ViewBag.Productos = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Productos, "Id", "Nombre");
             return View();
         }
 
         // 3. CREAR TICKET - LÓGICA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Crear(string asunto, string mensajeInicial)
+        public async Task<IActionResult> Crear(string asunto, string mensajeInicial, int? productoId)
         {
             if (!string.IsNullOrWhiteSpace(asunto) && !string.IsNullOrWhiteSpace(mensajeInicial))
             {
                 var nuevoTicket = new TicketSoporte
                 {
                     UsuarioId = ObtenerUsuarioId(),
+                    ProductoId = productoId,
                     Asunto = asunto,
                     Estado = EstadoTicket.Abierto,
                     FechaCreacion = DateTime.Now,
@@ -72,8 +75,42 @@ namespace COVAR_Tecnologia.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["Mensaje"] = "Por favor completa todos los campos.";
+            ViewBag.Productos = new Microsoft.AspNetCore.Mvc.Rendering.SelectList(_context.Productos, "Id", "Nombre");
+            ViewData["Mensaje"] = "Por favor completa todos los campos obligatorios.";
             return View();
+        }
+
+        // 3.5. CONSULTA RÁPIDA (Desde Detalle de Producto)
+        [HttpGet]
+        public async Task<IActionResult> ConsultaRapida(int productoId)
+        {
+            var producto = await _context.Productos.FindAsync(productoId);
+            if (producto == null) return NotFound();
+
+            var nuevoTicket = new TicketSoporte
+            {
+                UsuarioId = ObtenerUsuarioId(),
+                ProductoId = productoId,
+                Asunto = $"Tengo una duda acerca del {producto.Nombre}",
+                Estado = EstadoTicket.Abierto,
+                FechaCreacion = DateTime.Now,
+                EsComplejo = false,
+                Mensajes = new List<Mensaje>
+                {
+                    new Mensaje
+                    {
+                        Texto = $"Hola, quisiera saber más sobre {producto.Nombre}.",
+                        FechaEnvio = DateTime.Now,
+                        EsRespuestaAdmin = false
+                    }
+                }
+            };
+
+            _context.Add(nuevoTicket);
+            await _context.SaveChangesAsync();
+
+            // Redirigir directamente al chat de este nuevo ticket
+            return RedirectToAction(nameof(Chat), new { id = nuevoTicket.Id });
         }
 
         // 4. VER CHAT DEL TICKET (GET)
@@ -83,6 +120,7 @@ namespace COVAR_Tecnologia.Controllers
 
             // Buscamos el ticket, pero validando que le pertenezca a este usuario
             var ticket = await _context.TicketsSoporte
+                                       .Include(t => t.Producto)
                                        .Include(t => t.Mensajes)
                                        .FirstOrDefaultAsync(t => t.Id == id && t.UsuarioId == usuarioId);
 

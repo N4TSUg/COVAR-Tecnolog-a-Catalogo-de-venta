@@ -1,4 +1,4 @@
-﻿using COVAR_Tecnologia.Data;
+using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -76,6 +76,7 @@ namespace COVAR_Tecnologia.Controllers
 
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
+                TempData["Mensaje"] = "Producto creado exitosamente.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -133,6 +134,7 @@ namespace COVAR_Tecnologia.Controllers
                 throw; // Se omite el 'else' innecesario
             }
 
+            TempData["Mensaje"] = "Producto actualizado exitosamente.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -185,6 +187,7 @@ namespace COVAR_Tecnologia.Controllers
                 {
                     _context.Productos.Remove(producto);
                     await _context.SaveChangesAsync();
+                    TempData["Mensaje"] = "Producto eliminado exitosamente.";
                 }
                 catch (DbUpdateException)
                 {

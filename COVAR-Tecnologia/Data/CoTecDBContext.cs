@@ -1,11 +1,11 @@
-﻿using COVAR_Tecnologia.Models;
+using COVAR_Tecnologia.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace COVAR_Tecnologia.Data
 {
     public class CoTecDBContext : DbContext
     {
-        public CoTecDBContext(DbContextOptions<CoTecDBContext>options) : base(options) { }
+        public CoTecDBContext(DbContextOptions<CoTecDBContext> options) : base(options) { }
 
         // Estas propiedades DbSet representan cada tabla en tu base de datos SQL
         public DbSet<Usuario> Usuarios { get; set; }
@@ -35,6 +35,13 @@ namespace COVAR_Tecnologia.Data
                 .HasOne(t => t.Usuario)
                 .WithMany(u => u.Tickets)
                 .HasForeignKey(t => t.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // 2.5. Relación Producto -> TicketsSoporte
+            modelBuilder.Entity<TicketSoporte>()
+                .HasOne(t => t.Producto)
+                .WithMany()
+                .HasForeignKey(t => t.ProductoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             // 3. Relación Producto -> Marca
@@ -70,10 +77,16 @@ namespace COVAR_Tecnologia.Data
                     Id = 1,
                     Email = "enriquearana1402@gmail.com",
                     // IMPORTANTE: Aquí va el hash, no la contraseña real "examplepass"
-                    Password = "", //Aquí va el hash de tu contraseña
+                    Password = "$2a$12$tzU3g/s8DF2nU3Wu4t5sRuJ0j4jmhmrG0FZBhvadEgNe2Z0PUQnjq", //Aquí va el hash de tu contraseña
                     RolId = 1 // 1 corresponde a Administrador
                 }
             );
+            //8.Relación de Producto -> TicketSoporte
+            modelBuilder.Entity<TicketSoporte>()
+            .HasOne(t => t.Producto)
+            .WithMany() // O WithMany(p => p.Tickets) si decides añadir una lista de tickets en el modelo Producto
+            .HasForeignKey(t => t.ProductoId)
+            .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

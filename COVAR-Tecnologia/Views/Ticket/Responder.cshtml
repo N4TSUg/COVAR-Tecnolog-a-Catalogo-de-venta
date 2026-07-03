@@ -29,6 +29,10 @@
                     <div class="mb-3">
                         <small class="text-muted text-uppercase fw-bold d-block mb-1">Asunto</small>
                         <p class="mb-0 fw-medium">@Model.Asunto</p>
+                        @if (Model.Producto != null)
+                        {
+                            <span class="badge bg-info text-dark mt-2"><i class="bi bi-box-seam"></i> Producto: @Model.Producto.Nombre</span>
+                        }
                     </div>
 
                     <div class="mb-3 d-flex justify-content-between align-items-center">
@@ -83,7 +87,7 @@
                             <div class="d-flex mb-3 @(msj.EsRespuestaAdmin ? "justify-content-end" : "justify-content-start")">
                                 <div class="p-3 shadow-sm @(msj.EsRespuestaAdmin ? "bg-primary text-white text-end" : "bg-body border")" style="max-width: 80%; border-radius: 1.5rem; @(msj.EsRespuestaAdmin ? "border-bottom-right-radius: 0.25rem;" : "border-bottom-left-radius: 0.25rem;")">
                                     <p class="mb-1" style="word-wrap: break-word;">@msj.Texto</p>
-                                    <small class="@(msj.EsRespuestaAdmin ? "text-white-50" : "text-muted")" style="font-size: 0.75rem;">
+                                    <small class="@(msj.EsRespuestaAdmin ? "text-white" : "text-muted")" style="font-size: 0.75rem;">
                                         @msj.FechaEnvio.ToString("dd/MM HH:mm")
                                         @(msj.EsRespuestaAdmin ? "(Tú)" : "(Cliente)")
                                     </small>
@@ -146,7 +150,7 @@
             var isMine = sentByAdmin === isAdmin;
             var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
             var bgClass = isMine ? "bg-primary text-white text-end" : "bg-body border";
-            var textClass = isMine ? "text-white-50" : "text-muted";
+            var textClass = isMine ? "text-white" : "text-muted";
             var senderName = sentByAdmin ? "(Tú)" : "(Cliente)";
             var radiusStyle = isMine ? "border-radius: 1.5rem; border-bottom-right-radius: 0.25rem;" : "border-radius: 1.5rem; border-bottom-left-radius: 0.25rem;";
 

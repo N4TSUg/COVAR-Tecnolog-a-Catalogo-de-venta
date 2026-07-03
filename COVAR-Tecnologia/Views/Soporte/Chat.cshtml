@@ -6,8 +6,11 @@
 <div class="container mt-4 mb-5 fade-in-up">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h3 class="fw-bold mb-0">Ticket #@Model.Id</h3>
-            <p class="text-primary fw-bold mb-0">@Model.Asunto</p>
+            <h3 class="fw-bold mb-0">@Model.Asunto</h3>
+            @if (Model.Producto != null)
+            {
+                <span class="badge bg-info text-dark mt-2"><i class="bi bi-box-seam"></i> Producto: @Model.Producto.Nombre</span>
+            }
         </div>
         <a asp-action="Index" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-bold">
             <i class="bi bi-arrow-left"></i> Volver
@@ -28,7 +31,7 @@
                 <div class="d-flex mb-3 @(!msj.EsRespuestaAdmin ? "justify-content-end" : "justify-content-start")">
                     <div class="p-3 shadow-sm @(!msj.EsRespuestaAdmin ? "bg-primary text-white text-end" : "bg-body border")" style="max-width: 80%; border-radius: 1.5rem; @(!msj.EsRespuestaAdmin ? "border-bottom-right-radius: 0.25rem;" : "border-bottom-left-radius: 0.25rem;")">
                         <p class="mb-1" style="word-wrap: break-word;">@msj.Texto</p>
-                        <small class="@(!msj.EsRespuestaAdmin ? "text-white-50" : "text-muted")" style="font-size: 0.75rem;">
+                        <small class="@(!msj.EsRespuestaAdmin ? "text-white" : "text-muted")" style="font-size: 0.75rem;">
                             @msj.FechaEnvio.ToString("dd/MM HH:mm")
                             @(!msj.EsRespuestaAdmin ? "(Tú)" : "(Soporte)")
                         </small>
@@ -74,7 +77,7 @@
             var isMine = sentByAdmin === isAdmin;
             var alignmentClass = isMine ? "justify-content-end" : "justify-content-start";
             var bgClass = isMine ? "bg-primary text-white text-end" : "bg-body border";
-            var textClass = isMine ? "text-white-50" : "text-muted";
+            var textClass = isMine ? "text-white" : "text-muted";
             var senderName = sentByAdmin ? "(Soporte)" : "(Tú)";
             var radiusStyle = isMine ? "border-radius: 1.5rem; border-bottom-right-radius: 0.25rem;" : "border-radius: 1.5rem; border-bottom-left-radius: 0.25rem;";
 

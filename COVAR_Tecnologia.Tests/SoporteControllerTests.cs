@@ -67,7 +67,7 @@ namespace COVAR_Tecnologia.Tests
             using (var context = new CoTecDBContext(options))
             {
                 var controller = CrearControladorConUsuario(context, "1");
-                var result = await controller.Crear("Asunto test", "Mensaje inicial test");
+                var result = await controller.Crear("Asunto test", "Mensaje inicial test", null);
 
                 var redirectResult = Assert.IsType<RedirectToActionResult>(result);
                 Assert.Equal("Index", redirectResult.ActionName);

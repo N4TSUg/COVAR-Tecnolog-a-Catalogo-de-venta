@@ -20,6 +20,7 @@ namespace COVAR_Tecnologia.Controllers
         {
             var tickets = await _context.TicketsSoporte
                                         .Include(t => t.Usuario)
+                                        .Include(t => t.Producto)
                                         .OrderByDescending(t => t.FechaCreacion)
                                         .ToListAsync();
             return View(tickets);
@@ -31,6 +32,7 @@ namespace COVAR_Tecnologia.Controllers
 
             var ticket = await _context.TicketsSoporte
                                        .Include(t => t.Usuario)
+                                       .Include(t => t.Producto)
                                        .Include(t => t.Mensajes)
                                        .FirstOrDefaultAsync(t => t.Id == id);
 

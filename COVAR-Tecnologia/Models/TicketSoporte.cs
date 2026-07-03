@@ -25,5 +25,9 @@ namespace COVAR_Tecnologia.Models
 
         // Relación con los mensajes del chat
         public List<Mensaje> Mensajes { get; set; }
+        //Relación con el producto asociado al ticket
+        public int? ProductoId { get; set; }
+        [ForeignKey("ProductoId")]
+        public Producto Producto { get; set; }
     }
 }

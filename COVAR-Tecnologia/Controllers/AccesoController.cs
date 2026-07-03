@@ -1,4 +1,4 @@
-﻿using COVAR_Tecnologia.Data;
+using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -22,14 +22,15 @@ namespace COVAR_Tecnologia.Controllers
 
         // Método para mostrar la pantalla de Login
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         // Método que se ejecuta al darle clic al botón "Ingresar"
         [HttpPost]
-        public async Task<IActionResult> Login(string correo, string clave)
+        public async Task<IActionResult> Login(string correo, string clave, string? returnUrl = null)
         {
             // 1. Buscamos al usuario por su correo e incluimos su Rol
             var usuario = await _context.Usuarios
@@ -56,6 +57,11 @@ namespace COVAR_Tecnologia.Controllers
             // 4. Creamos la cookie de sesión
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
             // 5. REDIRECCIÓN DINÁMICA POR ROL
             // Evaluamos el nombre del rol (asegúrate que coincidan con los nombres en tu DB)
             switch (usuario.Rol.Nombre)
@@ -79,15 +85,16 @@ namespace COVAR_Tecnologia.Controllers
         }
 
         // VISTA DE REGISTRO (GET)
-        public IActionResult Registrarse()
+        public IActionResult Registrarse(string? returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
         // LÓGICA DE REGISTRO (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registrarse(Usuario usuario, string claveRaw, string confirmarClave)
+        public async Task<IActionResult> Registrarse(Usuario usuario, string claveRaw, string confirmarClave, string? returnUrl = null)
         {
             // Validaciones manuales básicas
             if (claveRaw != confirmarClave)
@@ -98,6 +105,7 @@ namespace COVAR_Tecnologia.Controllers
 
             // Quitamos validaciones de objetos de navegación
             ModelState.Remove("Rol");
+            ModelState.Remove("RolId");
             ModelState.Remove("Tickets");
             ModelState.Remove("Password");
 
@@ -126,10 +134,26 @@ namespace COVAR_Tecnologia.Controllers
                 _context.Add(usuario);
                 await _context.SaveChangesAsync();
 
-                // Redirigimos al Login para que inicie sesión
-                return RedirectToAction("Login", "Acceso");
+                // Auto-login después del registro
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                    new Claim(ClaimTypes.Email, usuario.Email),
+                    new Claim(ClaimTypes.Role, rolCliente.Nombre)
+                };
+
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
+
+                return RedirectToAction("Index", "Home");
             }
 
+            ViewData["ReturnUrl"] = returnUrl;
             return View(usuario);
         }
 
