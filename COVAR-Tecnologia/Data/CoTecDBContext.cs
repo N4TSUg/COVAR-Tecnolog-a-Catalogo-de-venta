@@ -77,7 +77,7 @@ namespace COVAR_Tecnologia.Data
                     Id = 1,
                     Email = "enriquearana1402@gmail.com",
                     // IMPORTANTE: Aquí va el hash, no la contraseña real "examplepass"
-                    Password = "$2a$12$tzU3g/s8DF2nU3Wu4t5sRuJ0j4jmhmrG0FZBhvadEgNe2Z0PUQnjq", //Aquí va el hash de tu contraseña
+                    Password = "", //Aquí va el hash de tu contraseña
                     RolId = 1 // 1 corresponde a Administrador
                 }
             );

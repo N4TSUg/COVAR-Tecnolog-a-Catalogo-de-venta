@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace COVAR_Tecnologia.Migrations
 {
     [DbContext(typeof(CoTecDBContext))]
-    [Migration("20260703173814_Asocontra")]
-    partial class Asocontra
+    [Migration("20260703202142_AsociacionProductoTicket")]
+    partial class AsociacionProductoTicket
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
