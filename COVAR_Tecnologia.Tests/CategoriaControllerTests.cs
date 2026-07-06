@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Xunit;
+using Moq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace COVAR_Tecnologia.Tests
 {
@@ -87,6 +89,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Cat_CrearExito");
             using var context = new CoTecDBContext(options);
             var controller = new CategoriaController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             var nuevaCategoria = new Categoria { Id = 0, Nombre = "Almacenamiento" };
 
@@ -140,6 +143,7 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new CategoriaController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             var categoriaEditada = new Categoria { Id = 1, Nombre = "Laptops Gamers" };
 
@@ -165,6 +169,7 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new CategoriaController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             var result = await controller.EliminarConfirmado(1);
 

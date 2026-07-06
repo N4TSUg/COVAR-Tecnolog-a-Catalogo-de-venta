@@ -128,6 +128,24 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new AccesoController(context);
+
+            var authServiceMock = new Moq.Mock<Microsoft.AspNetCore.Authentication.IAuthenticationService>();
+            authServiceMock.Setup(x => x.SignInAsync(Moq.It.IsAny<Microsoft.AspNetCore.Http.HttpContext>(), Moq.It.IsAny<string>(), Moq.It.IsAny<System.Security.Claims.ClaimsPrincipal>(), Moq.It.IsAny<Microsoft.AspNetCore.Authentication.AuthenticationProperties>()))
+                           .Returns(Task.CompletedTask);
+
+            var serviceProviderMock = new Moq.Mock<IServiceProvider>();
+            serviceProviderMock.Setup(sp => sp.GetService(typeof(Microsoft.AspNetCore.Authentication.IAuthenticationService)))
+                               .Returns(authServiceMock.Object);
+
+            controller.ControllerContext = new ControllerContext
+            {
+                HttpContext = new Microsoft.AspNetCore.Http.DefaultHttpContext
+                {
+                    RequestServices = serviceProviderMock.Object
+                }
+            };
+            controller.Url = new Moq.Mock<Microsoft.AspNetCore.Mvc.IUrlHelper>().Object;
+
             var nuevoUsuario = new Usuario { Email = "nuevo@covar.com", RolId = 1 };
             string clavePlana = "MiClaveSecreta";
 
@@ -135,10 +153,10 @@ namespace COVAR_Tecnologia.Tests
             var result = await controller.Registrarse(nuevoUsuario, clavePlana, clavePlana);
 
             // 3. ASSERT
-            // Verificamos redirección al Login
+            // Verificamos redirección a Home/Index por el autologin
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Equal("Login", redirectToActionResult.ActionName);
-            Assert.Equal("Acceso", redirectToActionResult.ControllerName);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+            Assert.Equal("Home", redirectToActionResult.ControllerName);
 
             // Verificamos la base de datos
             var usuarioGuardado = await context.Usuarios.FirstOrDefaultAsync(u => u.Email == "nuevo@covar.com");

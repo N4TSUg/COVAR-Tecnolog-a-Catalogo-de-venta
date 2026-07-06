@@ -6,6 +6,8 @@ using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
 using Xunit;
+using Moq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace COVAR_Tecnologia.Tests
 {
@@ -97,6 +99,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Prod_CrearExito");
             using var context = new CoTecDBContext(options);
             var controller = new ProductoController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             var nuevoProducto = new Producto
             {
@@ -173,6 +176,7 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new ProductoController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             var result = await controller.EliminarConfirmado(1);
 

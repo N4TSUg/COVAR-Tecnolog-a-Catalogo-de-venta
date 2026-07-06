@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using COVAR_Tecnologia.Controllers;
 using COVAR_Tecnologia.Data;
 using COVAR_Tecnologia.Models;
+using Xunit;
+using Moq;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace COVAR_Tecnologia.Tests
 {
@@ -57,6 +60,7 @@ namespace COVAR_Tecnologia.Tests
             var options = GetDbContextOptions("TestDB_Marcas_CrearExito");
             using var context = new CoTecDBContext(options);
             var controller = new MarcaController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             // Simulamos una marca nueva (con Id 0 porque la base de datos se encarga de asignarlo)
             var nuevaMarca = new Marca { Id = 0, Nombre = "Corsair" };
@@ -164,6 +168,7 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new MarcaController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             // Creamos el objeto con los datos ya modificados por el usuario
             var marcaEditada = new Marca { Id = 1, Nombre = "Marca Renombrada" };
@@ -215,6 +220,7 @@ namespace COVAR_Tecnologia.Tests
 
             using var context = new CoTecDBContext(options);
             var controller = new MarcaController(context);
+            controller.TempData = new Mock<ITempDataDictionary>().Object;
 
             // 2. ACT
             var result = await controller.EliminarConfirmado(1);
